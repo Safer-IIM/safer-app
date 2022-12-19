@@ -1,14 +1,14 @@
 import { Text, View } from "react-native";
 import styles from "../style/inscription";
-import LoginForm from "../components/LoginForm";
-
-const Inscription = () => {
+import RegisterForm from "../components/RegisterForm";
+const Inscription = ({ navigation }) => {
   return (
-    <View style={styles.inscriptionContainer}>
-      <Text style={styles.title}>Welcome to Safer</Text>
-      <LoginForm />
-    </View>
+    <>
+      <View style={styles.inscriptionContainer}>
+        <Text style={styles.title}>Welcome to Safer</Text>
+        <RegisterForm navigation={navigation} />
+      </View>
+    </>
   );
 };
-
 export default Inscription;

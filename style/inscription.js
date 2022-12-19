@@ -21,6 +21,12 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     textAlign: "center",
   },
+  donthaveAccount: {
+    marginTop: "10%",
+    display: "flex",
+    textDecorationLine: "underline",
+    textAlign: "center",
+  },
 });
 
 export default styles;
