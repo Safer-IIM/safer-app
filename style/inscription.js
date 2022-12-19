@@ -15,6 +15,12 @@ const styles = StyleSheet.create({
   form: {
     display: "flex",
   },
+  forgotPassword: {
+    marginTop: "10%",
+    display: "flex",
+    textDecorationLine: "underline",
+    textAlign: "center",
+  },
 });
 
 export default styles;

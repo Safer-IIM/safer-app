@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     marginBottom: 10,
-    width: 200,
+    width: 300,
   },
   button: {
     margin: "auto",
@@ -19,6 +19,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 3, height: 20 },
     shadowOpacity: 1,
     elevation: 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

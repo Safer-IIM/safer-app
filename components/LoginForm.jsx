@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import React from "react";
 import { View, Text } from "react-native";
 import styles from "../style/inscription";
 import FormInput from "./FormInput";
@@ -38,7 +39,7 @@ const LoginForm = () => {
         handleSubmit={handleSubmit}
       />
       <View>
-        <Text>Mot de passe oublié ?</Text>
+        <Text style={styles.forgotPassword}>Mot de passe oublié ?</Text>
       </View>
     </View>
   );
