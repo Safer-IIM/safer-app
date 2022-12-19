@@ -1,7 +1,7 @@
 import { TextInput, Pressable, Text, View } from "react-native";
 import styles from "../style/input";
 
-const Input = ({
+const FormInput = ({
   defaultValue,
   name,
   type,
@@ -30,4 +30,4 @@ const Input = ({
     </>
   );
 };
-export default Input;
+export default FormInput;

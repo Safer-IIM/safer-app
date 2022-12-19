@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import styles from "../style/inscription";
-import Input from "./Input";
+import FormInput from "./FormInput";
 
 const LoginForm = () => {
   const { register, setValue, handleSubmit, errors } = useForm();
@@ -16,27 +16,30 @@ const LoginForm = () => {
 
   return (
     <View style={styles.form}>
-      <Input
+      <FormInput
         name={"email"}
         defaultValue="email"
         type="text"
         onChange={onChange}
         setValue={setValue}
       />
-      <Input
+      <FormInput
         name={"password"}
         defaultValue="password"
         type="text"
         onChange={onChange}
         setValue={setValue}
       />
-      <Input
+      <FormInput
         name={"Envoyer"}
         type="submit"
         onChange={onChange}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
       />
+      <View>
+        <Text>Mot de passe oublié ?</Text>
+      </View>
     </View>
   );
 };
