@@ -8,15 +8,19 @@ const FormInput = ({
   handleSubmit,
   onSubmit,
   setValue,
+  navigation,
+  register,
 }) => {
   return (
     <>
-      {type === "text" ? (
+      {type !== "submit" ? (
         <TextInput
           style={styles.input}
           onChangeText={(text) => setValue(name, text)}
           type={type}
           placeholder={defaultValue}
+          secureTextEntry={type === "password" ? true : false}
+          {...register(name, { required: ` ${name} Address is required` })}
         />
       ) : (
         <Pressable
@@ -24,7 +28,7 @@ const FormInput = ({
           onPress={handleSubmit(onSubmit)}
           type={type}
         >
-          <Text>{name}</Text>
+          <Text style={{ color: "white" }}>{defaultValue}</Text>
         </Pressable>
       )}
     </>

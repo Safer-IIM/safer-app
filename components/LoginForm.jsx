@@ -5,36 +5,40 @@ import styles from "../style/inscription";
 import FormInput from "./FormInput";
 
 const LoginForm = ({ navigation }) => {
-  const { register, setValue, handleSubmit, errors } = useForm();
-  const onSubmit = (data) => console.log(data);
-  const onChange = (arg) => {
-    return {
-      value: arg.nativeEvent.text,
-    };
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => {
+    navigation.navigate("help");
   };
-
   return (
     <View style={styles.form}>
       <FormInput
         name={"email"}
         defaultValue="email"
         type="text"
-        onChange={onChange}
         setValue={setValue}
+        register={register}
       />
+      {errors.email && <Text>{errors.email?.message}</Text>}
       <FormInput
-        name="Mot de passe"
+        name="password"
         defaultValue="Mot de passe"
-        type="text"
-        onChange={onChange}
+        type="password"
         setValue={setValue}
+        register={register}
       />
+      {errors.password && <Text>{errors.password?.message}</Text>}
       <FormInput
-        name={"Se connecter"}
+        name={"SignUp"}
+        defaultValue="Se connecter"
         type="submit"
-        onChange={onChange}
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
+        navigation={navigation}
       />
       <View>
         <Text
