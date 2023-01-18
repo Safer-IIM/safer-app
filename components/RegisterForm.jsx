@@ -5,10 +5,14 @@ import styles from "../style/inscription";
 import FormInput from "./FormInput";
 
 const RegisterForm = ({ navigation }) => {
-  const { register, setValue, handleSubmit, errors } = useForm();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const onSubmit = (data) => {
-    console.log("errors :");
-    console.log("errors :", errors);
     console.log(data);
   };
 
@@ -21,7 +25,7 @@ const RegisterForm = ({ navigation }) => {
         setValue={setValue}
         register={register}
       />
-      {errors.name && <Text>{errors.name?.message}</Text>}
+      {errors?.name && <Text>{errors.name?.message}</Text>}
       <FormInput
         name={"email"}
         defaultValue="email"
@@ -29,7 +33,7 @@ const RegisterForm = ({ navigation }) => {
         setValue={setValue}
         register={register}
       />
-      {errors.email && <Text>{errors.email?.message}</Text>}
+      {errors?.email && <Text>{errors.email?.message}</Text>}
       <FormInput
         name="password"
         defaultValue="Mot de passe"
@@ -37,7 +41,7 @@ const RegisterForm = ({ navigation }) => {
         setValue={setValue}
         register={register}
       />
-      {errors.password && <Text>{errors.password?.message}</Text>}
+      {errors?.password && <Text>{errors.password?.message}</Text>}
       <FormInput
         name="confirmPassword"
         defaultValue="Confirmer le mot de passe"
@@ -45,7 +49,9 @@ const RegisterForm = ({ navigation }) => {
         setValue={setValue}
         register={register}
       />
-      {errors.password && <Text>{errors.password?.message}</Text>}
+      {errors?.confirmPassword && (
+        <Text>{errors.confirmPassword?.message}</Text>
+      )}
 
       <FormInput
         name={"SignIn"}

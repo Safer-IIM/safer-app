@@ -20,7 +20,7 @@ const FormInput = ({
           type={type}
           placeholder={defaultValue}
           secureTextEntry={type === "password" ? true : false}
-          {...register(name, { required: ` ${name} Address is required` })}
+          {...register(name, { required: ` ${name} is required` })}
         />
       ) : (
         <Pressable
