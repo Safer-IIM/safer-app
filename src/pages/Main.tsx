@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import jwt_decode from 'jwt-decode';
 import { getUser } from '../../api/user';
 
-function Main({ route, navigation }) {
+function Main({ route }) {
   useEffect(() => {
-    console.log('navigation :', navigation);
     if (route?.params) {
-      console.log(route.params.userToken);
-      getUser(route.params.userId, route.params.userToken);
+      const decoded: any = jwt_decode(route.params.userToken);
+      getUser(decoded.user.id, route.params.userToken).then((res) => res).catch((err) => err);
     }
   }, []);
+
   return (
     <>
     </>

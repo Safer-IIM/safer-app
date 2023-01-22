@@ -6,7 +6,7 @@ const url = 'https://iim-safer-2.herokuapp.com/api';
 
 export const registerUser = async (data: UserInterface) => axios.post(`${url}/auth/register`, data);
 
-export const loginUser = async (data: any) => axios.post(`${url}/auth/login`, data);
+export const loginUser = async (data: { email: string, password: string }) => axios.post(`${url}/auth/login`, data);
 
 export const getUser = async (userId: string, token: string) => {
   const config = {

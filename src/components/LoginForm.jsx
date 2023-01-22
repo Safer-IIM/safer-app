@@ -1,7 +1,7 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text } from 'react-native';
-import PropTypes from 'prop-types';
 import styles from '../../styles/inscription';
 import FormInput from './FormInput';
 import { loginUser } from '../../api/user';
@@ -16,8 +16,9 @@ function LoginForm({ navigation }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await loginUser(data.email, data.password)
+    await loginUser({ email: data.email, password: data.password })
       .then((response) => {
+        console.log('response :', response.data.token);
         storeData('@userToken', response.data.token);
         navigation.navigate('Main', {
           userToken: response.data.token,
@@ -64,7 +65,3 @@ function LoginForm({ navigation }) {
 }
 
 export default LoginForm;
-
-LoginForm.propTypes = {
-
-};
