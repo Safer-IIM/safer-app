@@ -1,14 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Connexion from "./src/pages/Connexion";
-import Inscription from "./src/pages/Inscription";
-import ForgotPassword from "./src/pages/ForgotPassword";
-import Main from "./src/pages/Main";
-import Help from "./src/pages/Help";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Connexion from './src/pages/Connexion';
+import Inscription from './src/pages/Inscription';
+import ForgotPassword from './src/pages/ForgotPassword';
+import Main from './src/pages/Main';
+import Help from './src/pages/Help';
 
-const App = () => {
+function App() {
   const Stack = createNativeStackNavigator();
   return (
     // <View style={styles.container}>
@@ -23,7 +22,7 @@ const App = () => {
     </NavigationContainer>
     // </View>
   );
-};
+}
 export default App;
 
 // const styles = StyleSheet.create({

@@ -1,14 +1,18 @@
-import { useEffect } from "react";
-import { getData } from "../../utils/store";
-import { getUser } from "../../api/user";
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
+import { getUser } from '../../api/user';
 
-const Main = ({ route, navigation }) => {
+function Main({ route, navigation }) {
   useEffect(() => {
+    console.log('navigation :', navigation);
     if (route?.params) {
       console.log(route.params.userToken);
       getUser(route.params.userId, route.params.userToken);
     }
   }, []);
-  return <></>;
-};
+  return (
+    <>
+    </>
+  );
+}
 export default Main;

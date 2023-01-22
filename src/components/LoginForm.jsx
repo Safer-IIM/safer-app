@@ -1,12 +1,13 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { View, Text } from "react-native";
-import styles from "../../styles/inscription";
-import FormInput from "./FormInput";
-import { login } from "../../api/user";
-import { storeData } from "../../utils/store";
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import styles from '../../styles/inscription';
+import FormInput from './FormInput';
+import { loginUser } from '../../api/user';
+import { storeData } from '../../utils/store';
 
-const LoginForm = ({ navigation }) => {
+function LoginForm({ navigation }) {
   const {
     register,
     setValue,
@@ -15,22 +16,20 @@ const LoginForm = ({ navigation }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await login(data.email, data.password)
-      .then(function (response) {
-        storeData("@userToken", response.data.token);
-        navigation.navigate("Main", {
+    await loginUser(data.email, data.password)
+      .then((response) => {
+        storeData('@userToken', response.data.token);
+        navigation.navigate('Main', {
           userToken: response.data.token,
         });
       })
-      .catch(function (error) {
-        console.log("error :", error);
-      });
+      .catch((error) => error);
   };
 
   return (
     <View style={styles.form}>
       <FormInput
-        name={"email"}
+        name="email"
         defaultValue="email"
         type="text"
         setValue={setValue}
@@ -46,28 +45,26 @@ const LoginForm = ({ navigation }) => {
       />
       {errors.password && <Text>{errors.password?.message}</Text>}
       <FormInput
-        name={"SignUp"}
+        name="SignUp"
         defaultValue="Se connecter"
         type="submit"
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
       />
       <View>
-        <Text
-          style={styles.forgotPassword}
-          onPress={() => navigation.navigate("forgotPassword")}
-        >
+        <Text style={styles.forgotPassword} onPress={() => navigation.navigate('forgotPassword')}>
           Mot de passe oublié ?
         </Text>
-        <Text
-          style={styles.donthaveAccount}
-          onPress={() => navigation.navigate("Inscription")}
-        >
-          Vous n'avez pas de compte ?
+        <Text style={styles.donthaveAccount} onPress={() => navigation.navigate('Inscription')}>
+          Vous n&#39;avez pas de compte ?
         </Text>
       </View>
     </View>
   );
-};
+}
 
 export default LoginForm;
+
+LoginForm.propTypes = {
+
+};

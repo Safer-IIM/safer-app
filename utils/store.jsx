@@ -1,15 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const storeData = async (key, value) => {
   try {
     let jsonValue = value;
-    if (typeof jsonValue !== "string") {
+    if (typeof jsonValue !== 'string') {
       jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem(key, jsonValue);
-      console.log("bien enregistré capitaine");
     }
+    await AsyncStorage.setItem(key, jsonValue);
+    return 'success';
   } catch (e) {
-    console.log("cannot store ", value);
+    return e;
   }
 };
 
@@ -18,6 +18,6 @@ export const getData = async (key) => {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
-    console.log("cannot store ", e);
+    return e;
   }
 };

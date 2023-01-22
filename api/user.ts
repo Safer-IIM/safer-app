@@ -1,21 +1,18 @@
-const axios = require("axios").default;
-import { UserInterface } from "../interfaces/userInterface";
+import { UserInterface } from '../interfaces/userInterface';
 
-const url = "https://iim-safer-2.herokuapp.com/api";
+const axios = require('axios').default;
 
-export const registerUser = async (data: UserInterface) => {
-  return axios.post(`${url}/auth/register`, data);
-};
+const url = 'https://iim-safer-2.herokuapp.com/api';
 
-export const loginUser = async (data) => {
-  return axios.post(`${url}/auth/login`, data);
-};
+export const registerUser = async (data: UserInterface) => axios.post(`${url}/auth/register`, data);
+
+export const loginUser = async (data: any) => axios.post(`${url}/auth/login`, data);
 
 export const getUser = async (userId: string, token: string) => {
-  let config = {
-    method: "get",
+  const config = {
+    method: 'get',
     url: `${url}/user/${userId}`,
-    headers: { Authorization: "Bearer " + token },
+    headers: { Authorization: `Bearer ${token}` },
   };
   return axios(config);
 };
