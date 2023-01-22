@@ -8,7 +8,6 @@ const FormInput = ({
   handleSubmit,
   onSubmit,
   setValue,
-  navigation,
   register,
 }) => {
   return (

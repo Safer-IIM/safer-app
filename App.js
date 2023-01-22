@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Connexion from "./pages/Connexion";
 import Inscription from "./pages/Inscription";
 import ForgotPassword from "./pages/ForgotPassword";
+import Main from "./pages/Main";
+
 import Help from "./pages/Help";
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -15,7 +17,8 @@ const App = () => {
         <Stack.Screen name="Home" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="forgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="help" component={Help} />
+        <Stack.Screen name="Help" component={Help} />
+        <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
     // </View>

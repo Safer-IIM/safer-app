@@ -1,8 +1,10 @@
-import { useForm } from "react-hook-form";
 import React from "react";
+import { useForm } from "react-hook-form";
 import { View, Text } from "react-native";
 import styles from "../style/inscription";
 import FormInput from "./FormInput";
+import { login } from "../api/user";
+import { storeData } from "../utils/store";
 
 const LoginForm = ({ navigation }) => {
   const {
@@ -11,9 +13,20 @@ const LoginForm = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
-    navigation.navigate("help");
+
+  const onSubmit = async (data) => {
+    await login(data.email, data.password)
+      .then(function (response) {
+        storeData("@userToken", response.data.token);
+        navigation.navigate("Main", {
+          userToken: response.data.token,
+        });
+      })
+      .catch(function (error) {
+        console.log("error :", error);
+      });
   };
+
   return (
     <View style={styles.form}>
       <FormInput
@@ -38,7 +51,6 @@ const LoginForm = ({ navigation }) => {
         type="submit"
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
-        navigation={navigation}
       />
       <View>
         <Text

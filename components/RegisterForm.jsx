@@ -3,6 +3,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import styles from "../style/inscription";
 import FormInput from "./FormInput";
+import { register } from "../api/user";
 
 const RegisterForm = ({ navigation }) => {
   const {
@@ -12,8 +13,16 @@ const RegisterForm = ({ navigation }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    await register(data.name, data.email, data.password)
+      .then(function (response) {
+        // en cas de réussite de la requête
+        console.log("response :", response);
+      })
+      .catch(function (error) {
+        // en cas d’échec de la requête
+        console.log("error :", error);
+      });
   };
 
   return (
