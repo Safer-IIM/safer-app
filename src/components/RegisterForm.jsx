@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import styles from "../../styles/inscription";
 import FormInput from "./FormInput";
-import { register } from "../../api/user";
+import { registerUser } from "../../api/user";
 
 const RegisterForm = ({ navigation }) => {
   const {
@@ -14,7 +14,7 @@ const RegisterForm = ({ navigation }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    await register({
+    await registerUser({
       name: data.name,
       email: data.email,
       password: data.password,
