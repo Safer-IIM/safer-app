@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getData } from "../utils/store";
+import { getData } from "../../utils/store";
 
 const Main = ({ route, navigation }) => {
   useEffect(() => {

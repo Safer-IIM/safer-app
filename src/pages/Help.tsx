@@ -1,5 +1,5 @@
 import { Pressable, View, Text } from "react-native";
-import styles from "../style/help";
+import styles from "../../styles/help";
 
 const Help = () => {
   return (

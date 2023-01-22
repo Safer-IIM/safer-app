@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { View, Text } from "react-native";
-import styles from "../style/inscription";
+import styles from "../../styles/inscription";
 import FormInput from "./FormInput";
-import { login } from "../api/user";
-import { storeData } from "../utils/store";
+import { login } from "../../api/user";
+import { storeData } from "../../utils/store";
 
 const LoginForm = ({ navigation }) => {
   const {

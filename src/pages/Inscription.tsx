@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import styles from "../style/inscription";
+import styles from "../../styles/inscription";
 import RegisterForm from "../components/RegisterForm";
 const Inscription = ({ navigation }) => {
   return (

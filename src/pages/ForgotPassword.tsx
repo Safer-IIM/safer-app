@@ -1,5 +1,5 @@
 import { TextInput, Pressable, Text, View } from "react-native";
-import styles from "../style/input";
+import styles from "../../styles/input";
 const ForgotPassword = () => {
   return (
     <>
