@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useForm } from 'react-hook-form';
 import React from 'react';
 import { View, Text } from 'react-native';
@@ -76,7 +77,7 @@ function RegisterForm({ navigation }) {
       <View>
         <Text
           style={styles.donthaveAccount}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Connexion')}
         >
           Vous avez deja un compte ?
         </Text>

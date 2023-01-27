@@ -18,10 +18,10 @@ function LoginForm({ navigation }) {
   const onSubmit = async (data) => {
     await loginUser({ email: data.email, password: data.password })
       .then((response) => {
-        console.log('response :  ----------- ', response);
+        console.log('res');
         if (response.data.token) {
           storeData('@userToken', response.data.token);
-          navigation.navigate('Main', {
+          navigation.navigate('Home', {
             userToken: response.data.token,
           });
         } else {

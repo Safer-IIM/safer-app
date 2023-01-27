@@ -13,23 +13,13 @@ function App() {
     // <View style={styles.container}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Connexion} />
+        <Stack.Screen name="Home" component={Main} />
+        <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
-        <Stack.Screen name="forgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Help" component={Help} />
-        <Stack.Screen name="Main" component={Main} />
       </Stack.Navigator>
     </NavigationContainer>
-    // </View>
   );
 }
 export default App;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
