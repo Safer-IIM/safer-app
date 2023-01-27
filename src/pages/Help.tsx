@@ -1,7 +1,8 @@
-import { Pressable, View, Text } from "react-native";
-import styles from "../style/help";
+import React from 'react';
+import { Pressable, View, Text } from 'react-native';
+import styles from '../../styles/help';
 
-const Help = () => {
+function Help() {
   return (
     <View style={styles.helpContainer}>
       <Pressable style={styles.helpButton}>
@@ -9,5 +10,5 @@ const Help = () => {
       </Pressable>
     </View>
   );
-};
+}
 export default Help;
