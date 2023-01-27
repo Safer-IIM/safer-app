@@ -77,7 +77,7 @@ function RegisterForm({ navigation }) {
       <View>
         <Text
           style={styles.donthaveAccount}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Connexion')}
         >
           Vous avez deja un compte ?
         </Text>

@@ -13,8 +13,8 @@ function App() {
     // <View style={styles.container}>
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Home" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Help" component={Help} />
