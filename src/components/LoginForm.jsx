@@ -28,7 +28,7 @@ function LoginForm({ navigation }) {
           register('user', { required: 'Email ou mot de passe invalide' });
         }
       })
-      .catch((error) => error);
+      .catch(() => register('user', { required: 'Email ou mot de passe invalide' }));
   };
 
   return (
