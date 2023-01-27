@@ -5,9 +5,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   alertButton: {
-    borderRadius: '10px',
+    paddingTop: 40,
+    paddingRight: 10,
+    paddingLeft: 10,
+    paddingBottom: 40,
+    borderRadius: 100,
   },
 });
 
