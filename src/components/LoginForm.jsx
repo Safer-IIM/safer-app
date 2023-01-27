@@ -18,16 +18,17 @@ function LoginForm({ navigation }) {
   const onSubmit = async (data) => {
     await loginUser({ email: data.email, password: data.password })
       .then((response) => {
+        console.log('res');
         if (response.data.token) {
           storeData('@userToken', response.data.token);
-          navigation.navigate('Main', {
+          navigation.navigate('Home', {
             userToken: response.data.token,
           });
         } else {
           register('user', { required: 'Email ou mot de passe invalide' });
         }
       })
-      .catch((error) => error);
+      .catch((error) => { console.log('err', error.response.data); return error; });
   };
 
   return (

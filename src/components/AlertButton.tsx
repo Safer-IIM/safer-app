@@ -8,8 +8,11 @@ import styles from '../../styles/main';
 function AlertButton({ navigation }) {
   return (
     <View style={styles.mainContainer}>
-      <Button style={styles.alertButton} mode="contained" onPress={() => console.log('Pressed')}>
+      <Button style={styles.alertButton} labelStyle={styles.alertButtonLabel} mode="contained" onPress={() => console.log('Pressed')}>
         Urgence
+      </Button>
+      <Button mode="contained" onPress={() => navigation.navigate('Inscription')}>
+        Incription
       </Button>
     </View>
   );
