@@ -18,11 +18,15 @@ function LoginForm({ navigation }) {
   const onSubmit = async (data) => {
     await loginUser({ email: data.email, password: data.password })
       .then((response) => {
-        console.log('response :', response.data.token);
-        storeData('@userToken', response.data.token);
-        navigation.navigate('Main', {
-          userToken: response.data.token,
-        });
+        console.log('response :  ----------- ', response);
+        if (response.data.token) {
+          storeData('@userToken', response.data.token);
+          navigation.navigate('Main', {
+            userToken: response.data.token,
+          });
+        } else {
+          register('user', { required: 'Email ou mot de passe invalide' });
+        }
       })
       .catch((error) => error);
   };
@@ -52,6 +56,7 @@ function LoginForm({ navigation }) {
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
       />
+      {errors.user && <Text>{errors.user?.message}</Text>}
       <View>
         <Text style={styles.forgotPassword} onPress={() => navigation.navigate('forgotPassword')}>
           Mot de passe oublié ?
