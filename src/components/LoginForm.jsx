@@ -21,7 +21,7 @@ function LoginForm({ navigation }) {
         console.log('res');
         if (response.data.token) {
           storeData('@userToken', response.data.token);
-          navigation.navigate('Home', {
+          navigation.navigate('Main', {
             userToken: response.data.token,
           });
         } else {

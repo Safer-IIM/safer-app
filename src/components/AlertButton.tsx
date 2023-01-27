@@ -11,9 +11,6 @@ function AlertButton({ navigation }) {
       <Button style={styles.alertButton} labelStyle={styles.alertButtonLabel} mode="contained" onPress={() => console.log('Pressed')}>
         Urgence
       </Button>
-      <Button mode="contained" onPress={() => navigation.navigate('Inscription')}>
-        Incription
-      </Button>
     </View>
   );
 }

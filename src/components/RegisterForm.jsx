@@ -22,7 +22,7 @@ function RegisterForm({ navigation }) {
 
     })
       .then((response) => {
-        navigation.navigate('Home');
+        navigation.navigate('Main');
         console.log('response :', response);
       })
       .catch((error) => {
@@ -77,7 +77,7 @@ function RegisterForm({ navigation }) {
       <View>
         <Text
           style={styles.donthaveAccount}
-          onPress={() => navigation.navigate('Connexion')}
+          onPress={() => navigation.navigate('Home')}
         >
           Vous avez deja un compte ?
         </Text>
