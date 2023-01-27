@@ -22,7 +22,7 @@ function RegisterForm({ navigation }) {
 
     })
       .then((response) => {
-        navigation.navigate('Home');
+        navigation.navigate('Main');
         console.log('response :', response);
       })
       .catch((error) => {
