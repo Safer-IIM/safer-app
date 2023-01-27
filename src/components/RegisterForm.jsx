@@ -21,6 +21,7 @@ function RegisterForm({ navigation }) {
 
     })
       .then((response) => {
+        navigation.navigate('Home');
         console.log('response :', response);
       })
       .catch((error) => {
