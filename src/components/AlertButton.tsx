@@ -11,10 +11,10 @@ function AlertButton({ navigation }) {
       <Button style={styles.alertButton} mode="contained" onPress={() => console.log('Pressed')}>
         Urgence
       </Button>
-      <Button style={styles.alertButton} mode="contained" onPress={() => navigation.navigate('Home')}>
-        Cnscription
+      <Button mode="contained" onPress={() => navigation.navigate('Inscription')}>
+        Inscription
       </Button>
-      <Button style={styles.alertButton} mode="contained" onPress={() => navigation.navigate('Home')}>
+      <Button mode="contained" onPress={() => navigation.navigate('Connexion')}>
         Connexion
       </Button>
     </View>

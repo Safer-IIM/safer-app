@@ -7,9 +7,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   alertButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    borderRadius: '10px',
   },
 });
 
