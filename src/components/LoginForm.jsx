@@ -13,22 +13,19 @@ function LoginForm({ navigation }) {
     setValue,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm();
 
-  const onSubmit = async (data) => {
-    await loginUser({ email: data.email, password: data.password })
-      .then((response) => {
-        console.log('res');
-        if (response.data.token) {
-          storeData('@userToken', response.data.token);
-          navigation.navigate('Main', {
-            userToken: response.data.token,
-          });
-        } else {
-          register('user', { required: 'Email ou mot de passe invalide' });
-        }
-      })
-      .catch(() => register('user', { required: 'Email ou mot de passe invalide' }));
+  const onSubmit = async ({ email, password }) => {
+    try {
+      const token = await loginUser({ email, password });
+      storeData('@userToken', token);
+      navigation.navigate('Main', {
+        userToken: token,
+      });
+    } catch (e) {
+      setError('user', { type: 'focus', message: 'Email ou mot de passe invalide' });
+    }
   };
 
   return (
@@ -40,7 +37,7 @@ function LoginForm({ navigation }) {
         setValue={setValue}
         register={register}
       />
-      {errors.email && <Text>{errors.email?.message}</Text>}
+      {errors.email && <Text style={{ color: 'red' }}>{errors.email?.message}</Text>}
       <FormInput
         name="password"
         defaultValue="Mot de passe"
@@ -48,7 +45,7 @@ function LoginForm({ navigation }) {
         setValue={setValue}
         register={register}
       />
-      {errors.password && <Text>{errors.password?.message}</Text>}
+      {errors.password && <Text style={{ color: 'red' }}>{errors.password?.message}</Text>}
       <FormInput
         name="SignUp"
         defaultValue="Se connecter"
@@ -56,7 +53,7 @@ function LoginForm({ navigation }) {
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
       />
-      {errors.user && <Text>{errors.user?.message}</Text>}
+      {errors.user && <Text style={{ color: 'red' }}>{errors.user?.message}</Text>}
       <View>
         <Text style={styles.forgotPassword} onPress={() => navigation.navigate('forgotPassword')}>
           Mot de passe oublié ?
