@@ -7,6 +7,7 @@ import ForgotPassword from './src/pages/ForgotPassword';
 import Main from './src/pages/Main';
 import Help from './src/pages/Help';
 import Account from './src/pages/Account';
+import CallPage from './src/pages/CallPage';
 
 function App() {
   const Stack = createNativeStackNavigator();
@@ -14,12 +15,14 @@ function App() {
     // <View style={styles.container}>
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Call" component={CallPage} />
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="Account" component={Account} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
