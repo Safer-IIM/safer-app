@@ -1,26 +1,27 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    position: "relative",
+    position: 'relative',
     flex: 1,
-    backgroundColor: "green",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'green',
+    alignItems: 'center',
+
+    justifyContent: 'center',
   },
   accountButton: {
-    position: "absolute",
+    position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   alertButton: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     height: 100,
     width: 100,
     borderRadius: 100,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

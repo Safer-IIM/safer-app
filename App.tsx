@@ -1,12 +1,12 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Connexion from "./src/pages/Connexion";
-import Inscription from "./src/pages/Inscription";
-import ForgotPassword from "./src/pages/ForgotPassword";
-import Main from "./src/pages/Main";
-import Help from "./src/pages/Help";
-import Account from "./src/pages/Account";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Connexion from './src/pages/Connexion';
+import Inscription from './src/pages/Inscription';
+import ForgotPassword from './src/pages/ForgotPassword';
+import Main from './src/pages/Main';
+import Help from './src/pages/Help';
+import Account from './src/pages/Account';
 
 function App() {
   const Stack = createNativeStackNavigator();
