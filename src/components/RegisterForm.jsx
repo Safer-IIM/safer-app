@@ -1,10 +1,10 @@
 /* eslint-disable react/prop-types */
-import { useForm } from 'react-hook-form';
-import React from 'react';
-import { View, Text } from 'react-native';
-import styles from '../../styles/inscription';
-import FormInput from './FormInput';
-import { registerUser } from '../../api/user';
+import { useForm } from "react-hook-form";
+import React from "react";
+import { View, Text } from "react-native";
+import styles from "../../styles/inscription";
+import FormInput from "./FormInput";
+import { registerUser } from "../../api/user";
 
 function RegisterForm({ navigation }) {
   const {
@@ -19,14 +19,13 @@ function RegisterForm({ navigation }) {
       name: data.name,
       email: data.email,
       password: data.password,
-
     })
       .then((response) => {
-        navigation.navigate('Main');
-        console.log('response :', response);
+        navigation.navigate("Main");
+        console.log("response :", response);
       })
       .catch((error) => {
-        console.log('error :', error);
+        console.log("error :", error);
       });
   };
 
@@ -77,7 +76,7 @@ function RegisterForm({ navigation }) {
       <View>
         <Text
           style={styles.donthaveAccount}
-          onPress={() => navigation.navigate('Connexion')}
+          onPress={() => navigation.navigate("Connexion")}
         >
           Vous avez deja un compte ?
         </Text>

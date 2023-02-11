@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { View, Text } from 'react-native';
-import styles from '../../styles/inscription';
-import FormInput from './FormInput';
-import { loginUser } from '../../api/user';
-import { storeData } from '../../utils/store';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { View, Text } from "react-native";
+import styles from "../../styles/inscription";
+import FormInput from "./FormInput";
+import { loginUser } from "../../api/user";
+import { storeData } from "../../utils/store";
 
 function LoginForm({ navigation }) {
   const {
@@ -19,12 +19,15 @@ function LoginForm({ navigation }) {
   const onSubmit = async ({ email, password }) => {
     try {
       const token = await loginUser({ email, password });
-      storeData('@userToken', token);
-      navigation.navigate('Main', {
+      storeData("@userToken", token);
+      navigation.navigate("Main", {
         userToken: token,
       });
     } catch (e) {
-      setError('user', { type: 'focus', message: 'Email ou mot de passe invalide' });
+      setError("user", {
+        type: "focus",
+        message: "Email ou mot de passe invalide",
+      });
     }
   };
 
@@ -37,7 +40,9 @@ function LoginForm({ navigation }) {
         setValue={setValue}
         register={register}
       />
-      {errors.email && <Text style={{ color: 'red' }}>{errors.email?.message}</Text>}
+      {errors.email && (
+        <Text style={{ color: "red" }}>{errors.email?.message}</Text>
+      )}
       <FormInput
         name="password"
         defaultValue="Mot de passe"
@@ -45,7 +50,9 @@ function LoginForm({ navigation }) {
         setValue={setValue}
         register={register}
       />
-      {errors.password && <Text style={{ color: 'red' }}>{errors.password?.message}</Text>}
+      {errors.password && (
+        <Text style={{ color: "red" }}>{errors.password?.message}</Text>
+      )}
       <FormInput
         name="SignUp"
         defaultValue="Se connecter"
@@ -53,12 +60,20 @@ function LoginForm({ navigation }) {
         onSubmit={onSubmit}
         handleSubmit={handleSubmit}
       />
-      {errors.user && <Text style={{ color: 'red' }}>{errors.user?.message}</Text>}
+      {errors.user && (
+        <Text style={{ color: "red" }}>{errors.user?.message}</Text>
+      )}
       <View>
-        <Text style={styles.forgotPassword} onPress={() => navigation.navigate('forgotPassword')}>
+        <Text
+          style={styles.forgotPassword}
+          onPress={() => navigation.navigate("forgotPassword")}
+        >
           Mot de passe oublié ?
         </Text>
-        <Text style={styles.donthaveAccount} onPress={() => navigation.navigate('Inscription')}>
+        <Text
+          style={styles.donthaveAccount}
+          onPress={() => navigation.navigate("Inscription")}
+        >
           Vous n&#39;avez pas de compte ?
         </Text>
       </View>
