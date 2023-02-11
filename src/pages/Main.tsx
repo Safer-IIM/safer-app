@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import jwt_decode from "jwt-decode";
-import { Text, View } from "react-native";
-import { Button } from "react-native-paper";
-import { getUser } from "../../api/user";
-import AlertButton from "../components/AlertButton";
-import styles from "../../styles/home";
-import { getData, storeData } from "../../utils/store";
+import jwt_decode from 'jwt-decode';
+import { Text, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import { getUser } from '../../api/user';
+import AlertButton from '../components/AlertButton';
+import styles from '../../styles/home';
+import { getData, storeData } from '../../utils/store';
 
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
@@ -29,10 +29,10 @@ function Main({ route, navigation }) {
       {isUserConnected ? (
         <Button
           style={styles.accountButton}
-          icon={"account"}
-          textColor={"black"}
+          icon="account"
+          textColor="black"
           onPress={() => {
-            navigation.navigate("Account");
+            navigation.navigate('Account');
           }}
         >
           Account
@@ -40,10 +40,10 @@ function Main({ route, navigation }) {
       ) : (
         <Button
           style={styles.accountButton}
-          icon={"account-question"}
-          textColor={"black"}
+          icon="account-question"
+          textColor="black"
           onPress={() => {
-            navigation.navigate("Inscription");
+            navigation.navigate('Inscription');
           }}
         >
           <></>
