@@ -10,10 +10,10 @@ function AlertButton({ navigation }) {
     <View>
       <Button
         style={styles.alertButton}
-        labelStyle={styles.alertButtonLabel}
         mode="contained"
         onPress={() => console.log("Pressed")}
         textColor={"red"}
+        uppercase={true}
       >
         Alerte
       </Button>

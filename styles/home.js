@@ -19,12 +19,8 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
     borderRadius: 100,
-  },
-  alertButtonLabel: {
-    paddingTop: 40,
-    paddingRight: 10,
-    paddingLeft: 10,
-    paddingBottom: 40,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
