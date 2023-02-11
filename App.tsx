@@ -15,14 +15,13 @@ function App() {
     // <View style={styles.container}>
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Call" component={CallPage} />
         <Stack.Screen name="Main" component={Main} />
         <Stack.Screen name="Connexion" component={Connexion} />
         <Stack.Screen name="Inscription" component={Inscription} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="Help" component={Help} />
         <Stack.Screen name="Account" component={Account} />
-
+        <Stack.Screen name="Call" component={CallPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

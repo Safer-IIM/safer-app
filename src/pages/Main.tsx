@@ -45,9 +45,8 @@ function Main({ route, navigation }) {
           onPress={() => {
             navigation.navigate('Inscription');
           }}
-        >
-          <></>
-        </Button>
+          children=""
+        />
       )}
       <AlertButton navigation={navigation} />
     </View>
