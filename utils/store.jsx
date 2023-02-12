@@ -13,10 +13,10 @@ export const storeData = async (key, value) => {
   }
 };
 
-export const getData = async (key) => {
+export const getData = async (key, type) => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    return jsonValue != null ? (type === 'string') ? jsonValue : JSON.parse(jsonValue) : null;
   } catch (e) {
     return e;
   }

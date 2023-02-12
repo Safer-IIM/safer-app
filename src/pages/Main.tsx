@@ -26,16 +26,22 @@ function Main({ route, navigation }) {
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
 
-  useEffect(() => {
+  const getUserInfo = async () => {
     if (route?.params) {
       const decoded: any = jwt_decode(route.params.userToken);
-      getUser(decoded.user.id, route.params.userToken)
-        .then((res) => {
-          setIsUserConnected(true);
-          return res;
-        })
-        .catch((err) => err);
+      return getUser(decoded.user.id, route.params.userToken);
     }
+    const token = await getData('@userToken', 'string');
+    const decoded = jwt_decode(token);
+    return getUser(decoded.user.id, token);
+  };
+
+  useEffect(() => {
+    getUserInfo().then((res) => {
+      setIsUserConnected(true);
+    }).catch((err) => {
+      setIsUserConnected(false);
+    });
   }, []);
 
   const handleScenario = (scenario) => {
@@ -73,8 +79,9 @@ function Main({ route, navigation }) {
           <View style={styles.scenarioModalContent}>
             <View style={styles.scenarioList}>
               {
-                  scenarios.map((scenario) => (
+                  scenarios.map((scenario, index) => (
                     <List.Item
+                      key={index}
                       titleStyle={{ fontWeight: 'bold', fontSize: 18, color: MD3Colors.primary40 }}
                       descriptionStyle={{ fontSize: 12 }}
                       style={styles.scenarioChoiceButton}

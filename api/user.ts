@@ -1,12 +1,11 @@
 /* eslint-disable max-len */
-import axios from "axios";
-import { UserInterface } from "../interfaces/userInterface";
+import axios from 'axios';
+import { UserInterface } from '../interfaces/userInterface';
 
-// const url = 'https://iim-safer-2.herokuapp.com/api';
-const url = "http://localhost:4000/api";
+const url = 'https://iim-safer-2.herokuapp.com/api';
+// const url = 'http://localhost:4000/api';
 
-export const registerUser = async (data: UserInterface) =>
-  axios.post(`${url}/auth/register`, data);
+export const registerUser = async (data: UserInterface) => axios.post(`${url}/auth/register`, data);
 
 export const loginUser = async ({
   email,
@@ -20,14 +19,13 @@ export const loginUser = async ({
     { email, password },
     {
       headers: {
-        "content-type": "application/json",
-        Accept: "application/json",
+        'content-type': 'application/json',
+        Accept: 'application/json',
       },
-    }
+    },
   );
-
   if (!response.data.token) {
-    throw new Error("Invalid credentials");
+    throw new Error('Invalid credentials');
   }
 
   return response.data.token;
