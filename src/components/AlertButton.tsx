@@ -3,13 +3,21 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Button } from 'react-native-paper';
-import styles from '../../styles/main';
+import styles from '../../styles/home';
 
 function AlertButton({ navigation }) {
   return (
-    <View style={styles.mainContainer}>
-      <Button style={styles.alertButton} labelStyle={styles.alertButtonLabel} mode="contained" onPress={() => console.log('Pressed')}>
-        Urgence
+    <View>
+      <Button
+        style={styles.alertButton}
+        mode="contained"
+        onPress={() => {
+          navigation.navigate('Call');
+        }}
+        textColor="red"
+        uppercase
+      >
+        Alerte
       </Button>
     </View>
   );

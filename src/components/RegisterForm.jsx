@@ -19,10 +19,9 @@ function RegisterForm({ navigation }) {
       name: data.name,
       email: data.email,
       password: data.password,
-
     })
       .then((response) => {
-        navigation.navigate('Main');
+        // navigation.navigate("Main");
         console.log('response :', response);
       })
       .catch((error) => {
