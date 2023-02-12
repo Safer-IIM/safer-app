@@ -16,12 +16,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   alertButton: {
+    fontWeight: 'bold',
     backgroundColor: 'white',
     height: 100,
     width: 100,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  scenarioButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+  scenarioList: {
+    flexDirection: 'column',
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  scenarioChoiceButton: {
+    marginTop: 10,
+    width: '50%',
   },
 });
 

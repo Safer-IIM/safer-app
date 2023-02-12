@@ -31,16 +31,15 @@ function CallPage({ navigation }) {
 
   return (
     <View>
-      <Button onPress={() => handleSound()}>{isplaying ? 'Pause' : 'Play'}</Button>
+      <Button mode="contained" onPress={() => handleSound()}>{isplaying ? 'Pause' : 'Play'}</Button>
       <Button
         onPress={() => {
           navigation.navigate('Main');
         }}
-        children=""
-      />
+      >
+        back
+      </Button>
     </View>
   );
 }
 export default CallPage;
-// prochaine etape, faire un bouton un peu plus soigné
-// faire un bouton qui a arreter l'appel et ramener sur la page principale
