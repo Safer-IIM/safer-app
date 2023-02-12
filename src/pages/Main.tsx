@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { Text, View } from 'react-native';
 import {
-  Button, IconButton, Dialog, Portal, List,
+  Button, IconButton, Dialog, Portal, List, MD3Colors,
 } from 'react-native-paper';
 import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
@@ -70,22 +70,26 @@ function Main({ route, navigation }) {
           <Dialog.Content>
             <Text style={{ textAlign: 'center' }} variant="bodyMedium">Chaque scénario correspond à un appel différent</Text>
           </Dialog.Content>
-          <View style={styles.scenarioList}>
-            {
+          <View style={styles.scenarioModalContent}>
+            <View style={styles.scenarioList}>
+              {
                   scenarios.map((scenario) => (
                     <List.Item
+                      titleStyle={{ fontWeight: 'bold', fontSize: 18, color: MD3Colors.primary40 }}
+                      descriptionStyle={{ fontSize: 12 }}
                       style={styles.scenarioChoiceButton}
                       onPress={() => {
                         handleScenario(scenario);
                       }}
                       title={scenario.name}
                       description={scenario.description}
-                      left={(props) => <List.Icon {...props} icon={scenario.icon} />}
+                      left={(props) => <List.Icon {...props} icon={scenario.icon} style={{ alignSelf: 'center' }} color={MD3Colors.primary40} />}
                     />
                   ))
               }
+            </View>
+            <Button style={styles.scenarioAddingButton} mode="contained">Ajouter un scénario</Button>
           </View>
-          <Button mode="contained">Ajouter un scénario</Button>
         </Dialog>
       </Portal>
       <Button onPress={() => setScenarioModalVisible(true)} style={styles.scenarioButton} mode="contained" icon={selectedScenario.icon}>{selectedScenario.name}</Button>

@@ -29,17 +29,26 @@ const styles = StyleSheet.create({
     bottom: 20,
     right: 20,
   },
+  scenarioModalContent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
   scenarioList: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 10,
+    width: '90%',
   },
   scenarioChoiceButton: {
     borderWidth: 5,
     borderRadius: 30,
     margin: 7,
     width: '100%',
+    paddingLeft: 10,
+  },
+  scenarioAddingButton: {
   },
 });
 
