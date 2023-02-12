@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import jwt_decode from 'jwt-decode';
 import { Text, View } from 'react-native';
 import {
-  Button, IconButton, Dialog, Portal,
+  Button, IconButton, Dialog, Portal, List,
 } from 'react-native-paper';
 import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
@@ -12,9 +12,15 @@ import styles from '../../styles/home';
 import { getData, storeData } from '../../utils/store';
 
 const scenarios = [
-  { id: 1, icon: 'party-popper', name: 'Soirée' },
-  { id: 2, icon: 'home', name: 'Maison' },
-  { id: 3, icon: 'cake', name: 'Anniversaire' }];
+  {
+    id: 1, icon: 'party-popper', name: 'Soirée', description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+  },
+  {
+    id: 2, icon: 'home', name: 'Maison', description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+  },
+  {
+    id: 3, icon: 'cake', name: 'Anniversaire', description: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+  }];
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
@@ -61,22 +67,25 @@ function Main({ route, navigation }) {
       <Portal>
         <Dialog visible={scenarioModalVisible} onDismiss={() => setScenarioModalVisible(false)}>
           <Dialog.Title style={{ textAlign: 'center' }}>Choisissez un Scénario</Dialog.Title>
-          <Dialog.Actions style={styles.scenarioList}>
+          <Dialog.Content>
+            <Text style={{ textAlign: 'center' }} variant="bodyMedium">Chaque scénario correspond à un appel différent</Text>
+          </Dialog.Content>
+          <View style={styles.scenarioList}>
             {
                   scenarios.map((scenario) => (
-                    <Button
+                    <List.Item
                       style={styles.scenarioChoiceButton}
                       onPress={() => {
                         handleScenario(scenario);
                       }}
-                      mode="outlined"
-                      icon={scenario.icon}
-                    >
-                      {scenario.name}
-                    </Button>
+                      title={scenario.name}
+                      description={scenario.description}
+                      left={(props) => <List.Icon {...props} icon={scenario.icon} />}
+                    />
                   ))
               }
-          </Dialog.Actions>
+          </View>
+          <Button mode="contained">Ajouter un scénario</Button>
         </Dialog>
       </Portal>
       <Button onPress={() => setScenarioModalVisible(true)} style={styles.scenarioButton} mode="contained" icon={selectedScenario.icon}>{selectedScenario.name}</Button>

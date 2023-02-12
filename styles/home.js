@@ -31,14 +31,15 @@ const styles = StyleSheet.create({
   },
   scenarioList: {
     flexDirection: 'column',
-    width: '100%',
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   scenarioChoiceButton: {
-    marginTop: 10,
-    width: '50%',
+    borderWidth: 5,
+    borderRadius: 30,
+    margin: 7,
+    width: '100%',
   },
 });
 
