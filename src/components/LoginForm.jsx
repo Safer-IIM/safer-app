@@ -14,6 +14,7 @@ function LoginForm({ navigation }) {
     handleSubmit,
     formState: { errors },
     setError,
+
   } = useForm();
 
   const onSubmit = async ({ email, password }) => {
@@ -24,6 +25,7 @@ function LoginForm({ navigation }) {
         userToken: token,
       });
     } catch (e) {
+      console.log('test');
       setError('user', {
         type: 'focus',
         message: 'Email ou mot de passe invalide',
