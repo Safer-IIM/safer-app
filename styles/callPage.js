@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   hangUpButton: {
-    position: 'absolute',
-    bottom: '11%',
     height: 80,
     width: 80,
     borderRadius: 100,
