@@ -1,15 +1,20 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import { Platform, Text, View } from 'react-native';
+import {
+  ImageBackground, Platform, Text, View,
+} from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Audio } from 'expo-av';
+import styles from '../../styles/callPage';
+import image from '../../assets/call.jpg';
 
 function CallPage({ navigation }) {
   const [sound, setSound] = useState();
   const [isplaying, setIsplaying] = useState();
   const deviceOS = Platform.OS;
+  // const image = { uri: '../../assets/call.jpg' };
 
   async function handleSound() {
     if (isplaying) {
@@ -30,23 +35,42 @@ function CallPage({ navigation }) {
     }
     : undefined), [sound]);
 
-  useEffect(() => {
-    Platform.OS === 'ios' ? console.log('Device is IOS') : console.log('Device is Android');
-  }, []);
+  useEffect(() => (deviceOS === 'ios' ? console.log('Device is IOS') : console.log('Device is Android')), []);
 
   return (
-    <View>
-      <Button mode="contained" onPress={() => handleSound()}>{isplaying ? 'Pause' : 'Play'}</Button>
-      <Button
-        onPress={() => {
-          navigation.navigate('Main');
-        }}
-      >
-        back
-      </Button>
-      <Text>
-        {deviceOS === 'ios' ? 'IOS' : 'Android'}
-      </Text>
+    <View style={styles.callPageContainer}>
+      <ImageBackground source={image} resizeMode="cover" style={styles.imageBg}>
+
+        {isplaying ? (
+          <IconButton
+            icon="pause"
+            mode="contained"
+            style={styles.resumeButton}
+            onPress={() => {
+              navigation.navigate('Main');
+            }}
+          />
+        ) : (
+          <IconButton
+            icon="play"
+            mode="contained"
+            style={styles.resumeButton}
+            onPress={() => {
+              navigation.navigate('Main');
+            }}
+          />
+        )}
+
+        <IconButton
+          icon="phone-hangup"
+          mode="contained"
+          style={styles.hangUpButton}
+          onPress={() => {
+            navigation.navigate('Main');
+          }}
+        />
+
+      </ImageBackground>
     </View>
   );
 }
