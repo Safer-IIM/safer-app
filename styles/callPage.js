@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
   resumeButton: {
     position: 'absolute',
-    bottom: 300,
+    bottom: '40%',
     height: 80,
     width: 80,
     borderRadius: 100,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   hangUpButton: {
     position: 'absolute',
-    bottom: 50,
+    bottom: '11%',
     height: 80,
     width: 80,
     borderRadius: 100,
