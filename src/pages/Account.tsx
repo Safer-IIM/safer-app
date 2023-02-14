@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-native-paper';
+import { Button, TextInput } from 'react-native-paper';
 import { getData, removeData, storeData } from '../../utils/store';
 import styles from '../../styles/account';
 
@@ -19,13 +19,32 @@ function Account({ navigation }) {
     userData
       ? (
         <View style={styles.accountContainer}>
-          <Text>
-            {userData.name}
-          </Text>
-          <Text>
-            {userData.email}
-          </Text>
+
+          <TextInput
+            style={styles.accountInput}
+            label="Nom"
+            value={userData.name}
+            onChangeText={(text) => console.log('text')}
+          />
+          <TextInput
+            style={styles.accountInput}
+            label="Email"
+            value={userData.email}
+            onChangeText={(text) => console.log('text')}
+          />
+
           <Button
+            style={styles.accountButton}
+            disabled
+            mode="contained"
+            onPress={async () => {
+            }}
+          >
+            Sauvegarder les modification
+          </Button>
+
+          <Button
+            style={styles.accountButton}
             mode="contained"
             onPress={async () => {
               await removeData('@userInfo');

@@ -8,5 +8,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
   },
+  accountInput: {
+    width: 300,
+    marginTop: 20,
+  },
+  accountButton: {
+    marginTop: 20,
+  },
 });
 export default styles;
