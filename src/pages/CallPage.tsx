@@ -13,7 +13,7 @@ import image from '../../assets/call.jpg';
 function CallPage({ navigation }) {
   const [sound, setSound] = useState();
   const [isplaying, setIsplaying] = useState();
-  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+  const fadeAnim = useRef(new Animated.Value(0.5)).current; // Initial value for opacity: 0
   const deviceOS = Platform.OS;
   // const image = { uri: '../../assets/call.jpg' };
 
@@ -45,12 +45,11 @@ function CallPage({ navigation }) {
       useNativeDriver: true,
     });
     const fadeOut = Animated.timing(fadeAnim, {
-      toValue: 0,
+      toValue: 0.5,
       duration: 2000,
       useNativeDriver: true,
     });
-
-    return Animated.loop(Animated.sequence([fadeIn, fadeOut]), -1).start();
+    Animated.loop(Animated.sequence([fadeIn, fadeOut]), -1).start();
   }
 
   useEffect(() => {
@@ -61,34 +60,43 @@ function CallPage({ navigation }) {
     <View style={styles.callPageContainer}>
       <ImageBackground source={image} resizeMode="cover" style={styles.imageBg}>
 
-        {isplaying ? (
-          <IconButton
-            icon="pause"
-            mode="contained"
-            style={styles.resumeButton}
-            onPress={() => {
-              navigation.navigate('Main');
-            }}
-          />
-        ) : (
-          <IconButton
-            icon="play"
-            mode="contained"
-            style={styles.resumeButton}
-            onPress={() => {
-              navigation.navigate('Main');
-            }}
-          />
-        )}
-
         <Animated.View // Special animatable View
           style={{
             position: 'absolute',
-            bottom: '11%',
+            bottom: '40%',
+            opacity: fadeAnim, // Bind opacity to animated value
+          }}
+        >
+
+          {/* isplaying ? (
+            <IconButton
+              icon="play"
+              mode="contained"
+              style={styles.resumeButton}
+              onPress={() => {
+                navigation.navigate('Main');
+              }}
+            />
+          ) : (
+            <IconButton
+              icon="pause"
+              mode="contained"
+              style={styles.resumeButton}
+              onPress={() => {
+                navigation.navigate('Main');
+              }}
+            />
+          ) */}
+        </Animated.View>
+        <Animated.View // Special animatable View
+          style={{
+            position: 'absolute',
+            bottom: '11.8%',
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
           <IconButton
+            iconColor="white"
             icon="phone-hangup"
             mode="contained"
             style={styles.hangUpButton}

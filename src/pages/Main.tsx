@@ -28,9 +28,11 @@ function Main({ route, navigation }) {
 
   const getUserInfo = async () => {
     if (route?.params) {
+      console.log('if');
       const decoded: any = jwt_decode(route.params.userToken);
       return getUser(decoded.user.id, route.params.userToken);
     }
+    console.log('else');
     const token = await getData('@userToken', 'string');
     const decoded = jwt_decode(token);
     return getUser(decoded.user.id, token);
@@ -39,7 +41,9 @@ function Main({ route, navigation }) {
   useEffect(() => {
     getUserInfo().then((res) => {
       setIsUserConnected(true);
+      console.log('test');
     }).catch((err) => {
+      console.log('err');
       setIsUserConnected(false);
     });
   }, []);
