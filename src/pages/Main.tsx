@@ -30,28 +30,28 @@ function Main({ route, navigation }) {
 
   const getUserInfo = async () => {
     if (route?.params) {
-      console.log('route?.params', route?.params);
       const decoded: any = jwt_decode(route.params.userToken);
-      console.log('decoded', decoded);
       return getUser(decoded.user.id, route.params.userToken);
     }
-
     const token = await getData('@userToken', 'string');
     const decoded = jwt_decode(token);
-    console.log('decoded :', decoded);
     return getUser(decoded.user.id, token);
   };
 
   useEffect(() => {
-    if (isFocused && !isUserConnected) {
-      getUserInfo().then((res) => {
-        setIsUserConnected(true);
-        console.log('res :', res);
-      }).catch((err) => {
-        console.log('err', err);
-        setIsUserConnected(false);
-      });
-    }
+    (async function () {
+      const isConnected = await getData('@isConnected');
+      if (isFocused && !isConnected) {
+        getUserInfo().then((res) => {
+          setIsUserConnected(true);
+          storeData('@userInfo', res);
+          storeData('@isConnected', true);
+        }).catch((err) => {
+          setIsUserConnected(false);
+          storeData('@isConnected', false);
+        });
+      }
+    }());
   }, [isFocused]);
 
   const handleScenario = (scenario) => {
