@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from 'jwt-decode';
 import { Animated, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import {
   Button, IconButton, Dialog, Portal, List, MD3Colors,
 } from 'react-native-paper';
@@ -25,28 +26,33 @@ function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
+  const isFocused = useIsFocused();
 
   const getUserInfo = async () => {
     if (route?.params) {
-      console.log('if');
+      console.log('route?.params', route?.params);
       const decoded: any = jwt_decode(route.params.userToken);
+      console.log('decoded', decoded);
       return getUser(decoded.user.id, route.params.userToken);
     }
-    console.log('else');
+
     const token = await getData('@userToken', 'string');
     const decoded = jwt_decode(token);
+    console.log('decoded :', decoded);
     return getUser(decoded.user.id, token);
   };
 
   useEffect(() => {
-    getUserInfo().then((res) => {
-      setIsUserConnected(true);
-      console.log('test');
-    }).catch((err) => {
-      console.log('err');
-      setIsUserConnected(false);
-    });
-  }, []);
+    if (isFocused && !isUserConnected) {
+      getUserInfo().then((res) => {
+        setIsUserConnected(true);
+        console.log('res :', res);
+      }).catch((err) => {
+        console.log('err', err);
+        setIsUserConnected(false);
+      });
+    }
+  }, [isFocused]);
 
   const handleScenario = (scenario) => {
     setSelectedScenario(scenario);
