@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from 'jwt-decode';
-import { Text, View } from 'react-native';
+import { Animated, Text, View } from 'react-native';
 import {
   Button, IconButton, Dialog, Portal, List, MD3Colors,
 } from 'react-native-paper';
@@ -52,6 +52,7 @@ function Main({ route, navigation }) {
     setSelectedScenario(scenario);
     setScenarioModalVisible(false);
   };
+
   return (
     <View style={styles.mainContainer}>
       {isUserConnected ? (
