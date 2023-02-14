@@ -53,7 +53,7 @@ function AlertButton({ navigation }) {
           onPress={() => {
             navigation.navigate('Call');
           }}
-          textColor="red"
+          textColor="white"
           uppercase
         >
           Alerte

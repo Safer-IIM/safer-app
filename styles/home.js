@@ -4,9 +4,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     position: 'relative',
     flex: 1,
-    backgroundColor: 'green',
     alignItems: 'center',
-
     justifyContent: 'center',
   },
   accountButton: {
@@ -17,12 +15,13 @@ const styles = StyleSheet.create({
   },
   alertButton: {
     fontWeight: 'bold',
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     height: 100,
     width: 100,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   scenarioButton: {
     position: 'absolute',
