@@ -2,10 +2,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from 'jwt-decode';
-import { Animated, Text, View } from 'react-native';
+import {
+  Animated, Image, Text, View,
+} from 'react-native';
 import {
   Button, IconButton, Dialog, Portal, List, MD3Colors,
 } from 'react-native-paper';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import Svg from 'react-native-svg';
 import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
 import styles from '../../styles/home';
@@ -28,11 +32,10 @@ function Main({ route, navigation }) {
 
   const getUserInfo = async () => {
     if (route?.params) {
-      console.log('if');
       const decoded: any = jwt_decode(route.params.userToken);
       return getUser(decoded.user.id, route.params.userToken);
     }
-    console.log('else');
+
     const token = await getData('@userToken', 'string');
     const decoded = jwt_decode(token);
     return getUser(decoded.user.id, token);
