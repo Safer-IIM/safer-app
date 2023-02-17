@@ -4,7 +4,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import styles from '../../styles/inscription';
 import FormInput from './FormInput';
-import { registerUser } from '../../api/user';
+import {loginUser, registerUser} from '../../api/user';
+import {storeData} from "../../utils/store";
 
 function RegisterForm({ navigation }) {
   const {
@@ -20,8 +21,16 @@ function RegisterForm({ navigation }) {
       email: data.email,
       password: data.password,
     })
-      .then((response) => {
+      .then(async (response) => {
+          const token = await loginUser({ email : data.email, password :data.password });
+          await storeData('@userToken', token);
+          await storeData('@fromLoginPage', true);
+          navigation.navigate('Main', {
+              userToken: token,
+          });
+
         // navigation.navigate("Main");
+          await storeData('@fromLoginPage', true);
         console.log('response :', response);
       })
       .catch((error) => {

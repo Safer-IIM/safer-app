@@ -2,14 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from 'jwt-decode';
-import {
-  Animated, Image, Text, View,
-} from 'react-native';
+import { Animated, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import {
   Button, IconButton, Dialog, Portal, List, MD3Colors,
 } from 'react-native-paper';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import Svg from 'react-native-svg';
 import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
 import styles from '../../styles/home';
@@ -29,27 +26,38 @@ function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
+  const isFocused = useIsFocused();
 
   const getUserInfo = async () => {
     if (route?.params) {
       const decoded: any = jwt_decode(route.params.userToken);
       return getUser(decoded.user.id, route.params.userToken);
     }
-
     const token = await getData('@userToken', 'string');
     const decoded = jwt_decode(token);
     return getUser(decoded.user.id, token);
   };
 
   useEffect(() => {
-    getUserInfo().then((res) => {
-      setIsUserConnected(true);
-      console.log('test');
-    }).catch((err) => {
-      console.log('err');
-      setIsUserConnected(false);
-    });
-  }, []);
+    (async function () {
+      const isConnected = await getData('@isConnected');
+      const fromLoginPage = await getData('@fromLoginPage');
+      if (isFocused && (!isConnected || fromLoginPage)) {
+        getUserInfo().then((res) => {
+           storeData('@fromLoginPage', false);
+          console.log('test')
+          setIsUserConnected(true);
+          storeData('@userInfo', res);
+          storeData('@isConnected', true);
+        }).catch((err) => {
+          storeData('@fromLoginPage', false);
+          console.log('test 2')
+          setIsUserConnected(false);
+          storeData('@isConnected', false);
+        });
+      }
+    }());
+  }, [isFocused]);
 
   const handleScenario = (scenario) => {
     setSelectedScenario(scenario);

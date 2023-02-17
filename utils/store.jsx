@@ -13,11 +13,20 @@ export const storeData = async (key, value) => {
   }
 };
 
-export const getData = async (key, type) => {
+export const getData = async (key, type = 'object') => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? (type === 'string') ? jsonValue : JSON.parse(jsonValue) : null;
   } catch (e) {
     return e;
+  }
+};
+
+export const removeData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+    return true;
+  } catch (exception) {
+    return false;
   }
 };
