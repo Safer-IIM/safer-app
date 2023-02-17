@@ -20,7 +20,8 @@ function LoginForm({ navigation }) {
   const onSubmit = async ({ email, password }) => {
     try {
       const token = await loginUser({ email, password });
-      storeData('@userToken', token);
+     await storeData('@userToken', token);
+     await storeData('@fromLoginPage', true);
       navigation.navigate('Main', {
         userToken: token,
       });

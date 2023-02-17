@@ -41,12 +41,17 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      if (isFocused && !isConnected) {
+      const fromLoginPage = await getData('@fromLoginPage');
+      if (isFocused && (!isConnected || fromLoginPage)) {
         getUserInfo().then((res) => {
+           storeData('@fromLoginPage', false);
+          console.log('test')
           setIsUserConnected(true);
           storeData('@userInfo', res);
           storeData('@isConnected', true);
         }).catch((err) => {
+          storeData('@fromLoginPage', false);
+          console.log('test 2')
           setIsUserConnected(false);
           storeData('@isConnected', false);
         });
