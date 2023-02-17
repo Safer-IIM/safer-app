@@ -38,6 +38,10 @@ function CallPage({ navigation }) {
 
   useEffect(() => (deviceOS === 'ios' ? console.log('Device is IOS') : console.log('Device is Android')), []);
 
+  useEffect(() => {
+    handleSound();
+  }, []);
+
   function fadeAnimation() {
     const fadeIn = Animated.timing(fadeAnim, {
       toValue: 1,
