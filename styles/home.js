@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   accountButton: {
     position: 'absolute',
-    top: 10,
+    top: 20,
     right: 10,
     backgroundColor: 'white',
   },
