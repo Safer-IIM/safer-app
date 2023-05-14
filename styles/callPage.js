@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   callPageContainer: {
@@ -6,24 +6,23 @@ const styles = StyleSheet.create({
   },
   imageBg: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'green',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "green",
   },
   resumeButton: {
     height: 69,
     width: 69,
     borderRadius: 100,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   hangUpButton: {
-    backgroundColor: 'red',
+    backgroundColor: "red",
     height: 69,
     width: 69,
     borderRadius: 100,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
-
 });
 
 export default styles;

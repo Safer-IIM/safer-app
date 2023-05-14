@@ -1,42 +1,52 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import {
-  ImageBackground, Platform, Text, View, Animated,
-} from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, IconButton } from 'react-native-paper';
+import { ImageBackground, Platform, Text, View, Animated } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, IconButton } from "react-native-paper";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Audio } from 'expo-av';
-import styles from '../../styles/callPage';
-import image from '../../assets/call.jpg';
+import { Audio } from "expo-av";
+import styles from "../../styles/callPage";
+import image from "../assets/call.jpg";
 
 function CallPage({ navigation }) {
-  const [sound, setSound] = useState();
-  const [isplaying, setIsplaying] = useState();
+  const [loadedSound, setLoadedSound] = useState<any>();
+  const [isplaying, setIsplaying] = useState<boolean>();
   const fadeAnim = useRef(new Animated.Value(0.5)).current; // Initial value for opacity: 0
   const deviceOS = Platform.OS;
-  // const image = { uri: '../../assets/call.jpg' };
+  //  const image = { uri: "../assets/call.jpg" };
 
   async function handleSound() {
     if (isplaying) {
-      await sound.pauseAsync();
+      await loadedSound.pauseAsync();
       setIsplaying(false);
     } else {
-      console.log('Loading Sound');
-      const { sound } = await Audio.Sound.createAsync(require('../../assets/tiktok.mp3'));
-      setSound(sound);
+      console.log("Loading Sound");
+      const { sound } = await Audio.Sound.createAsync(
+        require("../assets/tiktok.mp3")
+      );
+      setLoadedSound(sound);
       setIsplaying(true);
       await sound.playAsync();
     }
   }
-  useEffect(() => (sound
-    ? () => {
-      console.log('Unloading Sound');
-      sound.unloadAsync();
-    }
-    : undefined), [sound]);
+  useEffect(
+    () =>
+      loadedSound
+        ? () => {
+            console.log("Unloading Sound");
+            loadedSound.unloadAsync();
+          }
+        : undefined,
+    [loadedSound]
+  );
 
-  useEffect(() => (deviceOS === 'ios' ? console.log('Device is IOS') : console.log('Device is Android')), []);
+  useEffect(
+    () =>
+      deviceOS === "ios"
+        ? console.log("Device is IOS")
+        : console.log("Device is Android"),
+    []
+  );
 
   useEffect(() => {
     handleSound();
@@ -53,7 +63,7 @@ function CallPage({ navigation }) {
       duration: 2000,
       useNativeDriver: true,
     });
-    Animated.loop(Animated.sequence([fadeIn, fadeOut]), -1).start();
+    Animated.loop(Animated.sequence([fadeIn, fadeOut])).start();
   }
 
   useEffect(() => {
@@ -63,15 +73,13 @@ function CallPage({ navigation }) {
   return (
     <View style={styles.callPageContainer}>
       <ImageBackground source={image} resizeMode="cover" style={styles.imageBg}>
-
         <Animated.View // Special animatable View
           style={{
-            position: 'absolute',
-            bottom: '40%',
+            position: "absolute",
+            bottom: "40%",
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
-
           {/* isplaying ? (
             <IconButton
               icon="play"
@@ -94,8 +102,8 @@ function CallPage({ navigation }) {
         </Animated.View>
         <Animated.View // Special animatable View
           style={{
-            position: 'absolute',
-            bottom: '11.8%',
+            position: "absolute",
+            bottom: "11.8%",
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
@@ -105,7 +113,7 @@ function CallPage({ navigation }) {
             mode="contained"
             style={styles.hangUpButton}
             onPress={() => {
-              navigation.navigate('Main');
+              navigation.navigate("Main");
             }}
           />
         </Animated.View>
