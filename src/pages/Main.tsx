@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as Location from "expo-location";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from "jwt-decode";
-import { Animated, Text, View } from "react-native";
+import { Animated, Text, View, Linking, Pressable } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import {
   Button,
@@ -109,7 +109,11 @@ function Main({ route, navigation }) {
 
   return (
     <View style={styles.mainContainer}>
+      <Pressable onPress={() => Linking.openURL(`tel:911`)}>
+        <Text>Call 911</Text>
+      </Pressable>
       <Text style={styles.paragraph}>{text}</Text>
+
       {isUserConnected ? (
         <IconButton
           style={styles.accountButton}
