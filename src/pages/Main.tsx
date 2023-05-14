@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from "react";
+import * as Location from "expo-location";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from "jwt-decode";
 import { Animated, Text, View } from "react-native";
@@ -45,6 +46,8 @@ function Main({ route, navigation }) {
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const isFocused = useIsFocused();
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const getUserInfo = async () => {
     if (route?.params) {
@@ -55,6 +58,19 @@ function Main({ route, navigation }) {
     const decoded = jwt_decode(token);
     return getUser(decoded.user.id, token);
   };
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   useEffect(() => {
     (async function () {
@@ -84,8 +100,16 @@ function Main({ route, navigation }) {
     setScenarioModalVisible(false);
   };
 
+  let text = "Waiting..";
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
   return (
     <View style={styles.mainContainer}>
+      <Text style={styles.paragraph}>{text}</Text>
       {isUserConnected ? (
         <IconButton
           style={styles.accountButton}
@@ -115,7 +139,7 @@ function Main({ route, navigation }) {
             Choisissez un Scénario
           </Dialog.Title>
           <Dialog.Content>
-            <Text style={{ textAlign: "center" }} variant="bodyMedium">
+            <Text style={{ textAlign: "center" }}>
               Chaque scénario correspond à un appel différent
             </Text>
           </Dialog.Content>
