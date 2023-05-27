@@ -8,7 +8,10 @@ import {
   IconButton,
   Portal,
   Dialog,
+  TextInput,
+  Button,
 } from "react-native-paper";
+import DialogContent from "react-native-paper/lib/typescript/components/Dialog/DialogContent";
 
 type ContactType = {
   name: string;
@@ -20,8 +23,10 @@ type ContactProps = {
 
 const Contact = ({ contacts = [] }: ContactProps) => {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   return (
-    <>
+    <View style={styles.contactContainer}>
       <List.Section>
         {contacts.map((contact) => {
           return (
@@ -41,6 +46,22 @@ const Contact = ({ contacts = [] }: ContactProps) => {
           onDismiss={() => setAddingContactVisible(false)}
         >
           <Dialog.Title>Ajouter un contacts</Dialog.Title>
+          <Dialog.Content>
+            <Text>Ajouter soit un email ou un numero de telephone</Text>
+            <TextInput
+              label="Email"
+              onChangeText={(e) => setEmail(e)}
+              //secureTextEntry
+              right={<TextInput.Icon icon="email" />}
+            />
+            <TextInput
+              label="Telephone"
+              onChangeText={(e) => setPhone(e)}
+              //secureTextEntry
+              right={<TextInput.Icon icon="phone" />}
+            />
+            <Button mode="contained">Valider</Button>
+          </Dialog.Content>
         </Dialog>
       </Portal>
 
@@ -52,7 +73,7 @@ const Contact = ({ contacts = [] }: ContactProps) => {
         size={20}
         onPress={() => setAddingContactVisible(true)}
       />
-    </>
+    </View>
   );
 };
 

@@ -2,10 +2,13 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   contactContainer: {
-    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
   addContactButtons: {
-    flex: 1,
+    margin: "auto",
   },
 });
 

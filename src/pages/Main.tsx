@@ -128,7 +128,7 @@ function Main({ route, navigation }) {
             Modifiez vos contact
           </Dialog.Title>
           <Dialog.Content>
-            <Contact />
+            <Contact contacts={[]} />
           </Dialog.Content>
         </Dialog>
       </Portal>
@@ -136,7 +136,7 @@ function Main({ route, navigation }) {
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
         <Text>Call 911</Text>
       </Pressable>
-      <Text style={styles.paragraph}>{text}</Text>
+      <Text>{text}</Text>
 
       {isUserConnected ? (
         <IconButton
