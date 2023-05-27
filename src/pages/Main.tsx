@@ -112,6 +112,7 @@ function Main({ route, navigation }) {
   return (
     <View style={styles.mainContainer}>
       <Button
+        style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
         mode="contained"
         icon={selectedScenario.icon}
@@ -125,7 +126,7 @@ function Main({ route, navigation }) {
           onDismiss={() => setContactModalVisible(false)}
         >
           <Dialog.Title style={{ textAlign: "center" }}>
-            Modifiez vos contact
+            Modifiez vos contacts
           </Dialog.Title>
           <Dialog.Content>
             <Contact contacts={[]} />
@@ -133,10 +134,12 @@ function Main({ route, navigation }) {
         </Dialog>
       </Portal>
 
+      {/*
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
         <Text>Call 911</Text>
       </Pressable>
       <Text>{text}</Text>
+  */}
 
       {isUserConnected ? (
         <IconButton

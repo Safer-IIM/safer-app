@@ -9,6 +9,10 @@ const styles = StyleSheet.create({
   },
   addContactButtons: {
     margin: "auto",
+    borderWidth: 3,
+  },
+  contactInput: {
+    marginBottom: 20,
   },
 });
 
