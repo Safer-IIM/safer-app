@@ -10,6 +10,7 @@ import {
   Dialog,
   TextInput,
   Button,
+  Tooltip,
 } from "react-native-paper";
 import DialogContent from "react-native-paper/lib/typescript/components/Dialog/DialogContent";
 import { postContact } from "../../api/contact";
@@ -60,7 +61,7 @@ const Contact = ({ contacts = [] }: ContactProps) => {
           visible={addingContactVisible}
           onDismiss={() => setAddingContactVisible(false)}
         >
-          <Dialog.Title>Ajouter un contacts</Dialog.Title>
+          <Dialog.Title>Ajouter un contact</Dialog.Title>
           <Dialog.Content>
             <Text>Ajouter soit un email ou un numero de telephone</Text>
             <TextInput

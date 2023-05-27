@@ -12,6 +12,7 @@ import {
   Portal,
   List,
   MD3Colors,
+  Tooltip,
 } from "react-native-paper";
 import { getUser } from "../../api/user";
 import AlertButton from "../components/AlertButton";
@@ -126,7 +127,10 @@ function Main({ route, navigation }) {
           onDismiss={() => setContactModalVisible(false)}
         >
           <Dialog.Title style={{ textAlign: "center" }}>
-            Modifiez vos contacts
+            Modifiez vos contacts{" "}
+            <Tooltip title="Selected Camera">
+              <IconButton icon="camera" selected size={24} onPress={() => {}} />
+            </Tooltip>
           </Dialog.Title>
           <Dialog.Content>
             <Contact contacts={[]} />
