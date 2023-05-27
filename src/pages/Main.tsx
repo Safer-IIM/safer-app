@@ -17,6 +17,7 @@ import { getUser } from "../../api/user";
 import AlertButton from "../components/AlertButton";
 import styles from "../../styles/home";
 import { getData, storeData } from "../../utils/store";
+import Contact from "./Contact";
 
 const scenarios = [
   {
@@ -44,6 +45,7 @@ const scenarios = [
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
+  const [contactModalVisible, setContactModalVisible] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const isFocused = useIsFocused();
   const [location, setLocation] = useState(null);
@@ -109,6 +111,28 @@ function Main({ route, navigation }) {
 
   return (
     <View style={styles.mainContainer}>
+      <Button
+        onPress={() => setContactModalVisible(true)}
+        mode="contained"
+        icon={selectedScenario.icon}
+      >
+        Contact
+      </Button>
+
+      <Portal>
+        <Dialog
+          visible={contactModalVisible}
+          onDismiss={() => setContactModalVisible(false)}
+        >
+          <Dialog.Title style={{ textAlign: "center" }}>
+            Modifiez vos contact
+          </Dialog.Title>
+          <Dialog.Content>
+            <Contact />
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
+
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
         <Text>Call 911</Text>
       </Pressable>
