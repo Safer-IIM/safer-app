@@ -53,13 +53,17 @@ function Main({ route, navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const getUserInfo = async () => {
-    if (route?.params) {
-      const decoded: any = jwt_decode(route.params.userToken);
-      return getUser(decoded.user.id, route.params.userToken);
+    let decoded: any;
+    try {
+      if (route?.params) {
+        decoded = jwt_decode(route.params.userToken);
+      }
+      const token = await getData("@userToken", "string");
+      decoded = jwt_decode(token);
+      return "success";
+    } catch (err) {
+      return "error";
     }
-    const token = await getData("@userToken", "string");
-    const decoded = jwt_decode(token);
-    return getUser(decoded.user.id, token);
   };
 
   useEffect(() => {

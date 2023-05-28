@@ -13,10 +13,10 @@ export const getContact = async (userId: string, token: string) => {
   return response.data;
 };
 
-export const postContact = async (emails: Array<String>) => {
-  console.log("emails", emails);
-  const response = await axios.post(`${url}/user/subscription/`, {
-    emails: emails,
+export const postContact = async (userId, emails: Array<String>) => {
+  console.log(userId);
+  const response = await axios.post(`${url}/user/subscription/${userId}`, {
+    contacts: emails,
   });
   return response.data;
 };

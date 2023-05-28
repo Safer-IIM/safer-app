@@ -2,6 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "../../styles/contact";
 import { Animated, Text, View, Linking, Pressable } from "react-native";
+import jwt_decode from "jwt-decode";
 import {
   List,
   MD3Colors,
@@ -14,6 +15,7 @@ import {
 } from "react-native-paper";
 import DialogContent from "react-native-paper/lib/typescript/components/Dialog/DialogContent";
 import { postContact } from "../../api/contact";
+import { getData } from "../../utils/store";
 
 type ContactType = {
   name: string;
@@ -29,8 +31,11 @@ const Contact = ({ contacts = [] }: ContactProps) => {
   const [phone, setPhone] = useState("");
 
   const addContact = async () => {
-    const resulatApiContaxt = await postContact([email]);
-    console.log(resulatApiContaxt);
+    const token = await getData("@userToken", "string");
+    const decoded = jwt_decode(token);
+
+    const resulatApiContact = await postContact(decoded.user.id, [email]);
+    console.log(resulatApiContact);
   };
   return (
     <View style={styles.contactContainer}>
