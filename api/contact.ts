@@ -13,10 +13,20 @@ export const getContact = async (userId: string, token: string) => {
   return response.data;
 };
 
-export const postContact = async (userId, emails: Array<String>) => {
-  console.log(userId);
-  const response = await axios.post(`${url}/user/subscription/${userId}`, {
-    contacts: emails,
-  });
+export const postContact = async (
+  token: string,
+  userId: string,
+  emails: Array<String>
+) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const response = await axios.post(
+    `${url}/user/subscription/${userId}`,
+    {
+      contacts: emails,
+    },
+    config
+  );
   return response.data;
 };

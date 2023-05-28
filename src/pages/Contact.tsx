@@ -34,7 +34,9 @@ const Contact = ({ contacts = [] }: ContactProps) => {
     const token = await getData("@userToken", "string");
     const decoded = jwt_decode(token);
 
-    const resulatApiContact = await postContact(decoded.user.id, [email]);
+    const resulatApiContact = await postContact(token, decoded.user.id, [
+      email,
+    ]);
     console.log(resulatApiContact);
   };
   return (
