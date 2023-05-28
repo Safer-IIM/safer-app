@@ -59,7 +59,7 @@ const Contact = ({ contacts = [] }: ContactProps) => {
         >
           <Dialog.Title>Ajouter un contact</Dialog.Title>
           <Dialog.Content>
-            <ContactForm />
+            <ContactForm onValidate={() => setAddingContactVisible(false)} />
           </Dialog.Content>
         </Dialog>
       </Portal>

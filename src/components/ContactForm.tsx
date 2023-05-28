@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import { getData } from "../../utils/store";
 import { postContact } from "../../api/contact";
 
-const ContactForm = () => {
+const ContactForm = ({ onValidate }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
@@ -14,10 +14,7 @@ const ContactForm = () => {
     const token = await getData("@userToken", "string");
     const decoded = jwt_decode(token);
 
-    const resulatApiContact = await postContact(token, decoded.user.id, [
-      email,
-    ]);
-    console.log(resulatApiContact);
+    await postContact(token, decoded.user.id, [email]);
   };
 
   return (
@@ -37,7 +34,13 @@ const ContactForm = () => {
         //secureTextEntry
         right={<TextInput.Icon icon="phone" />}
       />
-      <Button mode="contained" onPress={() => addContact()}>
+      <Button
+        mode="contained"
+        onPress={async () => {
+          await addContact();
+          onValidate();
+        }}
+      >
         Valider
       </Button>
     </>
