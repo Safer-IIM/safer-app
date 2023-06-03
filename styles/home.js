@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import globalStyle from "./variables";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
   },
   alertButton: {
     fontWeight: "bold",
-    backgroundColor: "red",
+    backgroundColor: globalStyle.colorDanger,
     height: 100,
     width: 100,
     borderRadius: 100,
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   scenarioButton: {
+    backgroundColor: globalStyle.colorPrimary,
     position: "absolute",
     bottom: 20,
     right: 20,
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   scenarioChoiceButton: {
+    backgroundColor: globalStyle.colorPrimary,
     borderWidth: 5,
     borderRadius: 30,
     margin: 7,
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
   },
   scenarioAddingButton: {},
   contactButton: {
+    backgroundColor: globalStyle.colorPrimary,
     position: "absolute",
     bottom: 20,
     left: 20,

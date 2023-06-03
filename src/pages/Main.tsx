@@ -162,18 +162,20 @@ function Main({ route, navigation }) {
   };
   return (
     <View style={styles.mainContainer}>
-      <Camera
+      {/*    <Camera
         type={type}
         ref={(ref) => {
           setCameraRef(ref);
         }}
       >
+   
         <View>
           <TouchableOpacity onPress={toggleCameraType}>
             <Text>Flip Camera</Text>
           </TouchableOpacity>
         </View>
       </Camera>
+      */}
 
       <TouchableOpacity
         style={{ alignSelf: "center" }}
@@ -210,7 +212,7 @@ function Main({ route, navigation }) {
         style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
         mode="contained"
-        icon={selectedScenario.icon}
+        icon="phone"
       >
         Contact
       </Button>
