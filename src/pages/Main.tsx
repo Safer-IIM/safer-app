@@ -1,9 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useRef, useState } from "react";
 import * as Location from "expo-location";
+import { Camera, CameraType } from "expo-camera";
+import { Audio } from "expo-av";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import jwt_decode from "jwt-decode";
-import { Animated, Text, View, Linking, Pressable } from "react-native";
+import {
+  Animated,
+  Text,
+  View,
+  Linking,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 import {
   Button,
@@ -52,7 +61,21 @@ function Main({ route, navigation }) {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  const getUserInfo = async () => {
+  const [recording, setRecording] = useState(false);
+  const [cameraRef, setCameraRef] = useState(null);
+
+  const [type, setType] = useState(CameraType.back);
+  const [cameraPermission, setCameraPermission] = useState(null);
+  const [audioPermission, setAudioPermission] = useState(null);
+  const [galleryPermission, setGalleryPermission] = useState(null);
+
+  function toggleCameraType() {
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  }
+
+  const getUserInfo = new Promise(async (resolve, reject) => {
     let decoded: any;
     try {
       if (route?.params) {
@@ -60,11 +83,11 @@ function Main({ route, navigation }) {
       }
       const token = await getData("@userToken", "string");
       decoded = jwt_decode(token);
-      return "success";
+      resolve("success");
     } catch (err) {
-      return "error";
+      reject(err);
     }
-  };
+  });
 
   useEffect(() => {
     (async () => {
@@ -76,15 +99,28 @@ function Main({ route, navigation }) {
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      await cameraPermisionFunction();
     })();
   }, []);
+
+  const cameraPermisionFunction = async () => {
+    // here is how you can get the camera permission
+    const cameraPermission = await Camera.requestCameraPermissionsAsync();
+    const audioPermission = await Audio.requestPermissionsAsync();
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: true,
+      playsInSilentModeIOS: true,
+    });
+    setAudioPermission(audioPermission.status === "granted");
+    setCameraPermission(cameraPermission.status === "granted");
+  };
 
   useEffect(() => {
     (async function () {
       const isConnected = await getData("@isConnected");
       const fromLoginPage = await getData("@fromLoginPage");
       if (isFocused && (!isConnected || fromLoginPage)) {
-        getUserInfo()
+        getUserInfo
           .then((res) => {
             storeData("@fromLoginPage", false);
             console.log("test");
@@ -114,8 +150,62 @@ function Main({ route, navigation }) {
     text = JSON.stringify(location);
   }
 
+  const handleRecord = async () => {
+    if (!recording) {
+      setRecording(true);
+      let video = await cameraRef.recordAsync();
+      console.log("video", video);
+    } else {
+      setRecording(false);
+      cameraRef.stopRecording();
+    }
+  };
   return (
     <View style={styles.mainContainer}>
+      <Camera
+        type={type}
+        ref={(ref) => {
+          setCameraRef(ref);
+        }}
+      >
+        <View>
+          <TouchableOpacity onPress={toggleCameraType}>
+            <Text>Flip Camera</Text>
+          </TouchableOpacity>
+        </View>
+      </Camera>
+
+      <TouchableOpacity
+        style={{ alignSelf: "center" }}
+        onPress={() => {
+          handleRecord();
+        }}
+      >
+        <View
+          style={{
+            borderWidth: 2,
+            borderRadius: 25,
+            borderColor: "red",
+            height: 50,
+            width: 50,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View
+            style={{
+              borderWidth: 2,
+              borderRadius: 25,
+              borderColor: "red",
+              height: 40,
+              width: 40,
+              backgroundColor: "red",
+            }}
+          ></View>
+        </View>
+      </TouchableOpacity>
+
       <Button
         style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
