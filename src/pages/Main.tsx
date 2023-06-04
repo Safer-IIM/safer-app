@@ -55,7 +55,7 @@ const scenarios = [
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
-  const [contactModalVisible, setContactModalVisible] = useState(false);
+
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const isFocused = useIsFocused();
   const [location, setLocation] = useState(null);
@@ -208,31 +208,7 @@ function Main({ route, navigation }) {
         </View>
       </TouchableOpacity>
 
-      <Button
-        style={styles.contactButton}
-        onPress={() => setContactModalVisible(true)}
-        mode="contained"
-        icon="phone"
-      >
-        Contact
-      </Button>
-
-      <Portal>
-        <Dialog
-          visible={contactModalVisible}
-          onDismiss={() => setContactModalVisible(false)}
-        >
-          <Dialog.Title style={{ textAlign: "center" }}>
-            Modifiez vos contacts{" "}
-            <Tooltip title="Selected Camera">
-              <IconButton icon="camera" selected size={24} onPress={() => {}} />
-            </Tooltip>
-          </Dialog.Title>
-          <Dialog.Content>
-            <Contact contacts={[]} />
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
+      <ContactModal />
 
       {/*
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
@@ -321,3 +297,60 @@ function Main({ route, navigation }) {
 }
 
 export default Main;
+
+const ContactModal = ({}) => {
+  const [contactModalVisible, setContactModalVisible] = useState(false);
+  const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
+  return (
+    <>
+      <Button
+        style={styles.contactButton}
+        onPress={() => setContactModalVisible(true)}
+        mode="contained"
+        icon="phone"
+      >
+        Contact
+      </Button>
+
+      <Portal>
+        <Dialog
+          visible={contactModalVisible}
+          onDismiss={() => setContactModalVisible(false)}
+        >
+          <Dialog.Title
+            style={{
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Modifiez vos contacts
+            <IconButton
+              icon="information"
+              selected
+              size={24}
+              onPress={() => setContactModalInfoVisible(true)}
+            />
+            <Portal>
+              <Dialog
+                visible={contactModalInfoVisible}
+                onDismiss={() => setContactModalInfoVisible(false)}
+              >
+                <Dialog.Title>Infos</Dialog.Title>
+                <Dialog.Content>
+                  <Text>
+                    Ces contacts seront réélement appelé ou notifié si vous
+                    qdzqzdq qdqzddq
+                  </Text>
+                </Dialog.Content>
+              </Dialog>
+            </Portal>
+          </Dialog.Title>
+          <Dialog.Content>
+            <Contact contacts={[]} />
+          </Dialog.Content>
+        </Dialog>
+      </Portal>
+    </>
+  );
+};
