@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   scenarioChoiceButton: {
-    backgroundColor: globalStyle.colorPrimary,
     borderWidth: 5,
     borderRadius: 30,
     margin: 7,

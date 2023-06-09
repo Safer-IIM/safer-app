@@ -54,9 +54,7 @@ const scenarios = [
 ];
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
-  const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
 
-  const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const isFocused = useIsFocused();
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -138,11 +136,6 @@ function Main({ route, navigation }) {
     })();
   }, [isFocused]);
 
-  const handleScenario = (scenario) => {
-    setSelectedScenario(scenario);
-    setScenarioModalVisible(false);
-  };
-
   let text = "Waiting..";
   if (errorMsg) {
     text = errorMsg;
@@ -175,7 +168,7 @@ function Main({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </Camera>
-      */}
+    
 
       <TouchableOpacity
         style={{ alignSelf: "center" }}
@@ -207,8 +200,9 @@ function Main({ route, navigation }) {
           ></View>
         </View>
       </TouchableOpacity>
-
+  */}
       <ContactModal />
+      <ScenarioModal />
 
       {/*
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
@@ -237,6 +231,32 @@ function Main({ route, navigation }) {
         />
       )}
       <AlertButton navigation={navigation} />
+    </View>
+  );
+}
+
+export default Main;
+
+const ScenarioModal = ({}) => {
+  const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
+  const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
+
+  const handleScenario = (scenario) => {
+    setSelectedScenario(scenario);
+    setScenarioModalVisible(false);
+  };
+
+  return (
+    <>
+      <Button
+        onPress={() => setScenarioModalVisible(true)}
+        style={styles.scenarioButton}
+        mode="contained"
+        icon={selectedScenario.icon}
+      >
+        {selectedScenario.name}
+      </Button>
+
       <Portal>
         <Dialog
           visible={scenarioModalVisible}
@@ -278,26 +298,12 @@ function Main({ route, navigation }) {
                 />
               ))}
             </View>
-            <Button style={styles.scenarioAddingButton} mode="contained">
-              Ajouter un scénario
-            </Button>
           </View>
         </Dialog>
       </Portal>
-      <Button
-        onPress={() => setScenarioModalVisible(true)}
-        style={styles.scenarioButton}
-        mode="contained"
-        icon={selectedScenario.icon}
-      >
-        {selectedScenario.name}
-      </Button>
-    </View>
+    </>
   );
-}
-
-export default Main;
-
+};
 const ContactModal = ({}) => {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
