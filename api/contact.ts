@@ -21,12 +21,11 @@ export const postContact = async (
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-  const response = await axios.post(
+  return await axios.post(
     `${url}/user/subscription/${userId}`,
     {
       contacts: emails,
     },
     config
   );
-  return response.data;
 };

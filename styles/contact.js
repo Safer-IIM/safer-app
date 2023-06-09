@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
+  listContainer: {
+    width: "100%",
+  },
   addContactButtons: {
     margin: "auto",
     borderWidth: 3,

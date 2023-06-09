@@ -3,7 +3,7 @@ import { TextInput, Button } from "react-native-paper";
 import styles from "../../styles/contact";
 import { useState } from "react";
 import jwt_decode from "jwt-decode";
-import { getData } from "../../utils/store";
+import { getData, storeData } from "../../utils/store";
 import { postContact } from "../../api/contact";
 
 const ContactForm = ({ onValidate }) => {
@@ -14,7 +14,14 @@ const ContactForm = ({ onValidate }) => {
     const token = await getData("@userToken", "string");
     const decoded = jwt_decode(token);
 
-    await postContact(token, decoded.user.id, [email]);
+    postContact(token, decoded.user.id, [email])
+      .then((res) => {
+        console.log(res.data);
+        storeData("contactList", res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

@@ -301,6 +301,19 @@ export default Main;
 const ContactModal = ({}) => {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
+  const [contactList, setContactList] = useState([]);
+
+  useEffect(() => {
+    getData("contactList")
+      .then((res) => {
+        console.log("res", res);
+        res && setContactList(res.contacts);
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
+
   return (
     <>
       <Button
@@ -311,7 +324,6 @@ const ContactModal = ({}) => {
       >
         Contact
       </Button>
-
       <Portal>
         <Dialog
           visible={contactModalVisible}
@@ -340,14 +352,14 @@ const ContactModal = ({}) => {
                 <Dialog.Content>
                   <Text>
                     Ces contacts seront réélement appelé ou notifié si vous
-                    qdzqzdq qdqzddq
+                    cliquez sur le bouton d'urgence durant un faux appel
                   </Text>
                 </Dialog.Content>
               </Dialog>
             </Portal>
           </Dialog.Title>
           <Dialog.Content>
-            <Contact contacts={[]} />
+            <Contact contactList={contactList} />
           </Dialog.Content>
         </Dialog>
       </Portal>

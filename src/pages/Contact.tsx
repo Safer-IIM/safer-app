@@ -23,19 +23,19 @@ type ContactType = {
   email: string;
 };
 type ContactProps = {
-  contacts: Array<ContactType>;
+  contactList: Array<ContactType>;
 };
 
-const Contact = ({ contacts = [] }: ContactProps) => {
+const Contact = ({ contactList = [] }: ContactProps) => {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
   return (
     <View style={styles.contactContainer}>
-      <List.Section>
-        {contacts.map((contact) => {
+      <List.Section style={styles.listContainer}>
+        {contactList.map((contact) => {
           return (
             <>
               <List.Item
-                title={contact.name}
+                title={contact}
                 left={() => <List.Icon icon="email" />}
               />
             </>
