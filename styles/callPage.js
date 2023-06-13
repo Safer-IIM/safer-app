@@ -23,6 +23,11 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
   },
+  emergencyButton: {
+    position: "absolute",
+    bottom: "2%",
+    right: "3%",
+  },
 });
 
 export default styles;

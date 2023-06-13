@@ -39,3 +39,14 @@ export const getUser = async (userId: string, token: string) => {
   const response = await axios.get(`${url}/user/${userId}`, config);
   return response.data;
 };
+
+export const postAlert = async (
+  userData: UserInterface,
+  token: string
+): Promise<string> => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  const response = await axios.post(`${url}/user/alert`, userData, config);
+  return response.data;
+};

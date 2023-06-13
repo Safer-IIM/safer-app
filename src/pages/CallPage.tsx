@@ -118,6 +118,14 @@ function CallPage({ navigation }) {
           />
         </Animated.View>
       </ImageBackground>
+      <Button
+        icon="phone"
+        mode="contained"
+        onPress={() => console.log("Pressed")}
+        style={styles.emergencyButton}
+      >
+        Cliquez pour passer un appel d'urgence
+      </Button>
     </View>
   );
 }
