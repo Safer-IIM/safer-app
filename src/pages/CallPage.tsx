@@ -7,6 +7,8 @@ import { Button, IconButton } from "react-native-paper";
 import { Audio } from "expo-av";
 import styles from "../../styles/callPage";
 import image from "../assets/call.jpg";
+import { getData } from "../../utils/store";
+import { postAlert } from "../../api/user";
 
 function CallPage({ navigation }) {
   const [loadedSound, setLoadedSound] = useState<any>();
@@ -121,7 +123,14 @@ function CallPage({ navigation }) {
       <Button
         icon="phone"
         mode="contained"
-        onPress={() => console.log("Pressed")}
+        onPress={async () =>
+          postAlert(
+            await getData("@userInfo"),
+            await getData("@userToken", "string")
+          )
+            .then((res) => console.log("res :", res.data))
+            .catch((res) => console.log(" err :", res.data))
+        }
         style={styles.emergencyButton}
       >
         Cliquez pour passer un appel d'urgence

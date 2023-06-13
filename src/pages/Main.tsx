@@ -73,19 +73,12 @@ function Main({ route, navigation }) {
     );
   }
 
-  const getUserInfo = new Promise(async (resolve, reject) => {
+  const getUserInfo = async () => {
     let decoded: any;
-    try {
-      if (route?.params) {
-        decoded = jwt_decode(route.params.userToken);
-      }
-      const token = await getData("@userToken", "string");
-      decoded = jwt_decode(token);
-      resolve("success");
-    } catch (err) {
-      reject(err);
-    }
-  });
+    const token = await getData("@userToken", "string");
+    decoded = jwt_decode(token);
+    return getUser(decoded.user.id, token);
+  };
 
   useEffect(() => {
     (async () => {
@@ -118,17 +111,15 @@ function Main({ route, navigation }) {
       const isConnected = await getData("@isConnected");
       const fromLoginPage = await getData("@fromLoginPage");
       if (isFocused && (!isConnected || fromLoginPage)) {
-        getUserInfo
+        getUserInfo()
           .then((res) => {
             storeData("@fromLoginPage", false);
-            console.log("test");
-            setIsUserConnected(true);
-            storeData("@userInfo", res);
+            storeData("@userInfo", res.data);
             storeData("@isConnected", true);
+            setIsUserConnected(true);
           })
           .catch((err) => {
             storeData("@fromLoginPage", false);
-            console.log("test 2");
             setIsUserConnected(false);
             storeData("@isConnected", false);
           });
@@ -312,11 +303,11 @@ const ContactModal = ({}) => {
   useEffect(() => {
     getData("contactList")
       .then((res) => {
-        console.log("res", res);
+        console.log("res contact", res);
         res && setContactList(res.contacts);
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err contact", err);
       });
   }, []);
 
