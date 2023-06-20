@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useRef } from 'react';
-import { Animated, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import styles from '../../styles/home';
+import React, { useEffect, useRef } from "react";
+import { Animated, View, Text } from "react-native";
+import { Button } from "react-native-paper";
+import styles from "../../styles/home";
 
 function AlertButton({ navigation }) {
   const breathWidthAnim = useRef(new Animated.Value(1)).current;
@@ -11,12 +11,12 @@ function AlertButton({ navigation }) {
   function breathAnimation() {
     const biggerSize = Animated.parallel([
       Animated.timing(breathWidthAnim, {
-        toValue: 1.2,
+        toValue: 1.1,
         duration: 2000,
         useNativeDriver: true,
       }),
       Animated.timing(breathHeightAnim, {
-        toValue: 1.2,
+        toValue: 1.1,
         duration: 2000,
         useNativeDriver: true,
       }),
@@ -43,20 +43,25 @@ function AlertButton({ navigation }) {
     <View>
       <Animated.View>
         <Button
-          style={[styles.alertButton,
+          labelStyle={styles.alertButtonTitle}
+          style={[
+            styles.alertButton,
             {
-              transform: [{ scaleX: breathWidthAnim }, { scaleY: breathHeightAnim }],
+              transform: [
+                { scaleX: breathWidthAnim },
+                { scaleY: breathHeightAnim },
+              ],
               // Bind opacity to animated value
             },
           ]}
           mode="contained"
           onPress={() => {
-            navigation.navigate('Call');
+            navigation.navigate("Call");
           }}
           textColor="white"
           uppercase
         >
-          Alerte
+          SAFERIZE
         </Button>
       </Animated.View>
     </View>

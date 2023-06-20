@@ -28,6 +28,7 @@ import AlertButton from "../components/AlertButton";
 import styles from "../../styles/home";
 import { getData, storeData } from "../../utils/store";
 import Contact from "./Contact";
+import MyComponent from "../components/Footer";
 
 const scenarios = [
   {
@@ -192,8 +193,6 @@ function Main({ route, navigation }) {
         </View>
       </TouchableOpacity>
   */}
-      <ContactModal />
-      <ScenarioModal />
 
       {/*
       <Pressable onPress={() => Linking.openURL(`tel:911`)}>
@@ -221,7 +220,20 @@ function Main({ route, navigation }) {
           }}
         />
       )}
+      <View style={styles.saferTitleContainer}>
+        <Text style={styles.saferTitle}>KEEP CALM </Text>
+
+        <Text style={styles.saferTitleTerciary}>
+          ...And make a fake call to deter malicious people
+        </Text>
+      </View>
+
       <AlertButton navigation={navigation} />
+
+      <View style={styles.footerContainer}>
+        <ContactModal />
+        <ScenarioModal />
+      </View>
     </View>
   );
 }
@@ -295,6 +307,7 @@ const ScenarioModal = ({}) => {
     </>
   );
 };
+
 const ContactModal = ({}) => {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
@@ -313,14 +326,12 @@ const ContactModal = ({}) => {
 
   return (
     <>
-      <Button
+      <Pressable
         style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
-        mode="contained"
-        icon="phone"
       >
-        Contact
-      </Button>
+        <Text style={styles.contactButtonText}>Contact</Text>
+      </Pressable>
       <Portal>
         <Dialog
           visible={contactModalVisible}
