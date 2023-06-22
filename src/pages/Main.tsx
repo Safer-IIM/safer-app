@@ -1,19 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useRef, useState } from "react";
-import * as Location from "expo-location";
-import { Camera, CameraType } from "expo-camera";
-import { Audio } from "expo-av";
-// eslint-disable-next-line import/no-extraneous-dependencies
-import jwt_decode from "jwt-decode";
+import React, { useContext, useEffect, useState } from 'react';
+import * as Location from 'expo-location';
+import { Camera, CameraType } from 'expo-camera';
+import { Audio } from 'expo-av';
+import * as FileSystem from 'expo-file-system';
+import jwt_decode from 'jwt-decode';
+import { S3 } from 'aws-sdk';
+import { Buffer } from 'buffer';
 import {
-  Animated,
   Text,
   View,
-  Linking,
   Pressable,
-  TouchableOpacity,
-} from "react-native";
-import { useIsFocused } from "@react-navigation/native";
+} from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import {
   Button,
   IconButton,
@@ -21,226 +20,25 @@ import {
   Portal,
   List,
   MD3Colors,
-  Tooltip,
-} from "react-native-paper";
-import { getUser } from "../../api/user";
-import AlertButton from "../components/AlertButton";
-import styles from "../../styles/home";
-import { getData, storeData } from "../../utils/store";
-import Contact from "./Contact";
-import MyComponent from "../components/Footer";
+} from 'react-native-paper';
+import {
+  ACCESS_KEY_ID,
+  SECRET_ACCESS_KEY,
+  REGION,
+  BUCKET_NAME,
+} from '@env';
+import { getUser } from '../../api/user';
+import AlertButton from '../components/AlertButton';
+import styles from '../../styles/home';
+import { getData, storeData } from '../../utils/store';
+import Contact from './Contact';
+import MyComponent from '../components/Footer';
+import { generateNameVideo, getVideoContentType } from '../../utils/utils';
+import { ACTIONS } from '../reducer/reducer';
+import { Context } from '../context';
+import { scenarios } from '../../utils/scenarios';
 
-const scenarios = [
-  {
-    id: 1,
-    icon: "party-popper",
-    name: "Soirée",
-    description:
-      "Eidan vous appelle depuis une soirée parce que vous etes en retard  ",
-  },
-  {
-    id: 2,
-    icon: "home",
-    name: "Maison",
-    description:
-      "Votre frere Eidan vous appelle, parce que votre mere s'inquiete de pas vous voir",
-  },
-  {
-    id: 3,
-    icon: "cake",
-    name: "Anniversaire",
-    description:
-      "Eidan vous appelle depuis l'anniversaire de Sarah, parce que vous n'etes pas encore arrivé",
-  },
-];
-function Main({ route, navigation }) {
-  const [isUserConnected, setIsUserConnected] = useState(false);
-
-  const isFocused = useIsFocused();
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  const [recording, setRecording] = useState(false);
-  const [cameraRef, setCameraRef] = useState(null);
-
-  const [type, setType] = useState(CameraType.back);
-  const [cameraPermission, setCameraPermission] = useState(null);
-  const [audioPermission, setAudioPermission] = useState(null);
-  const [galleryPermission, setGalleryPermission] = useState(null);
-
-  function toggleCameraType() {
-    setType((current) =>
-      current === CameraType.back ? CameraType.front : CameraType.back
-    );
-  }
-
-  const getUserInfo = async () => {
-    let decoded: any;
-    const token = await getData("@userToken", "string");
-    decoded = jwt_decode(token);
-    return getUser(decoded.user.id, token);
-  };
-
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      await cameraPermisionFunction();
-    })();
-  }, []);
-
-  const cameraPermisionFunction = async () => {
-    // here is how you can get the camera permission
-    const cameraPermission = await Camera.requestCameraPermissionsAsync();
-    const audioPermission = await Audio.requestPermissionsAsync();
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      playsInSilentModeIOS: true,
-    });
-    setAudioPermission(audioPermission.status === "granted");
-    setCameraPermission(cameraPermission.status === "granted");
-  };
-
-  useEffect(() => {
-    (async function () {
-      const isConnected = await getData("@isConnected");
-      const fromLoginPage = await getData("@fromLoginPage");
-      if (isFocused && (!isConnected || fromLoginPage)) {
-        getUserInfo()
-          .then((res) => {
-            storeData("@fromLoginPage", false);
-            storeData("@userInfo", res.data);
-            storeData("@isConnected", true);
-            setIsUserConnected(true);
-          })
-          .catch((err) => {
-            storeData("@fromLoginPage", false);
-            setIsUserConnected(false);
-            storeData("@isConnected", false);
-          });
-      }
-    })();
-  }, [isFocused]);
-
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
-
-  const handleRecord = async () => {
-    if (!recording) {
-      setRecording(true);
-      let video = await cameraRef.recordAsync();
-      console.log("video", video);
-    } else {
-      setRecording(false);
-      cameraRef.stopRecording();
-    }
-  };
-  return (
-    <View style={styles.mainContainer}>
-      {/*    <Camera
-        type={type}
-        ref={(ref) => {
-          setCameraRef(ref);
-        }}
-      >
-   
-        <View>
-          <TouchableOpacity onPress={toggleCameraType}>
-            <Text>Flip Camera</Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    
-
-      <TouchableOpacity
-        style={{ alignSelf: "center" }}
-        onPress={() => {
-          handleRecord();
-        }}
-      >
-        <View
-          style={{
-            borderWidth: 2,
-            borderRadius: 25,
-            borderColor: "red",
-            height: 50,
-            width: 50,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <View
-            style={{
-              borderWidth: 2,
-              borderRadius: 25,
-              borderColor: "red",
-              height: 40,
-              width: 40,
-              backgroundColor: "red",
-            }}
-          ></View>
-        </View>
-      </TouchableOpacity>
-  */}
-
-      {/*
-      <Pressable onPress={() => Linking.openURL(`tel:911`)}>
-        <Text>Call 911</Text>
-      </Pressable>
-      <Text>{text}</Text>
-  */}
-
-      {isUserConnected ? (
-        <IconButton
-          style={styles.accountButton}
-          icon="account"
-          size={20}
-          onPress={() => {
-            navigation.navigate("Account");
-          }}
-        />
-      ) : (
-        <IconButton
-          style={styles.accountButton}
-          icon="account-question"
-          size={20}
-          onPress={() => {
-            navigation.navigate("Inscription");
-          }}
-        />
-      )}
-      <View style={styles.saferTitleContainer}>
-        <Text style={styles.saferTitle}>KEEP CALM </Text>
-
-        <Text style={styles.saferTitleTerciary}>
-          ...And make a fake call to deter malicious people
-        </Text>
-      </View>
-
-      <AlertButton navigation={navigation} />
-
-      <View style={styles.footerContainer}>
-        <ContactModal />
-        <ScenarioModal />
-      </View>
-    </View>
-  );
-}
-
-export default Main;
-
-const ScenarioModal = ({}) => {
+function ScenarioModal({}) {
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
 
@@ -265,11 +63,11 @@ const ScenarioModal = ({}) => {
           visible={scenarioModalVisible}
           onDismiss={() => setScenarioModalVisible(false)}
         >
-          <Dialog.Title style={{ textAlign: "center" }}>
+          <Dialog.Title style={{ textAlign: 'center' }}>
             Choisissez un Scénario
           </Dialog.Title>
           <Dialog.Content>
-            <Text style={{ textAlign: "center" }}>
+            <Text style={{ textAlign: 'center' }}>
               Chaque scénario correspond à un appel différent
             </Text>
           </Dialog.Content>
@@ -279,7 +77,7 @@ const ScenarioModal = ({}) => {
                 <List.Item
                   key={index}
                   titleStyle={{
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     fontSize: 18,
                     color: MD3Colors.primary40,
                   }}
@@ -294,7 +92,7 @@ const ScenarioModal = ({}) => {
                     <List.Icon
                       {...props}
                       icon={scenario.icon}
-                      style={{ alignSelf: "center" }}
+                      style={{ alignSelf: 'center' }}
                       color={MD3Colors.primary40}
                     />
                   )}
@@ -306,21 +104,21 @@ const ScenarioModal = ({}) => {
       </Portal>
     </>
   );
-};
+}
 
-const ContactModal = ({}) => {
+function ContactModal({}) {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
   const [contactList, setContactList] = useState([]);
 
   useEffect(() => {
-    getData("contactList")
+    getData('contactList')
       .then((res) => {
-        console.log("res contact", res);
+        console.log('res contact', res);
         res && setContactList(res.contacts);
       })
       .catch((err) => {
-        console.log("err contact", err);
+        console.log('err contact', err);
       });
   }, []);
 
@@ -339,9 +137,9 @@ const ContactModal = ({}) => {
         >
           <Dialog.Title
             style={{
-              textAlign: "center",
-              display: "flex",
-              alignItems: "center",
+              textAlign: 'center',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             Modifiez vos contacts
@@ -373,4 +171,186 @@ const ContactModal = ({}) => {
       </Portal>
     </>
   );
-};
+}
+
+function Main({ route, navigation }) {
+  const [isUserConnected, setIsUserConnected] = useState(false);
+
+  const isFocused = useIsFocused();
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const [type, setType] = useState(CameraType.back);
+  const [cameraPermission, setCameraPermission] = useState(null);
+  const [audioPermission, setAudioPermission] = useState(null);
+  // const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [cameraRef, setCameraRef] = useState<any>(null);
+  const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
+
+  const isRecordingContext = useContext(Context);
+  const { isRecordingState, isRecordingDispatch } = isRecordingContext;
+
+  const s3 = new S3({
+    accessKeyId: ACCESS_KEY_ID,
+    secretAccessKey: SECRET_ACCESS_KEY,
+    region: REGION,
+  });
+
+  const cameraPermisionFunction = async () => {
+    // here is how you can get the camera permission
+    const cameraRequestPermission = await Camera.requestCameraPermissionsAsync();
+    const audioRequestPermission = await Audio.requestPermissionsAsync();
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: true,
+      playsInSilentModeIOS: true,
+    });
+    setAudioPermission(audioRequestPermission.status === 'granted');
+    setCameraPermission(cameraRequestPermission.status === 'granted');
+  };
+
+  const getUserInfo = async () => {
+    const token = await getData('@userToken', 'string');
+    const decoded: any = jwt_decode(token);
+    return getUser(decoded.user.id, token);
+  };
+
+  async function takeVideo() {
+    if (cameraPermission) {
+      if (isRecordingState) {
+        console.log('already recording');
+      } else {
+        console.log('[recording]');
+        isRecordingDispatch({ type: ACTIONS.RECORDING });
+        if (cameraRef && isCameraReady) {
+          const recordData = await cameraRef.recordAsync({
+            maxDuration: 5,
+          });
+          const { exists, uri } = await FileSystem.getInfoAsync(recordData.uri);
+
+          if (exists) {
+            const videoContent = await FileSystem
+              .readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+            console.log('[buffering ...]');
+            const buffer = Buffer.from(videoContent, FileSystem.EncodingType.Base64);
+            const uploadParams = {
+              Bucket: BUCKET_NAME,
+              Key: `${generateNameVideo()}.${uri.split('.')[1]}`,
+              Body: buffer,
+              ContentType: await getVideoContentType(uri),
+            };
+            console.log('[uploading to aws...]');
+            s3.upload(uploadParams, (err: any, responseAws: any) => {
+              isRecordingDispatch({ type: ACTIONS.STOP_RECORDING });
+              if (err) {
+                console.log('Error while uploading the video :', err);
+              } else {
+                console.log('Video successfully uploaded :', responseAws);
+              }
+            });
+          } else {
+            console.error('Error file does not exists');
+          }
+        } else {
+          console.log('pas de camera');
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (cameraRef && cameraRef.current) {
+      if (!isRecordingState) {
+        console.log('[cameraRef stopping recording]');
+        cameraRef.stopRecording();
+      }
+    }
+  }, [isRecordingState]);
+
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      await cameraPermisionFunction();
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      const isConnected = await getData('@isConnected');
+      const fromLoginPage = await getData('@fromLoginPage');
+      if (isFocused && (!isConnected || fromLoginPage)) {
+        getUserInfo()
+          .then((res) => {
+            storeData('@fromLoginPage', false);
+            storeData('@userInfo', res.data);
+            storeData('@isConnected', true);
+            setIsUserConnected(true);
+          })
+          .catch((err) => {
+            storeData('@fromLoginPage', false);
+            setIsUserConnected(false);
+            storeData('@isConnected', false);
+          });
+      }
+    }());
+  }, [isFocused]);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
+
+  return (
+    <View style={styles.mainContainer}>
+      {isUserConnected ? (
+        <IconButton
+          style={styles.accountButton}
+          icon="account"
+          size={20}
+          onPress={() => {
+            navigation.navigate('Account');
+          }}
+        />
+      ) : (
+        <IconButton
+          style={styles.accountButton}
+          icon="account-question"
+          size={20}
+          onPress={() => {
+            navigation.navigate('Inscription');
+          }}
+        />
+      )}
+      <View style={styles.saferTitleContainer}>
+        <Text style={styles.saferTitle}>KEEP CALM </Text>
+
+        <Text style={styles.saferTitleTerciary}>
+          ...And make a fake call to deter malicious people
+        </Text>
+      </View>
+
+      <Camera
+        ref={(ref) => setCameraRef(ref)}
+        type={type}
+        ratio="16:9"
+        onCameraReady={() => setIsCameraReady(true)}
+      />
+      <AlertButton navigation={navigation} takeVideo={takeVideo} />
+
+      <View style={styles.footerContainer}>
+        <ContactModal />
+        <ScenarioModal />
+      </View>
+    </View>
+  );
+}
+
+export default Main;

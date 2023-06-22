@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import { ImageBackground, Platform, Text, View, Animated } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import { ImageBackground, Platform, View, Animated } from "react-native";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { Button, IconButton } from "react-native-paper";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Audio } from "expo-av";
@@ -9,11 +9,15 @@ import styles from "../../styles/callPage";
 import image from "../assets/call.jpg";
 import { getData } from "../../utils/store";
 import { postAlert } from "../../api/user";
+import { Context } from "../context";
+import { ACTIONS } from "../reducer/reducer";
 
 function CallPage({ navigation }) {
   const [loadedSound, setLoadedSound] = useState<any>();
   const [isplaying, setIsplaying] = useState<boolean>();
   const fadeAnim = useRef(new Animated.Value(0.5)).current; // Initial value for opacity: 0
+  const isRecordingContext = useContext(Context)
+  const { isRecordingDispatch } = isRecordingContext;
   const deviceOS = Platform.OS;
   //  const image = { uri: "../assets/call.jpg" };
 
@@ -116,6 +120,7 @@ function CallPage({ navigation }) {
             style={styles.hangUpButton}
             onPress={() => {
               navigation.navigate("Main");
+              isRecordingDispatch({ type: ACTIONS.STOP_RECORDING });
             }}
           />
         </Animated.View>
