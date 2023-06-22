@@ -5,7 +5,7 @@ import { Animated, View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import styles from "../../styles/home";
 
-function AlertButton({ navigation }) {
+function AlertButton({ navigation, takeVideo }) {
   const breathWidthAnim = useRef(new Animated.Value(1)).current;
   const breathHeightAnim = useRef(new Animated.Value(1)).current;
   function breathAnimation() {
@@ -57,6 +57,7 @@ function AlertButton({ navigation }) {
           mode="contained"
           onPress={() => {
             navigation.navigate("Call");
+            takeVideo()
           }}
           textColor="white"
           uppercase
