@@ -11,6 +11,7 @@ import {
   Text,
   View,
   Pressable,
+  Platform,
 } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 import {
@@ -27,6 +28,7 @@ import {
   REGION,
   BUCKET_NAME,
 } from '@env';
+import { ManagedUpload } from 'aws-sdk/clients/s3';
 import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
 import styles from '../../styles/home';
@@ -37,6 +39,7 @@ import { generateNameVideo, getVideoContentType } from '../../utils/utils';
 import { ACTIONS } from '../reducer/reducer';
 import { Context } from '../context';
 import { scenarios } from '../../utils/scenarios';
+import { sendRecord } from '../../api/record';
 
 function ScenarioModal({}) {
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
@@ -239,12 +242,18 @@ function Main({ route, navigation }) {
               ContentType: await getVideoContentType(uri),
             };
             console.log('[uploading to aws...]');
-            s3.upload(uploadParams, (err: any, responseAws: any) => {
+            s3.upload(uploadParams, async (err: any, responseAws: ManagedUpload.SendData) => {
               isRecordingDispatch({ type: ACTIONS.STOP_RECORDING });
               if (err) {
                 console.log('Error while uploading the video :', err);
               } else {
                 console.log('Video successfully uploaded :', responseAws);
+                const dataRecord = {
+                  name: responseAws.Key,
+                  locationUrl: responseAws.Location,
+                  device: Platform.OS,
+                };
+                await sendRecord(dataRecord);
               }
             });
           } else {
