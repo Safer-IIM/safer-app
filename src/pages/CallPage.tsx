@@ -1,22 +1,26 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import { ImageBackground, Platform, View, Animated } from "react-native";
-import React, { useEffect, useRef, useState, useContext } from "react";
-import { Button, IconButton } from "react-native-paper";
+import {
+  ImageBackground, Platform, View, Animated,
+} from 'react-native';
+import React, {
+  useEffect, useRef, useState, useContext,
+} from 'react';
+import { Button, IconButton } from 'react-native-paper';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Audio } from "expo-av";
-import styles from "../../styles/callPage";
-import image from "../assets/call.jpg";
-import { getData } from "../../utils/store";
-import { postAlert } from "../../api/user";
-import { Context } from "../context";
-import { ACTIONS } from "../reducer/reducer";
+import { Audio } from 'expo-av';
+import styles from '../../styles/callPage';
+import image from '../assets/call.jpg';
+import { getData } from '../../utils/store';
+import { postAlert } from '../../api/user';
+import { Context } from '../context';
+import { ACTIONS } from '../reducer/reducer';
 
 function CallPage({ navigation }) {
   const [loadedSound, setLoadedSound] = useState<any>();
   const [isplaying, setIsplaying] = useState<boolean>();
   const fadeAnim = useRef(new Animated.Value(0.5)).current; // Initial value for opacity: 0
-  const isRecordingContext = useContext(Context)
+  const isRecordingContext = useContext(Context);
   const { isRecordingDispatch } = isRecordingContext;
   const deviceOS = Platform.OS;
   //  const image = { uri: "../assets/call.jpg" };
@@ -26,9 +30,9 @@ function CallPage({ navigation }) {
       await loadedSound.pauseAsync();
       setIsplaying(false);
     } else {
-      console.log("Loading Sound");
+      console.log('Loading Sound');
       const { sound } = await Audio.Sound.createAsync(
-        require("../assets/tiktok.mp3")
+        require('../assets/tiktok.mp3'),
       );
       setLoadedSound(sound);
       setIsplaying(true);
@@ -36,22 +40,20 @@ function CallPage({ navigation }) {
     }
   }
   useEffect(
-    () =>
-      loadedSound
-        ? () => {
-            console.log("Unloading Sound");
-            loadedSound.unloadAsync();
-          }
-        : undefined,
-    [loadedSound]
+    () => (loadedSound
+      ? () => {
+        console.log('Unloading Sound');
+        loadedSound.unloadAsync();
+      }
+      : undefined),
+    [loadedSound],
   );
 
   useEffect(
-    () =>
-      deviceOS === "ios"
-        ? console.log("Device is IOS")
-        : console.log("Device is Android"),
-    []
+    () => (deviceOS === 'ios'
+      ? console.log('Device is IOS')
+      : console.log('Device is Android')),
+    [],
   );
 
   useEffect(() => {
@@ -81,8 +83,8 @@ function CallPage({ navigation }) {
       <ImageBackground source={image} resizeMode="cover" style={styles.imageBg}>
         <Animated.View // Special animatable View
           style={{
-            position: "absolute",
-            bottom: "40%",
+            position: 'absolute',
+            bottom: '40%',
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
@@ -108,8 +110,8 @@ function CallPage({ navigation }) {
         </Animated.View>
         <Animated.View // Special animatable View
           style={{
-            position: "absolute",
-            bottom: "11.8%",
+            position: 'absolute',
+            bottom: '11.8%',
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
@@ -119,7 +121,7 @@ function CallPage({ navigation }) {
             mode="contained"
             style={styles.hangUpButton}
             onPress={() => {
-              navigation.navigate("Main");
+              navigation.navigate('Main');
               isRecordingDispatch({ type: ACTIONS.STOP_RECORDING });
             }}
           />
@@ -128,14 +130,12 @@ function CallPage({ navigation }) {
       <Button
         icon="phone"
         mode="contained"
-        onPress={async () =>
-          postAlert(
-            await getData("@userInfo"),
-            await getData("@userToken", "string")
-          )
-            .then((res) => console.log("res :", res.data))
-            .catch((res) => console.log(" err :", res.data))
-        }
+        onPress={async () => postAlert(
+          await getData('@userInfo'),
+          await getData('@userToken', 'string'),
+        )
+          .then((res) => console.log('res :', res.data))
+          .catch((res) => console.log(' err :', res.data))}
         style={styles.emergencyButton}
       >
         Cliquez pour passer un appel d'urgence

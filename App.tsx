@@ -11,15 +11,20 @@ import Help from './src/pages/Help';
 import Account from './src/pages/Account';
 import CallPage from './src/pages/CallPage';
 import { initialState, reducer } from './src/reducer/reducer';
+import { initialScenarioState, scenarioReducer } from './src/reducer/scenario';
 
 function App() {
   const [isRecording, isRecordingDispatch] = useReducer(reducer, initialState);
+  const [scenarioState, scenarioDispatch] = useReducer(scenarioReducer, initialScenarioState);
   const Stack = createNativeStackNavigator();
+
   return (
     // <View style={styles.container}>
     <Context.Provider value={{
       isRecordingState: isRecording.isRecording,
       isRecordingDispatch,
+      scenarioState,
+      scenarioDispatch,
     }}
     >
       <PaperProvider>

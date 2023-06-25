@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Dialog, List, MD3Colors, Portal,
 } from 'react-native-paper';
 import { Pressable, Text, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { scenarios } from '../../../utils/scenarios';
 import styles from '../../../styles/home';
+import { Context } from '../../context';
 
 function ScenarioModal({}) {
+  const context = useContext(Context);
   const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
   const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
 
   const handleScenario = (scenario) => {
     setSelectedScenario(scenario);
+    context.scenarioDispatch(scenario);
     setScenarioModalVisible(false);
   };
 
@@ -24,7 +27,7 @@ function ScenarioModal({}) {
         style={styles.scenarioButton}
       >
 
-        <AntDesign name="contacts" size={32} color="black" />
+        <MaterialCommunityIcons name={context.scenarioState.icon} size={32} color="black" />
         <Text>
           {selectedScenario.name}
         </Text>
