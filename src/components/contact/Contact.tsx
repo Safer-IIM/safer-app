@@ -1,22 +1,13 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import styles from "../../styles/contact";
-import { Animated, Text, View, Linking, Pressable } from "react-native";
-import jwt_decode from "jwt-decode";
+import React, { useState } from 'react';
+import { View } from 'react-native';
 import {
   List,
-  MD3Colors,
   IconButton,
   Portal,
   Dialog,
-  TextInput,
-  Button,
-  Tooltip,
-} from "react-native-paper";
-import DialogContent from "react-native-paper/lib/typescript/components/Dialog/DialogContent";
-import { postContact } from "../../api/contact";
-import { getData } from "../../utils/store";
-import ContactForm from "../components/ContactForm";
+} from 'react-native-paper';
+import styles from '../../../styles/contact';
+import ContactForm from '../ContactForm';
 
 type ContactType = {
   name: string;
@@ -26,21 +17,17 @@ type ContactProps = {
   contactList: Array<ContactType>;
 };
 
-const Contact = ({ contactList = [] }: ContactProps) => {
+function Contact({ contactList = [] }: ContactProps) {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
   return (
     <View style={styles.contactContainer}>
       <List.Section style={styles.listContainer}>
-        {contactList.map((contact) => {
-          return (
-            <>
-              <List.Item
-                title={contact}
-                left={() => <List.Icon icon="email" />}
-              />
-            </>
-          );
-        })}
+        {contactList.map((contact) => (
+          <List.Item
+            title={contact}
+            left={() => <List.Icon icon="email" />}
+          />
+        ))}
       </List.Section>
 
       <IconButton
@@ -65,10 +52,6 @@ const Contact = ({ contactList = [] }: ContactProps) => {
       </Portal>
     </View>
   );
-};
+}
 
 export default Contact;
-
-Contact.propTypes = {
-  contacts: PropTypes.array,
-};

@@ -15,13 +15,13 @@ import { initialState, reducer } from './src/reducer/reducer';
 function App() {
   const [isRecording, isRecordingDispatch] = useReducer(reducer, initialState);
   const Stack = createNativeStackNavigator();
-  console.log('isRecording', isRecording)
   return (
     // <View style={styles.container}>
     <Context.Provider value={{
       isRecordingState: isRecording.isRecording,
       isRecordingDispatch,
-    }}>
+    }}
+    >
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>

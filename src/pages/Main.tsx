@@ -33,148 +33,14 @@ import { getUser } from '../../api/user';
 import AlertButton from '../components/AlertButton';
 import styles from '../../styles/home';
 import { getData, storeData } from '../../utils/store';
-import Contact from './Contact';
-import MyComponent from '../components/Footer';
+import Contact from '../components/contact/Contact';
+
 import { generateNameVideo, getVideoContentType } from '../../utils/utils';
 import { ACTIONS } from '../reducer/reducer';
 import { Context } from '../context';
 import { scenarios } from '../../utils/scenarios';
 import { sendRecord } from '../../api/record';
-
-function ScenarioModal({}) {
-  const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
-  const [scenarioModalVisible, setScenarioModalVisible] = useState(false);
-
-  const handleScenario = (scenario) => {
-    setSelectedScenario(scenario);
-    setScenarioModalVisible(false);
-  };
-
-  return (
-    <>
-      <Button
-        onPress={() => setScenarioModalVisible(true)}
-        style={styles.scenarioButton}
-        mode="contained"
-        icon={selectedScenario.icon}
-      >
-        {selectedScenario.name}
-      </Button>
-
-      <Portal>
-        <Dialog
-          visible={scenarioModalVisible}
-          onDismiss={() => setScenarioModalVisible(false)}
-        >
-          <Dialog.Title style={{ textAlign: 'center' }}>
-            Choisissez un Scénario
-          </Dialog.Title>
-          <Dialog.Content>
-            <Text style={{ textAlign: 'center' }}>
-              Chaque scénario correspond à un appel différent
-            </Text>
-          </Dialog.Content>
-          <View style={styles.scenarioModalContent}>
-            <View style={styles.scenarioList}>
-              {scenarios.map((scenario, index) => (
-                <List.Item
-                  key={index}
-                  titleStyle={{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    color: MD3Colors.primary40,
-                  }}
-                  descriptionStyle={{ fontSize: 12 }}
-                  style={styles.scenarioChoiceButton}
-                  onPress={() => {
-                    handleScenario(scenario);
-                  }}
-                  title={scenario.name}
-                  description={scenario.description}
-                  left={(props) => (
-                    <List.Icon
-                      {...props}
-                      icon={scenario.icon}
-                      style={{ alignSelf: 'center' }}
-                      color={MD3Colors.primary40}
-                    />
-                  )}
-                />
-              ))}
-            </View>
-          </View>
-        </Dialog>
-      </Portal>
-    </>
-  );
-}
-
-function ContactModal({}) {
-  const [contactModalVisible, setContactModalVisible] = useState(false);
-  const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
-  const [contactList, setContactList] = useState([]);
-
-  useEffect(() => {
-    getData('contactList')
-      .then((res) => {
-        console.log('res contact', res);
-        res && setContactList(res.contacts);
-      })
-      .catch((err) => {
-        console.log('err contact', err);
-      });
-  }, []);
-
-  return (
-    <>
-      <Pressable
-        style={styles.contactButton}
-        onPress={() => setContactModalVisible(true)}
-      >
-        <Text style={styles.contactButtonText}>Contact</Text>
-      </Pressable>
-      <Portal>
-        <Dialog
-          visible={contactModalVisible}
-          onDismiss={() => setContactModalVisible(false)}
-        >
-          <Dialog.Title
-            style={{
-              textAlign: 'center',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            Modifiez vos contacts
-            <IconButton
-              icon="information"
-              selected
-              size={24}
-              onPress={() => setContactModalInfoVisible(true)}
-            />
-            <Portal>
-              <Dialog
-                visible={contactModalInfoVisible}
-                onDismiss={() => setContactModalInfoVisible(false)}
-              >
-                <Dialog.Title>Infos</Dialog.Title>
-                <Dialog.Content>
-                  <Text>
-                    Ces contacts seront réélement appelé ou notifié si vous
-                    cliquez sur le bouton d'urgence durant un faux appel
-                  </Text>
-                </Dialog.Content>
-              </Dialog>
-            </Portal>
-          </Dialog.Title>
-          <Dialog.Content>
-            <Contact contactList={contactList} />
-          </Dialog.Content>
-        </Dialog>
-      </Portal>
-    </>
-  );
-}
+import Footer from '../components/Footer';
 
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
@@ -354,10 +220,7 @@ function Main({ route, navigation }) {
       />
       <AlertButton navigation={navigation} takeVideo={takeVideo} />
 
-      <View style={styles.footerContainer}>
-        <ContactModal />
-        <ScenarioModal />
-      </View>
+      <Footer />
     </View>
   );
 }
