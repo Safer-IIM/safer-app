@@ -78,10 +78,14 @@ function ContactModal() {
             <Contact contactList={contactList} />
             {!isAuthenticatedState && (
             <Chip
-              style={{ backgroundColor: '#FFCAA7FF' }}
-              icon="information"
+              style={{
+                backgroundColor: '#ffeae5',
+              }}
+              textStyle={{
+                color: '#ff5e00',
+              }}
             >
-              Vous n'etes pas connecté, si vous effacez les données de l'application vous perdrez de perdre vos contact enregistré
+              Vous n'êtes pas connecté, si vous effacez les données de l'application vous perdrez de perdre vos contact enregistré
             </Chip>
             )}
 
