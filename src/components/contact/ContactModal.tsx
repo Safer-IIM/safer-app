@@ -1,18 +1,24 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Pressable, Text } from 'react-native';
-import { Dialog, IconButton, Portal } from 'react-native-paper';
+import {
+  Dialog, IconButton, Portal, Chip,
+} from 'react-native-paper';
 
 import { AntDesign } from '@expo/vector-icons';
 import { getData } from '../../../utils/store';
 import Contact from './Contact';
 import styles from '../../../styles/home';
+import { Context } from '../../context';
 
 function ContactModal() {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
   const [contactList, setContactList] = useState([]);
-
+  const context = useContext(Context);
+  const {
+    isAuthenticatedState,
+  } = context;
   useEffect(() => {
     getData('contactList')
       .then((res) => {
@@ -45,6 +51,7 @@ function ContactModal() {
               alignItems: 'center',
             }}
           >
+
             Modifiez vos contacts
             <IconButton
               icon="information"
@@ -69,6 +76,15 @@ function ContactModal() {
           </Dialog.Title>
           <Dialog.Content>
             <Contact contactList={contactList} />
+            {!isAuthenticatedState && (
+            <Chip
+              style={{ backgroundColor: '#FFCAA7FF' }}
+              icon="information"
+            >
+              Vous n'etes pas connecté, si vous effacez les données de l'application vous perdrez de perdre vos contact enregistré
+            </Chip>
+            )}
+
           </Dialog.Content>
         </Dialog>
       </Portal>

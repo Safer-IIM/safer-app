@@ -12,10 +12,12 @@ import Account from './src/pages/Account';
 import CallPage from './src/pages/CallPage';
 import { initialState, reducer } from './src/reducer/reducer';
 import { initialScenarioState, scenarioReducer } from './src/reducer/scenario';
+import { initialAuthenticatedState, authenticatedReducer } from './src/reducer/userReducer';
 
 function App() {
   const [isRecording, isRecordingDispatch] = useReducer(reducer, initialState);
   const [scenarioState, scenarioDispatch] = useReducer(scenarioReducer, initialScenarioState);
+  const [isAuthenticatedState, isAuthenticatedDispatch] = useReducer(authenticatedReducer, initialAuthenticatedState);
   const Stack = createNativeStackNavigator();
 
   return (
@@ -25,6 +27,8 @@ function App() {
       isRecordingDispatch,
       scenarioState,
       scenarioDispatch,
+      isAuthenticatedState,
+      isAuthenticatedDispatch,
     }}
     >
       <PaperProvider>

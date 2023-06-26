@@ -56,8 +56,13 @@ function Main({ route, navigation }) {
   const [cameraRef, setCameraRef] = useState<any>(null);
   const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
 
-  const isRecordingContext = useContext(Context);
-  const { isRecordingState, isRecordingDispatch } = isRecordingContext;
+  const context = useContext(Context);
+  const {
+    isRecordingState,
+    isRecordingDispatch,
+    isAuthenticatedState,
+    isAuthenticatedDispatch,
+  } = context;
 
   const s3 = new S3({
     accessKeyId: ACCESS_KEY_ID,
@@ -165,11 +170,11 @@ function Main({ route, navigation }) {
             storeData('@fromLoginPage', false);
             storeData('@userInfo', res.data);
             storeData('@isConnected', true);
-            setIsUserConnected(true);
+            isAuthenticatedDispatch(true);
           })
           .catch((err) => {
             storeData('@fromLoginPage', false);
-            setIsUserConnected(false);
+            isAuthenticatedDispatch(false);
             storeData('@isConnected', false);
           });
       }
