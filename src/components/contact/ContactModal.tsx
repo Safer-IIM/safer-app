@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { Pressable, Text } from 'react-native';
 import {
-  Dialog, IconButton, Portal, Chip,
+  Dialog, IconButton, Portal, Chip, Tooltip,
 } from 'react-native-paper';
 
 import { AntDesign } from '@expo/vector-icons';
@@ -76,19 +76,22 @@ function ContactModal() {
           </Dialog.Title>
           <Dialog.Content>
             <Contact contactList={contactList} />
-            {!isAuthenticatedState && (
-            <Chip
-              style={{
-                backgroundColor: '#ffeae5',
-              }}
-              textStyle={{
-                color: '#ff5e00',
-              }}
-            >
-              Vous n'êtes pas connecté, si vous effacez les données de l'application vous perdrez de perdre vos contact enregistré
-            </Chip>
-            )}
 
+            {!isAuthenticatedState && (
+            <Tooltip title="Selected Camera">
+              <Chip
+                style={{
+                  backgroundColor: '#ffeae5',
+                }}
+                textStyle={{
+                  color: '#ff5e00',
+                }}
+              >
+                Vous n'êtes pas connecté, si vous effacez les données de l'application
+                vous perdrez de perdre vos contact enregistré
+              </Chip>
+            </Tooltip>
+            )}
           </Dialog.Content>
         </Dialog>
       </Portal>
