@@ -5,6 +5,7 @@ import { Audio } from "expo-av";
 import { Camera, CameraType } from "expo-camera";
 import { Text, View, Pressable, Platform } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
+import SVGCarIcon, {SVGCloudOneIcon, SVGCloudTwoIcon, SVGTreeIcon} from '../components/SvgTransform';
 import {
   Button,
   IconButton,
@@ -126,13 +127,17 @@ function Main({ route, navigation }) {
           }}
         />
       )}
+      <SVGCloudOneIcon style={{position :"absolute", top: '10%', right: 20}}/>
+      <SVGCloudTwoIcon style={{position :"absolute",  top: '20%', left: 20}}/>
+      <SVGCarIcon style={{position :"absolute",  bottom: "10.2%", left: 20, fontSize: "30px", width: 100, height: 100}}/>
+      <SVGTreeIcon style={{position :"absolute",  bottom: "11%", right: 20, fontSize: "30px", width: 100, height: 100, strokeWidth: 4}}/>
       <View style={styles.saferTitleContainer}>
         <Text style={styles.saferTitle}>KEEP CALM </Text>
-
         <Text style={styles.saferTitleTerciary}>
           ...And make a fake call to deter malicious people
         </Text>
       </View>
+
       <AlertButton navigation={navigation} />
       <Footer />
     </View>
