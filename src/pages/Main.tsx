@@ -15,6 +15,7 @@ import {
   List,
   MD3Colors,
 } from 'react-native-paper';
+import jwt_decode from 'jwt-decode';
 import SVGCarIcon, { SVGCloudOneIcon, SVGCloudTwoIcon, SVGTreeIcon } from '../components/SvgTransform';
 
 import { getUser } from '../../api/user';
@@ -30,8 +31,6 @@ import { sendRecord } from '../../api/record';
 import Footer from '../components/Footer';
 
 function Main({ route, navigation }) {
-  const [isUserConnected, setIsUserConnected] = useState(false);
-
   const isFocused = useIsFocused();
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -78,22 +77,22 @@ function Main({ route, navigation }) {
       await cameraPermisionFunction();
     })();
   }, []);
-
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      const fromLoginPage = await getData('@fromLoginPage');
-      if (isFocused && (!isConnected || fromLoginPage)) {
+      const userInfo = await getData('@userInfo');
+      if (isConnected) {
+        isAuthenticatedDispatch(true);
+      }
+      if (isFocused && (!isConnected)) {
         getUserInfo()
           .then((res) => {
             console.log('getUserInfo', res);
-            storeData('@fromLoginPage', false);
             storeData('@userInfo', res.data);
             storeData('@isConnected', true);
             isAuthenticatedDispatch(true);
           })
           .catch((err) => {
-            storeData('@fromLoginPage', false);
             isAuthenticatedDispatch(false);
             storeData('@isConnected', false);
           });
@@ -110,7 +109,7 @@ function Main({ route, navigation }) {
 
   return (
     <View style={styles.mainContainer}>
-      {isUserConnected ? (
+      {isAuthenticatedState ? (
         <IconButton
           style={styles.accountButton}
           icon="account"
