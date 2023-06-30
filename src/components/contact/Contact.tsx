@@ -15,9 +15,10 @@ type ContactType = {
 };
 type ContactProps = {
   contactList: Array<ContactType>;
+  setContactList: any
 };
 
-function Contact({ contactList = [] }: ContactProps) {
+function Contact({ contactList = [], setContactList }: ContactProps) {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
 
   return (
@@ -66,7 +67,11 @@ function Contact({ contactList = [] }: ContactProps) {
         >
           <Dialog.Title>Ajouter un contact</Dialog.Title>
           <Dialog.Content>
-            <ContactForm onValidate={() => setAddingContactVisible(false)} />
+            <ContactForm onValidate={(res) => {
+              setAddingContactVisible(false);
+              setContactList(res);
+            }}
+            />
           </Dialog.Content>
         </Dialog>
       </Portal>

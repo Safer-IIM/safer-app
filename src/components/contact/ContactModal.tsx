@@ -19,14 +19,12 @@ function ContactModal() {
   const {
     isAuthenticatedState,
   } = context;
+
   useEffect(() => {
-    getData('contactList')
-      .then((res) => {
-        res && setContactList(res.contacts);
-      })
-      .catch((err) => {
-        console.log('err contact', err);
-      });
+    (async function () {
+      const userInfo = await getData('@userInfo');
+      userInfo.user && setContactList(userInfo.user.contacts);
+    }());
   }, []);
 
   return (
@@ -74,7 +72,7 @@ function ContactModal() {
             </Portal>
           </Dialog.Title>
           <Dialog.Content style={{ maxHeight: '90%' }}>
-            <Contact contactList={contactList} />
+            <Contact contactList={contactList} setContactList={setContactList} />
             {!isAuthenticatedState && (
               <Chip
                 style={{

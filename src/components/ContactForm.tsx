@@ -13,11 +13,9 @@ function ContactForm({ onValidate }) {
   const addContact = async () => {
     const token = await getData('@userToken', 'string');
     const userInfo = await getData('@userInfo');
-
-    postContact(token, userInfo.id, [email])
+    postContact(token, userInfo.user.id, [email])
       .then((res) => {
-        console.log('res :', res.data);
-        // storeData("contactList", res.data);
+        onValidate(res.data.contacts);
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +43,6 @@ function ContactForm({ onValidate }) {
         mode="contained"
         onPress={async () => {
           await addContact();
-          onValidate();
         }}
       >
         Valider

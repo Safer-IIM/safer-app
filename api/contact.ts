@@ -18,9 +18,6 @@ export const postContact = async (
   userId: string,
   emails: Array<String>,
 ) => {
-  console.log('emails', emails);
-  console.log('userId', userId);
-  console.log('token', token);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

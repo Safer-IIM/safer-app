@@ -80,7 +80,6 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      console.log(isConnected);
       if (isConnected && !isAuthenticatedState) {
         isAuthenticatedDispatch(true);
       }
