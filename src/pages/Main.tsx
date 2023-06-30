@@ -80,7 +80,8 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      if (isConnected) {
+      console.log(isConnected);
+      if (isConnected && !isAuthenticatedState) {
         isAuthenticatedDispatch(true);
       }
       if (isFocused && (!isConnected)) {
@@ -96,7 +97,7 @@ function Main({ route, navigation }) {
           });
       }
     }());
-  }, []);
+  }, [isFocused]);
 
   let text = 'Waiting..';
   if (errorMsg) {
