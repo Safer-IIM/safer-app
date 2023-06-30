@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     color: '#242424',
   },
   alertButton: {
+    shadowColor: '#000000',
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 10,
     marginTop: 20,
     position: 'relative',
     backgroundColor: globalStyle.colorDanger,
@@ -47,6 +51,7 @@ const styles = StyleSheet.create({
   alertButtonTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white',
   },
 
   scenarioButton: {

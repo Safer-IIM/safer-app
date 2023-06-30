@@ -17,6 +17,13 @@ const styles = StyleSheet.create(
       borderTopLeftRadius: 50,
       backgroundColor: globalStyle.colorPrimarySemiVisible,
     },
+    carIcon: {
+      position: 'absolute',
+      top: -100,
+      fontSize: '10px',
+      width: 100,
+      height: 100,
+    },
   },
 );
 
