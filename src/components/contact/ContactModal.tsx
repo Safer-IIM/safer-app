@@ -75,9 +75,7 @@ function ContactModal() {
           </Dialog.Title>
           <Dialog.Content>
             <Contact contactList={contactList} />
-
             {!isAuthenticatedState && (
-            <Tooltip title="Selected Camera">
               <Chip
                 style={{
                   backgroundColor: '#ffeae5',
@@ -89,7 +87,6 @@ function ContactModal() {
                 Vous n'êtes pas connecté, si vous effacez les données de l'application
                 vous perdrez de perdre vos contact enregistré
               </Chip>
-            </Tooltip>
             )}
           </Dialog.Content>
         </Dialog>

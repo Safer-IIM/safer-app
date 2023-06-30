@@ -80,14 +80,12 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      const userInfo = await getData('@userInfo');
       if (isConnected) {
         isAuthenticatedDispatch(true);
       }
       if (isFocused && (!isConnected)) {
         getUserInfo()
           .then((res) => {
-            console.log('getUserInfo', res);
             storeData('@userInfo', res.data);
             storeData('@isConnected', true);
             isAuthenticatedDispatch(true);

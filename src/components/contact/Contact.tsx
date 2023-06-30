@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import {
   List,
   IconButton,
@@ -19,16 +19,36 @@ type ContactProps = {
 
 function Contact({ contactList = [] }: ContactProps) {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
+  const [screenHeight, setScreenHeight] = useState(0);
+  // const { height } = Dimensions.get('window');
+  const scrollEnabled = screenHeight > height;
+  const onContentSizeChange = (contentWidth, contentHeight) => {
+    setScreenHeight(contentHeight);
+  };
+
   return (
     <View style={styles.contactContainer}>
-      <List.Section style={styles.listContainer}>
-        {contactList.map((contact) => (
-          <List.Item
-            title={contact}
-            left={() => <List.Icon icon="email" />}
-          />
+      <ScrollView
+        style={styles.listContainer}
+        scrollEnabled={scrollEnabled}
+        onContentSizeChange={onContentSizeChange}
+      >
+        {contactList.map((contact, index) => (
+          <View
+            style={styles.item}
+            key={index}
+          >
+            <View style={styles.itemMail}>
+              <List.Icon icon="email" />
+              <Text>{contact}</Text>
+            </View>
+            <View style={styles.itemPhone}>
+              <List.Icon icon="phone" />
+              <Text>{contact}</Text>
+            </View>
+          </View>
         ))}
-      </List.Section>
+      </ScrollView>
 
       <IconButton
         icon="plus"
