@@ -79,27 +79,11 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      if (isFocused && isConnected && !isAuthenticatedState) {
+      if (isConnected && !isAuthenticatedState) {
         isAuthenticatedDispatch(true);
       } else {
         isAuthenticatedDispatch(false);
       }
-      /*
-            if (isFocused && (!isConnected)) {
-        getUserInfo()
-          .then((res) => {
-            storeData('@userInfo', res.data);
-            storeData('@isConnected', true);
-            isAuthenticatedDispatch(true);
-          })
-          .catch((err) => {
-            isAuthenticatedDispatch(false);
-            storeData('@isConnected', false);
-          });
-      } else {
-        isAuthenticatedDispatch(false);
-      }
-       */
     }());
   }, [isFocused]);
 
