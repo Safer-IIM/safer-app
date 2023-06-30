@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useEffect, useState } from "react";
-import * as Location from "expo-location";
-import { Audio } from "expo-av";
-import { Camera, CameraType } from "expo-camera";
-import { Text, View, Pressable, Platform } from "react-native";
-import { useIsFocused } from "@react-navigation/native";
-import SVGCarIcon, {SVGCloudOneIcon, SVGCloudTwoIcon, SVGTreeIcon} from '../components/SvgTransform';
+import React, { useContext, useEffect, useState } from 'react';
+import * as Location from 'expo-location';
+import { Audio } from 'expo-av';
+import { Camera, CameraType } from 'expo-camera';
+import {
+  Text, View, Pressable, Platform,
+} from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 import {
   Button,
   IconButton,
@@ -13,19 +14,20 @@ import {
   Portal,
   List,
   MD3Colors,
-} from "react-native-paper";
+} from 'react-native-paper';
+import SVGCarIcon, { SVGCloudOneIcon, SVGCloudTwoIcon, SVGTreeIcon } from '../components/SvgTransform';
 
-import { getUser } from "../../api/user";
-import AlertButton from "../components/AlertButton";
-import styles from "../../styles/home";
-import { getData, storeData } from "../../utils/store";
-import Contact from "../components/contact/Contact";
+import { getUser } from '../../api/user';
+import AlertButton from '../components/AlertButton';
+import styles from '../../styles/home';
+import { getData, storeData } from '../../utils/store';
+import Contact from '../components/contact/Contact';
 
-import { ACTIONS } from "../reducer/reducer";
-import { Context } from "../context";
-import { scenarios } from "../../utils/scenarios";
-import { sendRecord } from "../../api/record";
-import Footer from "../components/Footer";
+import { ACTIONS } from '../reducer/reducer';
+import { Context } from '../context';
+import { scenarios } from '../../utils/scenarios';
+import { sendRecord } from '../../api/record';
+import Footer from '../components/Footer';
 
 function Main({ route, navigation }) {
   const [isUserConnected, setIsUserConnected] = useState(false);
@@ -41,25 +43,24 @@ function Main({ route, navigation }) {
 
   const cameraPermisionFunction = async () => {
     // here is how you can get the camera permission
-    const cameraRequestPermission =
-      await Camera.requestCameraPermissionsAsync();
+    const cameraRequestPermission = await Camera.requestCameraPermissionsAsync();
     const audioRequestPermission = await Audio.requestPermissionsAsync();
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: true,
       playsInSilentModeIOS: true,
     });
     await storeData(
-      "@audioPermission",
-      audioRequestPermission.status === "granted"
+      '@audioPermission',
+      audioRequestPermission.status === 'granted',
     );
     await storeData(
-      "@cameraPermission",
-      cameraRequestPermission.status === "granted"
+      '@cameraPermission',
+      cameraRequestPermission.status === 'granted',
     );
   };
 
   const getUserInfo = async () => {
-    const token = await getData("@userToken", "string");
+    const token = await getData('@userToken', 'string');
     const decoded: any = jwt_decode(token);
     return getUser(decoded.user.id, token);
   };
@@ -67,8 +68,8 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
         return;
       }
 
@@ -80,26 +81,27 @@ function Main({ route, navigation }) {
 
   useEffect(() => {
     (async function () {
-      const isConnected = await getData("@isConnected");
-      const fromLoginPage = await getData("@fromLoginPage");
+      const isConnected = await getData('@isConnected');
+      const fromLoginPage = await getData('@fromLoginPage');
       if (isFocused && (!isConnected || fromLoginPage)) {
         getUserInfo()
           .then((res) => {
-            storeData("@fromLoginPage", false);
-            storeData("@userInfo", res.data);
-            storeData("@isConnected", true);
+            console.log('getUserInfo', res);
+            storeData('@fromLoginPage', false);
+            storeData('@userInfo', res.data);
+            storeData('@isConnected', true);
             isAuthenticatedDispatch(true);
           })
           .catch((err) => {
-            storeData("@fromLoginPage", false);
+            storeData('@fromLoginPage', false);
             isAuthenticatedDispatch(false);
-            storeData("@isConnected", false);
+            storeData('@isConnected', false);
           });
       }
-    })();
-  }, [isFocused]);
+    }());
+  }, []);
 
-  let text = "Waiting..";
+  let text = 'Waiting..';
   if (errorMsg) {
     text = errorMsg;
   } else if (location) {
@@ -114,7 +116,7 @@ function Main({ route, navigation }) {
           icon="account"
           size={20}
           onPress={() => {
-            navigation.navigate("Account");
+            navigation.navigate('Account');
           }}
         />
       ) : (
@@ -123,14 +125,20 @@ function Main({ route, navigation }) {
           icon="account-question"
           size={20}
           onPress={() => {
-            navigation.navigate("Inscription");
+            navigation.navigate('Inscription');
           }}
         />
       )}
-      <SVGCloudOneIcon style={{position :"absolute", top: '10%', right: 20}}/>
-      <SVGCloudTwoIcon style={{position :"absolute",  top: '20%', left: 20}}/>
-      <SVGCarIcon style={{position :"absolute",  bottom: "10.2%", left: 20, fontSize: "30px", width: 100, height: 100}}/>
-      <SVGTreeIcon style={{position :"absolute",  bottom: "11%", right: 20, fontSize: "30px", width: 100, height: 100, strokeWidth: 4}}/>
+      <SVGCloudOneIcon style={{ position: 'absolute', top: '10%', right: 20 }} />
+      <SVGCloudTwoIcon style={{ position: 'absolute', top: '20%', left: 20 }} />
+      <SVGCarIcon style={{
+        position: 'absolute', bottom: '10.2%', left: 20, fontSize: '30px', width: 100, height: 100,
+      }}
+      />
+      <SVGTreeIcon style={{
+        position: 'absolute', bottom: '11%', right: 20, fontSize: '30px', width: 100, height: 100, strokeWidth: 4,
+      }}
+      />
       <View style={styles.saferTitleContainer}>
         <Text style={styles.saferTitle}>KEEP CALM </Text>
         <Text style={styles.saferTitleTerciary}>

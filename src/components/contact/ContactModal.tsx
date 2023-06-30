@@ -22,7 +22,6 @@ function ContactModal() {
   useEffect(() => {
     getData('contactList')
       .then((res) => {
-        console.log('res contact', res);
         res && setContactList(res.contacts);
       })
       .catch((err) => {
