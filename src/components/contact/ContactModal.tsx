@@ -73,7 +73,7 @@ function ContactModal() {
               </Dialog>
             </Portal>
           </Dialog.Title>
-          <Dialog.Content>
+          <Dialog.Content style={{ maxHeight: '90%' }}>
             <Contact contactList={contactList} />
             {!isAuthenticatedState && (
               <Chip

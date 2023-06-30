@@ -3,14 +3,17 @@ import globalStyle from './variables';
 
 const styles = StyleSheet.create({
   contactContainer: {
+    position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+
   },
   listContainer: {
-    maxHeight: '50%',
     width: '100%',
+    height: 'auto',
+    maxHeight: '90%',
   },
   item: {
     marginTop: 10,
@@ -19,14 +22,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   itemMail: {
+    marginBottom: 10,
     flexDirection: 'row',
   },
   itemPhone: {
     flexDirection: 'row',
   },
+  addContactButtonContainer: {
 
-  addContactButtons: {
-    margin: 'auto',
+    height: '10%',
+    justifyContent: 'center',
+  },
+  addContactButton: {
+
     borderWidth: 3,
   },
   contactInput: {

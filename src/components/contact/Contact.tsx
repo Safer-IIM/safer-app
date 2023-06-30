@@ -19,19 +19,11 @@ type ContactProps = {
 
 function Contact({ contactList = [] }: ContactProps) {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
-  const [screenHeight, setScreenHeight] = useState(0);
-  // const { height } = Dimensions.get('window');
-  const scrollEnabled = screenHeight > height;
-  const onContentSizeChange = (contentWidth, contentHeight) => {
-    setScreenHeight(contentHeight);
-  };
 
   return (
     <View style={styles.contactContainer}>
       <ScrollView
         style={styles.listContainer}
-        scrollEnabled={scrollEnabled}
-        onContentSizeChange={onContentSizeChange}
       >
         {contactList.map((contact, index) => (
           <View
@@ -40,25 +32,33 @@ function Contact({ contactList = [] }: ContactProps) {
           >
             <View style={styles.itemMail}>
               <List.Icon icon="email" />
+              <Text>
+                {'   '}
+              </Text>
               <Text>{contact}</Text>
             </View>
             <View style={styles.itemPhone}>
               <List.Icon icon="phone" />
-              <Text>{contact}</Text>
+              <Text>
+                {'   '}
+              </Text>
             </View>
           </View>
         ))}
       </ScrollView>
 
-      <IconButton
-        icon="plus"
-        mode="outlined"
-        style={styles.addContactButtons}
+      <View
+        style={styles.addContactButtonContainer}
+      >
+        <IconButton
+          icon="plus"
+          mode="outlined"
+          style={styles.addContactButton}
         // iconColor={MD3Colors.error50}
-        size={20}
-        onPress={() => setAddingContactVisible(true)}
-      />
-
+          size={20}
+          onPress={() => setAddingContactVisible(true)}
+        />
+      </View>
       <Portal>
         <Dialog
           visible={addingContactVisible}
