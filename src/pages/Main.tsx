@@ -71,7 +71,6 @@ function Main({ route, navigation }) {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
       const location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       await cameraPermisionFunction();
@@ -80,10 +79,13 @@ function Main({ route, navigation }) {
   useEffect(() => {
     (async function () {
       const isConnected = await getData('@isConnected');
-      if (isConnected && !isAuthenticatedState) {
+      if (isFocused && isConnected && !isAuthenticatedState) {
         isAuthenticatedDispatch(true);
+      } else {
+        isAuthenticatedDispatch(false);
       }
-      if (isFocused && (!isConnected)) {
+      /*
+            if (isFocused && (!isConnected)) {
         getUserInfo()
           .then((res) => {
             storeData('@userInfo', res.data);
@@ -94,7 +96,10 @@ function Main({ route, navigation }) {
             isAuthenticatedDispatch(false);
             storeData('@isConnected', false);
           });
+      } else {
+        isAuthenticatedDispatch(false);
       }
+       */
     }());
   }, [isFocused]);
 
