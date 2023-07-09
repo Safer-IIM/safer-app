@@ -107,10 +107,20 @@ const styles = StyleSheet.create({
   },
   scenarioAddingButton: {},
 
+  contactModal: {
+    backgroundColor: 'white',
+    maxHeight: '90%',
+  },
+
+  modalContactContent: {
+
+    maxHeight: '90%',
+    height: 'auto',
+    position: 'relative',
+  },
   contactButton: {
     justifyContent: 'center',
     alignItems: 'center',
-
   },
   contactButtonText: {
     color: globalStyle.colorText,

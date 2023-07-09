@@ -29,12 +29,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   addContactButtonContainer: {
-    height: '10%',
+    marginTop: 10,
     justifyContent: 'center',
   },
   addContactButton: {
-
-    borderWidth: 3,
+    color: globalStyle.colorPrimary,
   },
   contactInput: {
     marginBottom: 20,

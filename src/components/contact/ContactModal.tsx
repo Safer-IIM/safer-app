@@ -38,7 +38,7 @@ function ContactModal() {
       </Pressable>
       <Portal>
         <Dialog
-          style={styles.scenarioModal}
+          style={styles.contactModal}
           visible={contactModalVisible}
           onDismiss={() => setContactModalVisible(false)}
         >
@@ -68,7 +68,7 @@ function ContactModal() {
               </Dialog>
             </Portal>
           </Dialog.Title>
-          <Dialog.Content style={{ maxHeight: '90%' }}>
+          <Dialog.Content style={styles.modalContactContent}>
             <Contact contactList={contactList} setContactList={setContactList} />
             {!isAuthenticatedState && (
               <Chip

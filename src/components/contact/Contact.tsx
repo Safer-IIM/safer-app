@@ -6,6 +6,7 @@ import {
   Portal,
   Dialog,
 } from 'react-native-paper';
+import { AntDesign } from '@expo/vector-icons';
 import styles from '../../../styles/contact';
 import ContactForm from '../ContactForm';
 
@@ -47,18 +48,8 @@ function Contact({ contactList = [], setContactList }: ContactProps) {
           </View>
         ))}
       </ScrollView>
-
-      <View
-        style={styles.addContactButtonContainer}
-      >
-        <IconButton
-          icon="plus"
-          mode="outlined"
-          style={styles.addContactButton}
-        // iconColor={MD3Colors.error50}
-          size={20}
-          onPress={() => setAddingContactVisible(true)}
-        />
+      <View style={styles.addContactButtonContainer}>
+        <AntDesign style={styles.addContactButton} name="pluscircle" size={40} color="black" onPress={() => setAddingContactVisible(true)} />
       </View>
       <Portal>
         <Dialog
