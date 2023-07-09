@@ -14,6 +14,7 @@ import { Context } from '../../context';
 function ContactModal() {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
+  const [connectedModalVisible, setConnectedModalVisible] = useState(false);
   const [contactList, setContactList] = useState([]);
   const context = useContext(Context);
   const {
@@ -69,20 +70,38 @@ function ContactModal() {
             </Portal>
           </Dialog.Title>
           <Dialog.Content style={styles.modalContactContent}>
-            <Contact contactList={contactList} setContactList={setContactList} />
             {!isAuthenticatedState && (
-              <Chip
-                style={{
-                  backgroundColor: '#ffeae5',
-                }}
-                textStyle={{
-                  color: '#ff5e00',
-                }}
-              >
-                Vous n'êtes pas connecté, si vous effacez les données de l'application
-                vous perdrez de perdre vos contact enregistré
-              </Chip>
+            <Chip
+              onPress={() => setConnectedModalVisible(true)}
+              style={{
+                backgroundColor: '#ffeae5',
+
+              }}
+              textStyle={{
+                color: '#ff5e00',
+                alignSelf: 'center',
+              }}
+            >
+              Attention Vous n'êtes pas connecté
+              {' '}
+              <AntDesign style={{ alignSelf: 'center' }} name="eye" size={18} />
+            </Chip>
             )}
+            <Portal>
+              <Dialog
+                visible={connectedModalVisible}
+                onDismiss={() => setConnectedModalVisible(false)}
+              >
+                <Dialog.Title>Attention</Dialog.Title>
+                <Dialog.Content>
+                  <Text>
+                    Attention Vous n'êtes pas connecté, si vous effacez les données de l'application
+                    vous perdrez de perdre vos contact enregistré
+                  </Text>
+                </Dialog.Content>
+              </Dialog>
+            </Portal>
+            <Contact contactList={contactList} setContactList={setContactList} />
           </Dialog.Content>
         </Dialog>
       </Portal>

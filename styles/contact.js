@@ -8,12 +8,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
-
+    maxHeight: '95%',
   },
   listContainer: {
     width: '100%',
     height: 'auto',
-    maxHeight: '90%',
   },
   item: {
     marginTop: 10,
