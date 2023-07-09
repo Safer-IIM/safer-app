@@ -83,10 +83,23 @@ const styles = StyleSheet.create({
   contactButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    color: globalStyle.colorPrimary,
+
   },
   contactButtonText: {
+    color: globalStyle.colorPrimary,
     fontSize: 15,
+    fontWeight: 'bold',
+  },
+  contactButtonIcon: {
+    color: globalStyle.colorPrimary,
+  },
+  scenarioButtonText: {
+    color: globalStyle.colorPrimary,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  scenarioButtonIcon: {
+    color: globalStyle.colorPrimary,
   },
 });
 

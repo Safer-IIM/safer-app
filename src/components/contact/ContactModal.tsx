@@ -33,7 +33,7 @@ function ContactModal() {
         style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
       >
-        <AntDesign name="contacts" size={32} color="black" />
+        <AntDesign style={styles.contactButtonIcon} name="contacts" size={32} color="black" />
         <Text style={styles.contactButtonText}>Contact</Text>
       </Pressable>
       <Portal>

@@ -27,8 +27,13 @@ function ScenarioModal({}) {
         style={styles.scenarioButton}
       >
 
-        <MaterialCommunityIcons name={context.scenarioState.icon} size={32} color="black" />
-        <Text>
+        <MaterialCommunityIcons
+          style={styles.scenarioButtonIcon}
+          name={context.scenarioState.icon}
+          size={32}
+          color="black"
+        />
+        <Text style={styles.scenarioButtonText}>
           {selectedScenario.name}
         </Text>
       </Pressable>

@@ -13,6 +13,8 @@ const styles = StyleSheet.create(
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      borderColor: globalStyle.colorPrimarySemiVisible,
+      borderWidth: 5,
       borderTopRightRadius: 50,
       borderTopLeftRadius: 50,
       backgroundColor: globalStyle.colorPrimarySemiVisible,
