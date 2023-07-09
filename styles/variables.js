@@ -5,6 +5,9 @@ const globalStyle = {
   colorSuccess: '#ff985b',
   colorDanger: '#F9225A',
   colorWarning: '#ff761b',
+  colorText: '#182850',
+
+  colorPrimaryVersionTwo: '#2654CA',
 
   colorPrimarySemiVisible: '#e5e4fa',
   colorSecondarySemiVisible: 'rgba(152, 71, 255, .1)',

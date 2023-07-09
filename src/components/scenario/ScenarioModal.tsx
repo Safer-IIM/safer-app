@@ -56,13 +56,9 @@ function ScenarioModal({}) {
               {scenarios.map((scenario, index) => (
                 <List.Item
                   key={index}
-                  titleStyle={{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    color: MD3Colors.primary40,
-                  }}
+                  titleStyle={styles.scenarioListTitle}
                   descriptionStyle={{ fontSize: 12 }}
-                  style={styles.scenarioChoiceButton}
+                  style={[styles.scenarioChoiceButton, scenario.id === selectedScenario.id && styles.selectedScenario]}
                   onPress={() => {
                     handleScenario(scenario);
                   }}
@@ -72,8 +68,7 @@ function ScenarioModal({}) {
                     <List.Icon
                       {...props}
                       icon={scenario.icon}
-                      style={{ alignSelf: 'center' }}
-                      color={MD3Colors.primary40}
+                      style={styles.scenarioListIcon}
                     />
                   )}
                 />

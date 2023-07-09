@@ -72,11 +72,27 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   scenarioChoiceButton: {
-    borderWidth: 5,
+    backgroundColor: 'white',
+
     borderRadius: 30,
     margin: 7,
     width: '100%',
     paddingLeft: 10,
+  },
+
+  selectedScenario: {
+    borderWidth: 3,
+    borderColor: globalStyle.colorPrimaryVersionTwo,
+  },
+
+  scenarioListTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: globalStyle.colorPrimaryVersionTwo,
+  },
+  scenarioListIcon: {
+    color: globalStyle.colorPrimaryVersionTwo,
+    alignSelf: 'center',
   },
   scenarioAddingButton: {},
 
@@ -86,20 +102,20 @@ const styles = StyleSheet.create({
 
   },
   contactButtonText: {
-    color: globalStyle.colorPrimary,
+    color: globalStyle.colorText,
     fontSize: 15,
     fontWeight: 'bold',
   },
   contactButtonIcon: {
-    color: globalStyle.colorPrimary,
+    color: globalStyle.colorText,
   },
   scenarioButtonText: {
-    color: globalStyle.colorPrimary,
+    color: globalStyle.colorText,
     fontSize: 15,
     fontWeight: 'bold',
   },
   scenarioButtonIcon: {
-    color: globalStyle.colorPrimary,
+    color: globalStyle.colorText,
   },
 });
 
