@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   item: {
     marginTop: 10,
     padding: 10,
-    backgroundColor: globalStyle.colorSecondarySemiVisible,
-    borderRadius: 10,
+    backgroundColor: globalStyle.colorPrimarySemiVisible,
+    borderRadius: 30,
   },
   itemMail: {
     marginBottom: 10,
@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   addContactButtonContainer: {
-
     height: '10%',
     justifyContent: 'center',
   },

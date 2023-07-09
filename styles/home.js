@@ -59,21 +59,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: globalStyle.colorPrimary,
   },
+
+  scenarioModal: {
+    backgroundColor: 'white',
+  },
   scenarioModalContent: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
+
   scenarioList: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
   },
-  scenarioChoiceButton: {
-    backgroundColor: 'white',
 
+  scenarioChoiceButton: {
+    backgroundColor: globalStyle.colorPrimarySemiVisible,
     borderRadius: 30,
     margin: 7,
     width: '100%',
@@ -82,16 +87,22 @@ const styles = StyleSheet.create({
 
   selectedScenario: {
     borderWidth: 3,
-    borderColor: globalStyle.colorPrimaryVersionTwo,
+    borderColor: globalStyle.colorPrimary,
   },
 
   scenarioListTitle: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: globalStyle.colorPrimaryVersionTwo,
+    color: globalStyle.colorPrimary,
   },
+
+  scenarioListDescription: {
+    fontSize: 12,
+    color: globalStyle.colorText,
+  },
+
   scenarioListIcon: {
-    color: globalStyle.colorPrimaryVersionTwo,
+    color: globalStyle.colorPrimary,
     alignSelf: 'center',
   },
   scenarioAddingButton: {},

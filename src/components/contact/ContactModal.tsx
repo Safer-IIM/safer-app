@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import {
   Dialog, IconButton, Portal, Chip, Tooltip,
 } from 'react-native-paper';
@@ -38,6 +38,7 @@ function ContactModal() {
       </Pressable>
       <Portal>
         <Dialog
+          style={styles.scenarioModal}
           visible={contactModalVisible}
           onDismiss={() => setContactModalVisible(false)}
         >
@@ -48,14 +49,10 @@ function ContactModal() {
               alignItems: 'center',
             }}
           >
-
             Modifiez vos contacts
-            <IconButton
-              icon="information"
-              selected
-              size={24}
-              onPress={() => setContactModalInfoVisible(true)}
-            />
+            {' '}
+            <AntDesign style={{ fontSize: 24 }} name="infocirlce" color="black" onPress={() => setContactModalInfoVisible(true)} />
+
             <Portal>
               <Dialog
                 visible={contactModalInfoVisible}

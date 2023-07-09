@@ -1,5 +1,5 @@
 const globalStyle = {
-  colorPrimary: '#2A1FFF',
+  colorPrimary: '#2654CA',
   colorSecondary: '#9847FF',
   colorTerciary: '#FF66F0',
   colorSuccess: '#ff985b',
@@ -7,9 +7,7 @@ const globalStyle = {
   colorWarning: '#ff761b',
   colorText: '#182850',
 
-  colorPrimaryVersionTwo: '#2654CA',
-
-  colorPrimarySemiVisible: '#e5e4fa',
+  colorPrimarySemiVisible: 'rgba(42,31,255,0.12)',
   colorSecondarySemiVisible: 'rgba(152, 71, 255, .1)',
   colorTerciarySemiVisible: 'rgba(255, 102, 240, .1)',
   colorSuccesSemiVisible: 'rgba(73, 235, 91, .1)',

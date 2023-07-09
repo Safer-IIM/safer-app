@@ -40,6 +40,7 @@ function ScenarioModal({}) {
 
       <Portal>
         <Dialog
+          style={styles.scenarioModal}
           visible={scenarioModalVisible}
           onDismiss={() => setScenarioModalVisible(false)}
         >
@@ -57,7 +58,7 @@ function ScenarioModal({}) {
                 <List.Item
                   key={index}
                   titleStyle={styles.scenarioListTitle}
-                  descriptionStyle={{ fontSize: 12 }}
+                  descriptionStyle={styles.scenarioListDescription}
                   style={[styles.scenarioChoiceButton, scenario.id === selectedScenario.id && styles.selectedScenario]}
                   onPress={() => {
                     handleScenario(scenario);
