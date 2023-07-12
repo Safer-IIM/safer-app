@@ -31,7 +31,8 @@ const soundLink = [require('../assets/voice1.m4a'), require('../assets/voice2.m4
 
 function CallPage({ navigation }) {
   const [loadedSound, setLoadedSound] = useState<any>();
-  const [isplaying, setIsplaying] = useState<boolean>();
+  const [isplaying, setIsplaying] = useState<boolean>(false);
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
   const [cameraPermission, setCameraPermission] = useState(null);
   const [audioPermission, setAudioPermission] = useState(null);
@@ -57,9 +58,17 @@ function CallPage({ navigation }) {
   // Quand le son a fini de joué on set une var is playing sur false
   // Si le meterint est au dessus de 20 et que isplaying est sur false alors on joue le morceau suivant
   // is playing est sur true
-  const onRecordingStatusUpdate = (e) => {
-    if (e.metering > -20 && !isplaying) {
+
+  useEffect(() => {
+    if (!isplaying) {
+      setIsSpeaking(false);
       handleSound(stepSound);
+    }
+  }, [isSpeaking]);
+
+  const onRecordingStatusUpdate = (e) => {
+    if (e.metering > -20) {
+      setIsSpeaking(true);
     }
   };
 
