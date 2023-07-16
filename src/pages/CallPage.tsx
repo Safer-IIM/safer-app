@@ -1,44 +1,42 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import {
-  ImageBackground, Platform, View, Animated,
-} from 'react-native';
-import React, {
-  useEffect, useRef, useState, useContext,
-} from 'react';
-import { Button, IconButton } from 'react-native-paper';
-import { Camera, CameraType } from 'expo-camera';
-import { Audio } from 'expo-av';
-import {
-  ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, BUCKET_NAME,
-} from '@env';
-import * as FileSystem from 'expo-file-system';
-import jwt_decode from 'jwt-decode';
-import { S3 } from 'aws-sdk';
-import { Buffer } from 'buffer';
-import { ManagedUpload } from 'aws-sdk/clients/s3';
+import { ImageBackground, Platform, View, Animated } from "react-native";
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { Button, IconButton } from "react-native-paper";
+import { Camera, CameraType } from "expo-camera";
+import { Audio } from "expo-av";
+import { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, BUCKET_NAME } from "@env";
+import * as FileSystem from "expo-file-system";
+import jwt_decode from "jwt-decode";
+import { S3 } from "aws-sdk";
+import { Buffer } from "buffer";
+import { ManagedUpload } from "aws-sdk/clients/s3";
 // eslint-disable-next-line import/no-extraneous-dependencies
-import styles from '../../styles/callPage';
-import image from '../assets/call.jpg';
-import { getData } from '../../utils/store';
-import { postAlert } from '../../api/user';
-import { Context } from '../context';
-import { ACTIONS } from '../reducer/reducer';
-import { sendRecord } from '../../api/record';
-import { generateNameVideo, getVideoContentType } from '../../utils/utils';
+import styles from "../../styles/callPage";
+import image from "../assets/call.jpg";
+import { getData } from "../../utils/store";
+import { postAlert } from "../../api/user";
+import { Context } from "../context";
+import { ACTIONS } from "../reducer/reducer";
+import { sendRecord } from "../../api/record";
+import { generateNameVideo, getVideoContentType } from "../../utils/utils";
 
-const soundLink = [require('../assets/voice1.m4a'), require('../assets/voice2.m4a'), require('../assets/voice3.m4a')];
+const soundLink = [
+  require("../assets/voice1.m4a"),
+  require("../assets/voice2.m4a"),
+  require("../assets/voice3.m4a"),
+];
 
 function CallPage({ navigation }) {
   const [loadedSound, setLoadedSound] = useState<any>();
-  const [isplaying, setIsplaying] = useState<boolean>(false);
+  const [isplaying, setIsplaying] = useState<boolean>(true);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const [isCameraReady, setIsCameraReady] = useState<boolean>(false);
   const [cameraPermission, setCameraPermission] = useState(null);
   const [audioPermission, setAudioPermission] = useState(null);
   const [type, setType] = useState(CameraType.back);
   const [isRecording, setIsRecording] = useState(false);
-  const [isAudioRecording, setIsAudioRecording] = useState(null);
+  const [audioRecording, setAudioRecording] = useState(null);
   const [deviceOS, setDeviceOS] = useState(Platform.OS);
   const [stepSound, setStepSound] = useState(0);
 
@@ -52,15 +50,8 @@ function CallPage({ navigation }) {
     region: REGION,
   });
 
-  // Il faut que
-  // Le son joue en premier, on est dans la step 1
-  // le micro record
-  // Quand le son a fini de joué on set une var is playing sur false
-  // Si le meterint est au dessus de 20 et que isplaying est sur false alors on joue le morceau suivant
-  // is playing est sur true
-
   useEffect(() => {
-    if (!isplaying) {
+    if (!isplaying && isSpeaking) {
       setIsSpeaking(false);
       handleSound(stepSound);
     }
@@ -86,15 +77,15 @@ function CallPage({ navigation }) {
         playsInSilentModeIOS: true,
       });
 
-      console.log('Starting recording..');
+      console.log("Starting recording..");
       const { recording } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY,
-        onRecordingStatusUpdate,
+        onRecordingStatusUpdate
       );
-      setIsAudioRecording(recording);
-      console.log('Recording started');
+      setAudioRecording(recording);
+      console.log("Recording started");
     } catch (err) {
-      console.error('Failed to start recording', err);
+      console.error("Failed to start recording", err);
     }
   }
 
@@ -105,12 +96,8 @@ function CallPage({ navigation }) {
     }
   }
   async function handleSound(index = 0) {
-    console.log('Loading Sound');
-
-    console.log(soundLink[index]);
-    const { sound } = await Audio.Sound.createAsync(
-      soundLink[index],
-    );
+    console.log("Loading Sound");
+    const { sound } = await Audio.Sound.createAsync(soundLink[index]);
     sound.setOnPlaybackStatusUpdate(onAudioPlayingStatusUpdate);
     await sound.playAsync();
     setStepSound(() => index + 1);
@@ -121,9 +108,9 @@ function CallPage({ navigation }) {
   async function takeVideo() {
     if (cameraPermission) {
       if (isRecording) {
-        console.log('already recording');
+        console.log("already recording");
       } else {
-        console.log('[recording]');
+        console.log("[recording]");
         setIsRecording(true);
         if (cameraRef) {
           const recordData = await cameraRef.recordAsync({
@@ -135,7 +122,7 @@ function CallPage({ navigation }) {
             const videoContent = await FileSystem.readAsStringAsync(uri, {
               encoding: FileSystem.EncodingType.Base64,
             });
-            console.log('[buffering ...]');
+            console.log("[buffering ...]");
             /*
             const buffer = Buffer.from(
               videoContent,
@@ -168,45 +155,49 @@ function CallPage({ navigation }) {
             );
             */
           } else {
-            console.error('Error file does not exists');
+            console.error("Error file does not exists");
           }
         } else {
-          console.log('pas de camera');
+          console.log("pas de camera");
         }
       }
     }
   }
+  const stopRecording = () => {
+    if (audioRecording) {
+      setAudioRecording(undefined);
+      audioRecording.stopAndUnloadAsync();
+    }
+  };
 
   useEffect(() => {
-    if (deviceOS === 'ios') {
-      console.log('Device is IOS');
+    console.log("build");
+    if (deviceOS === "ios") {
+      console.log("Device is IOS");
     } else {
-      console.log('Device is Android');
+      console.log("Device is Android");
     }
     (async () => {
+      await takeVideo();
       await startRecording();
       await handleSound(stepSound);
     })();
 
     return () => {
+      console.log("destroy");
       isRecording && cameraRef.stopRecording();
       loadedSound && loadedSound.unloadAsync();
+      stopRecording();
     };
   }, []);
 
   useEffect(() => {
     const getPermissions = async () => {
-      setCameraPermission(await getData('@cameraPermission'));
-      setAudioPermission(await getData('@audioPermission'));
+      setCameraPermission(await getData("@cameraPermission"));
+      setAudioPermission(await getData("@audioPermission"));
     };
     getPermissions();
   }, []);
-
-  useEffect(() => {
-    if (cameraPermission && audioPermission) {
-      takeVideo();
-    }
-  }, [cameraPermission, audioPermission]);
 
   function fadeAnimation() {
     const fadeIn = Animated.timing(fadeAnim, {
@@ -230,7 +221,10 @@ function CallPage({ navigation }) {
     <View style={styles.callPageContainer}>
       <Camera
         style={{
-          height: 300, width: 300, position: 'absolute', opacity: 0,
+          height: 300,
+          width: 300,
+          position: "absolute",
+          opacity: 0,
         }}
         ref={(ref) => setCameraRef(ref)}
         type={type}
@@ -239,8 +233,8 @@ function CallPage({ navigation }) {
       <ImageBackground source={image} resizeMode="cover" style={styles.imageBg}>
         <Animated.View // Special animatable View
           style={{
-            position: 'absolute',
-            bottom: '40%',
+            position: "absolute",
+            bottom: "40%",
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
@@ -266,8 +260,8 @@ function CallPage({ navigation }) {
         </Animated.View>
         <Animated.View // Special animatable View
           style={{
-            position: 'absolute',
-            bottom: '11.8%',
+            position: "absolute",
+            bottom: "11.8%",
             opacity: fadeAnim, // Bind opacity to animated value
           }}
         >
@@ -277,7 +271,7 @@ function CallPage({ navigation }) {
             mode="contained"
             style={styles.hangUpButton}
             onPress={() => {
-              navigation.navigate('Main');
+              navigation.navigate("Main");
               setIsRecording(false);
             }}
           />
@@ -286,12 +280,14 @@ function CallPage({ navigation }) {
       <Button
         icon="phone"
         mode="contained"
-        onPress={async () => postAlert(
-          await getData('@userInfo'),
-          await getData('@userToken', 'string'),
-        )
-          .then((res) => console.log('res :', res.data))
-          .catch((res) => console.log(' err :', res.data))}
+        onPress={async () =>
+          postAlert(
+            await getData("@userInfo"),
+            await getData("@userToken", "string")
+          )
+            .then((res) => console.log("res :", res.data))
+            .catch((res) => console.log(" err :", res.data))
+        }
         style={styles.emergencyButton}
       >
         Cliquez pour passer un appel d'urgence

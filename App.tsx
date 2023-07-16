@@ -1,35 +1,45 @@
-import React, { useReducer } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { Context } from './src/context/index';
-import Connexion from './src/pages/Connexion';
-import Inscription from './src/pages/Inscription';
-import ForgotPassword from './src/pages/ForgotPassword';
-import Main from './src/pages/Main';
-import Help from './src/pages/Help';
-import Account from './src/pages/Account';
-import CallPage from './src/pages/CallPage';
-import { initialState, reducer } from './src/reducer/reducer';
-import { initialScenarioState, scenarioReducer } from './src/reducer/scenario';
-import { initialAuthenticatedState, authenticatedReducer } from './src/reducer/userReducer';
+import React, { useReducer } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider as PaperProvider } from "react-native-paper";
+import { Context } from "./src/context/index";
+import Connexion from "./src/pages/Connexion";
+import Inscription from "./src/pages/Inscription";
+import ForgotPassword from "./src/pages/ForgotPassword";
+import Main from "./src/pages/Main";
+import Help from "./src/pages/Help";
+import Account from "./src/pages/Account";
+import CallPage from "./src/pages/CallPage";
+import { initialState, reducer } from "./src/reducer/reducer";
+import { initialScenarioState, scenarioReducer } from "./src/reducer/scenario";
+import {
+  initialAuthenticatedState,
+  authenticatedReducer,
+} from "./src/reducer/userReducer";
 
 function App() {
   const [isRecording, isRecordingDispatch] = useReducer(reducer, initialState);
-  const [scenarioState, scenarioDispatch] = useReducer(scenarioReducer, initialScenarioState);
-  const [isAuthenticatedState, isAuthenticatedDispatch] = useReducer(authenticatedReducer, initialAuthenticatedState);
+  const [scenarioState, scenarioDispatch] = useReducer(
+    scenarioReducer,
+    initialScenarioState
+  );
+  const [isAuthenticatedState, isAuthenticatedDispatch] = useReducer(
+    authenticatedReducer,
+    initialAuthenticatedState
+  );
   const Stack = createNativeStackNavigator();
 
   return (
     // <View style={styles.container}>
-    <Context.Provider value={{
-      isRecordingState: isRecording.isRecording,
-      isRecordingDispatch,
-      scenarioState,
-      scenarioDispatch,
-      isAuthenticatedState,
-      isAuthenticatedDispatch,
-    }}
+    <Context.Provider
+      value={{
+        isRecordingState: isRecording.isRecording,
+        isRecordingDispatch,
+        scenarioState,
+        scenarioDispatch,
+        isAuthenticatedState,
+        isAuthenticatedDispatch,
+      }}
     >
       <PaperProvider>
         <NavigationContainer>
