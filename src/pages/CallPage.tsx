@@ -70,6 +70,7 @@ function CallPage({ navigation }) {
   };
   //   await recording.stopAndUnloadAsync();
   async function startRecording() {
+    console.log("test");
     try {
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
@@ -163,11 +164,15 @@ function CallPage({ navigation }) {
       }
     }
   }
-  const stopRecording = () => {
+
+  const stopCall = async () => {
+    isRecording && cameraRef.stopRecording();
+    loadedSound && loadedSound.unloadAsync();
     if (audioRecording) {
-      setAudioRecording(undefined);
-      audioRecording.stopAndUnloadAsync();
+      await audioRecording.stopAndUnloadAsync();
     }
+    navigation.navigate("Main");
+    setIsRecording(false);
   };
 
   useEffect(() => {
@@ -184,10 +189,7 @@ function CallPage({ navigation }) {
     })();
 
     return () => {
-      console.log("destroy");
-      isRecording && cameraRef.stopRecording();
-      loadedSound && loadedSound.unloadAsync();
-      stopRecording();
+      stopCall();
     };
   }, []);
 
@@ -271,12 +273,18 @@ function CallPage({ navigation }) {
             mode="contained"
             style={styles.hangUpButton}
             onPress={() => {
-              navigation.navigate("Main");
-              setIsRecording(false);
+              stopCall();
             }}
           />
         </Animated.View>
       </ImageBackground>
+      <Button
+        onPress={() => {
+          stopCall();
+        }}
+      >
+        test
+      </Button>
       <Button
         icon="phone"
         mode="contained"
