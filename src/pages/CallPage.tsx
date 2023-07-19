@@ -52,8 +52,12 @@ function CallPage({ navigation }) {
 
   useEffect(() => {
     if (!isplaying && isSpeaking) {
+      setTimeout(() => {
+        setIsSpeaking(false);
+        handleSound(stepSound);
+      }, 2000);
+    } else {
       setIsSpeaking(false);
-      handleSound(stepSound);
     }
   }, [isSpeaking]);
 
@@ -65,12 +69,12 @@ function CallPage({ navigation }) {
 
   const onAudioPlayingStatusUpdate = ({ didJustFinish }) => {
     if (didJustFinish) {
+      console.log("didJustFinish", didJustFinish);
       setIsplaying(false);
     }
   };
   //   await recording.stopAndUnloadAsync();
   async function startRecording() {
-    console.log("test");
     try {
       await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
@@ -97,7 +101,6 @@ function CallPage({ navigation }) {
     }
   }
   async function handleSound(index = 0) {
-    console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(soundLink[index]);
     sound.setOnPlaybackStatusUpdate(onAudioPlayingStatusUpdate);
     await sound.playAsync();
@@ -278,13 +281,7 @@ function CallPage({ navigation }) {
           />
         </Animated.View>
       </ImageBackground>
-      <Button
-        onPress={() => {
-          stopCall();
-        }}
-      >
-        test
-      </Button>
+
       <Button
         icon="phone"
         mode="contained"
