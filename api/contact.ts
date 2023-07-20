@@ -1,8 +1,8 @@
 /* eslint-disable max-len */
-import axios from 'axios';
-import { UserInterface } from '../interfaces/userInterface';
+import axios from "axios";
+import { UserInterface } from "../interfaces/userInterface";
 
-const url = 'https://iim-safer-2.herokuapp.com/api';
+const url = "https://iim-safer-2.herokuapp.com/api";
 
 // Need to be fixed
 export const getContact = async (userId: string, token: string) => {
@@ -16,8 +16,9 @@ export const getContact = async (userId: string, token: string) => {
 export const postContact = async (
   token: string,
   userId: string,
-  emails: Array<String>,
+  emails: Array<String>
 ) => {
+  console.log();
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -26,6 +27,6 @@ export const postContact = async (
     {
       contacts: emails,
     },
-    config,
+    config
   );
 };

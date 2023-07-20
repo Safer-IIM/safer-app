@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import {
-  List,
-  IconButton,
-  Portal,
-  Dialog,
-} from 'react-native-paper';
-import { AntDesign } from '@expo/vector-icons';
-import styles from '../../../styles/contact';
-import ContactForm from '../ContactForm';
+import React, { useState } from "react";
+import { View, Text, ScrollView } from "react-native";
+import { List, IconButton, Portal, Dialog } from "react-native-paper";
+import { AntDesign } from "@expo/vector-icons";
+import styles from "../../../styles/contact";
+import ContactForm from "../ContactForm";
 
 type ContactType = {
   name: string;
@@ -16,7 +11,7 @@ type ContactType = {
 };
 type ContactProps = {
   contactList: Array<ContactType>;
-  setContactList: any
+  setContactList: any;
 };
 
 function Contact({ contactList = [], setContactList }: ContactProps) {
@@ -24,32 +19,31 @@ function Contact({ contactList = [], setContactList }: ContactProps) {
 
   return (
     <View style={styles.contactContainer}>
-      <ScrollView
-        style={styles.listContainer}
-      >
+      <ScrollView style={styles.listContainer}>
         {contactList.map((contact, index) => (
-          <View
-            style={styles.item}
-            key={index}
-          >
+          <View style={styles.item} key={index}>
             <View style={styles.itemMail}>
               <List.Icon icon="email" />
-              <Text>
-                {'   '}
-              </Text>
+              <Text>{"   "}</Text>
               <Text>{contact}</Text>
             </View>
-            <View style={styles.itemPhone}>
-              <List.Icon icon="phone" />
-              <Text>
-                {'   '}
-              </Text>
-            </View>
+            {/*
+                   <View style={styles.itemPhone}>
+                <List.Icon icon="phone" />
+                <Text>{"   "}</Text>
+              </View>
+              */}
           </View>
         ))}
       </ScrollView>
       <View style={styles.addContactButtonContainer}>
-        <AntDesign style={styles.addContactButton} name="pluscircle" size={40} color="black" onPress={() => setAddingContactVisible(true)} />
+        <AntDesign
+          style={styles.addContactButton}
+          name="pluscircle"
+          size={40}
+          color="black"
+          onPress={() => setAddingContactVisible(true)}
+        />
       </View>
       <Portal>
         <Dialog
@@ -58,10 +52,11 @@ function Contact({ contactList = [], setContactList }: ContactProps) {
         >
           <Dialog.Title>Ajouter un contact</Dialog.Title>
           <Dialog.Content>
-            <ContactForm onValidate={(res) => {
-              setAddingContactVisible(false);
-              setContactList(res);
-            }}
+            <ContactForm
+              onValidate={(res) => {
+                setAddingContactVisible(false);
+                setContactList(res);
+              }}
             />
           </Dialog.Content>
         </Dialog>

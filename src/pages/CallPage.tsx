@@ -22,9 +22,10 @@ import { sendRecord } from "../../api/record";
 import { generateNameVideo, getVideoContentType } from "../../utils/utils";
 
 const soundLink = [
-  require("../assets/voice1.m4a"),
-  require("../assets/voice2.m4a"),
-  require("../assets/voice3.m4a"),
+  require("../assets/Sound.m4a"),
+  require("../assets/Sound2.m4a"),
+  require("../assets/Sound3.m4a"),
+  require("../assets/Sound4.m4a"),
 ];
 
 function CallPage({ navigation }) {
@@ -55,7 +56,7 @@ function CallPage({ navigation }) {
       setTimeout(() => {
         setIsSpeaking(false);
         handleSound(stepSound);
-      }, 2000);
+      }, 1000);
     } else {
       setIsSpeaking(false);
     }
