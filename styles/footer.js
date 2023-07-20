@@ -13,9 +13,18 @@ const styles = StyleSheet.create(
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      borderColor: globalStyle.colorPrimarySemiVisible,
+      borderWidth: 5,
       borderTopRightRadius: 50,
       borderTopLeftRadius: 50,
       backgroundColor: globalStyle.colorPrimarySemiVisible,
+    },
+    carIcon: {
+      position: 'absolute',
+      top: -100,
+      fontSize: '10px',
+      width: 100,
+      height: 100,
     },
   },
 );

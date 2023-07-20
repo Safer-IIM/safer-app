@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import {
   List,
   IconButton,
   Portal,
   Dialog,
 } from 'react-native-paper';
+import { AntDesign } from '@expo/vector-icons';
 import styles from '../../../styles/contact';
 import ContactForm from '../ContactForm';
 
@@ -15,30 +16,41 @@ type ContactType = {
 };
 type ContactProps = {
   contactList: Array<ContactType>;
+  setContactList: any
 };
 
-function Contact({ contactList = [] }: ContactProps) {
+function Contact({ contactList = [], setContactList }: ContactProps) {
   const [addingContactVisible, setAddingContactVisible] = useState(false);
+
   return (
     <View style={styles.contactContainer}>
-      <List.Section style={styles.listContainer}>
-        {contactList.map((contact) => (
-          <List.Item
-            title={contact}
-            left={() => <List.Icon icon="email" />}
-          />
+      <ScrollView
+        style={styles.listContainer}
+      >
+        {contactList.map((contact, index) => (
+          <View
+            style={styles.item}
+            key={index}
+          >
+            <View style={styles.itemMail}>
+              <List.Icon icon="email" />
+              <Text>
+                {'   '}
+              </Text>
+              <Text>{contact}</Text>
+            </View>
+            <View style={styles.itemPhone}>
+              <List.Icon icon="phone" />
+              <Text>
+                {'   '}
+              </Text>
+            </View>
+          </View>
         ))}
-      </List.Section>
-
-      <IconButton
-        icon="plus"
-        mode="outlined"
-        style={styles.addContactButtons}
-        // iconColor={MD3Colors.error50}
-        size={20}
-        onPress={() => setAddingContactVisible(true)}
-      />
-
+      </ScrollView>
+      <View style={styles.addContactButtonContainer}>
+        <AntDesign style={styles.addContactButton} name="pluscircle" size={40} color="black" onPress={() => setAddingContactVisible(true)} />
+      </View>
       <Portal>
         <Dialog
           visible={addingContactVisible}
@@ -46,7 +58,11 @@ function Contact({ contactList = [] }: ContactProps) {
         >
           <Dialog.Title>Ajouter un contact</Dialog.Title>
           <Dialog.Content>
-            <ContactForm onValidate={() => setAddingContactVisible(false)} />
+            <ContactForm onValidate={(res) => {
+              setAddingContactVisible(false);
+              setContactList(res);
+            }}
+            />
           </Dialog.Content>
         </Dialog>
       </Portal>

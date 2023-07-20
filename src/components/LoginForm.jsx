@@ -2,6 +2,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { View, Text } from 'react-native';
+import jwt_decode from 'jwt-decode';
 import styles from '../../styles/inscription';
 import FormInput from './FormInput';
 import { loginUser } from '../../api/user';
@@ -20,8 +21,10 @@ function LoginForm({ navigation }) {
   const onSubmit = async ({ email, password }) => {
     try {
       const token = await loginUser({ email, password });
-     await storeData('@userToken', token);
-     await storeData('@fromLoginPage', true);
+      const decoded = jwt_decode(token);
+      await storeData('@userToken', token);
+      await storeData('@userInfo', decoded);
+      await storeData('@isConnected', true);
       navigation.navigate('Main', {
         userToken: token,
       });

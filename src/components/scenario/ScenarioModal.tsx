@@ -27,14 +27,20 @@ function ScenarioModal({}) {
         style={styles.scenarioButton}
       >
 
-        <MaterialCommunityIcons name={context.scenarioState.icon} size={32} color="black" />
-        <Text>
+        <MaterialCommunityIcons
+          style={styles.scenarioButtonIcon}
+          name={context.scenarioState.icon}
+          size={32}
+          color="black"
+        />
+        <Text style={styles.scenarioButtonText}>
           {selectedScenario.name}
         </Text>
       </Pressable>
 
       <Portal>
         <Dialog
+          style={styles.scenarioModal}
           visible={scenarioModalVisible}
           onDismiss={() => setScenarioModalVisible(false)}
         >
@@ -51,13 +57,9 @@ function ScenarioModal({}) {
               {scenarios.map((scenario, index) => (
                 <List.Item
                   key={index}
-                  titleStyle={{
-                    fontWeight: 'bold',
-                    fontSize: 18,
-                    color: MD3Colors.primary40,
-                  }}
-                  descriptionStyle={{ fontSize: 12 }}
-                  style={styles.scenarioChoiceButton}
+                  titleStyle={styles.scenarioListTitle}
+                  descriptionStyle={styles.scenarioListDescription}
+                  style={[styles.scenarioChoiceButton, scenario.id === selectedScenario.id && styles.selectedScenario]}
                   onPress={() => {
                     handleScenario(scenario);
                   }}
@@ -67,8 +69,7 @@ function ScenarioModal({}) {
                     <List.Icon
                       {...props}
                       icon={scenario.icon}
-                      style={{ alignSelf: 'center' }}
-                      color={MD3Colors.primary40}
+                      style={styles.scenarioListIcon}
                     />
                   )}
                 />

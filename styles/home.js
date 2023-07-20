@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     color: '#242424',
   },
   alertButton: {
+    shadowColor: '#000000',
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 10,
     marginTop: 20,
     position: 'relative',
     backgroundColor: globalStyle.colorDanger,
@@ -47,6 +51,7 @@ const styles = StyleSheet.create({
   alertButtonTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white',
   },
 
   scenarioButton: {
@@ -54,34 +59,84 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     color: globalStyle.colorPrimary,
   },
+
+  scenarioModal: {
+    backgroundColor: 'white',
+  },
   scenarioModalContent: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
+
   scenarioList: {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     width: '90%',
   },
+
   scenarioChoiceButton: {
-    borderWidth: 5,
+    backgroundColor: globalStyle.colorPrimarySemiVisible,
     borderRadius: 30,
     margin: 7,
     width: '100%',
     paddingLeft: 10,
   },
+
+  selectedScenario: {
+    borderWidth: 3,
+    borderColor: globalStyle.colorPrimary,
+  },
+
+  scenarioListTitle: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    color: globalStyle.colorPrimary,
+  },
+
+  scenarioListDescription: {
+    fontSize: 12,
+    color: globalStyle.colorText,
+  },
+
+  scenarioListIcon: {
+    color: globalStyle.colorPrimary,
+    alignSelf: 'center',
+  },
   scenarioAddingButton: {},
 
+  contactModal: {
+    backgroundColor: 'white',
+    maxHeight: '90%',
+  },
+
+  modalContactContent: {
+
+    maxHeight: '90%',
+    height: 'auto',
+    position: 'relative',
+  },
   contactButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    color: globalStyle.colorPrimary,
   },
   contactButtonText: {
+    color: globalStyle.colorText,
     fontSize: 15,
+    fontWeight: 'bold',
+  },
+  contactButtonIcon: {
+    color: globalStyle.colorText,
+  },
+  scenarioButtonText: {
+    color: globalStyle.colorText,
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  scenarioButtonIcon: {
+    color: globalStyle.colorText,
   },
 });
 

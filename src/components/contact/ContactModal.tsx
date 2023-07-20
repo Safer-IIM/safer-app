@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import {
-  Dialog, IconButton, Portal, Chip,
+  Dialog, IconButton, Portal, Chip, Tooltip,
 } from 'react-native-paper';
 
 import { AntDesign } from '@expo/vector-icons';
@@ -14,20 +14,18 @@ import { Context } from '../../context';
 function ContactModal() {
   const [contactModalVisible, setContactModalVisible] = useState(false);
   const [contactModalInfoVisible, setContactModalInfoVisible] = useState(false);
+  const [connectedModalVisible, setConnectedModalVisible] = useState(false);
   const [contactList, setContactList] = useState([]);
   const context = useContext(Context);
   const {
     isAuthenticatedState,
   } = context;
+
   useEffect(() => {
-    getData('contactList')
-      .then((res) => {
-        console.log('res contact', res);
-        res && setContactList(res.contacts);
-      })
-      .catch((err) => {
-        console.log('err contact', err);
-      });
+    (async function () {
+      const userInfo = await getData('@userInfo');
+      userInfo.user && setContactList(userInfo.user.contacts);
+    }());
   }, []);
 
   return (
@@ -36,11 +34,12 @@ function ContactModal() {
         style={styles.contactButton}
         onPress={() => setContactModalVisible(true)}
       >
-        <AntDesign name="contacts" size={32} color="black" />
+        <AntDesign style={styles.contactButtonIcon} name="contacts" size={32} color="black" />
         <Text style={styles.contactButtonText}>Contact</Text>
       </Pressable>
       <Portal>
         <Dialog
+          style={styles.contactModal}
           visible={contactModalVisible}
           onDismiss={() => setContactModalVisible(false)}
         >
@@ -51,14 +50,10 @@ function ContactModal() {
               alignItems: 'center',
             }}
           >
-
             Modifiez vos contacts
-            <IconButton
-              icon="information"
-              selected
-              size={24}
-              onPress={() => setContactModalInfoVisible(true)}
-            />
+            {' '}
+            <AntDesign style={{ fontSize: 24 }} name="infocirlce" color="black" onPress={() => setContactModalInfoVisible(true)} />
+
             <Portal>
               <Dialog
                 visible={contactModalInfoVisible}
@@ -74,21 +69,39 @@ function ContactModal() {
               </Dialog>
             </Portal>
           </Dialog.Title>
-          <Dialog.Content>
-            <Contact contactList={contactList} />
+          <Dialog.Content style={styles.modalContactContent}>
             {!isAuthenticatedState && (
             <Chip
+              onPress={() => setConnectedModalVisible(true)}
               style={{
                 backgroundColor: '#ffeae5',
+
               }}
               textStyle={{
                 color: '#ff5e00',
+                alignSelf: 'center',
               }}
             >
-              Vous n'êtes pas connecté, si vous effacez les données de l'application vous perdrez de perdre vos contact enregistré
+              Attention Vous n'êtes pas connecté
+              {' '}
+              <AntDesign style={{ alignSelf: 'center' }} name="eye" size={18} />
             </Chip>
             )}
-
+            <Portal>
+              <Dialog
+                visible={connectedModalVisible}
+                onDismiss={() => setConnectedModalVisible(false)}
+              >
+                <Dialog.Title>Attention</Dialog.Title>
+                <Dialog.Content>
+                  <Text>
+                    Attention Vous n'êtes pas connecté, si vous effacez les données de l'application
+                    vous perdrez de perdre vos contact enregistré
+                  </Text>
+                </Dialog.Content>
+              </Dialog>
+            </Portal>
+            <Contact contactList={contactList} setContactList={setContactList} />
           </Dialog.Content>
         </Dialog>
       </Portal>
