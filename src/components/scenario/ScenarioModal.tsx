@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
-import {
-  Dialog, List, MD3Colors, Portal,
-} from 'react-native-paper';
-import { Pressable, Text, View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { scenarios } from '../../../utils/scenarios';
-import styles from '../../../styles/home';
-import { Context } from '../../context';
+import React, { useContext, useState } from "react";
+import { Dialog, List, MD3Colors, Portal } from "react-native-paper";
+import { Pressable, Text, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { scenarios } from "../../../utils/scenarios";
+import styles from "../../../styles/home";
+import { Context } from "../../context";
 
 function ScenarioModal({}) {
   const context = useContext(Context);
@@ -21,21 +19,17 @@ function ScenarioModal({}) {
 
   return (
     <>
-
       <Pressable
         onPress={() => setScenarioModalVisible(true)}
         style={styles.scenarioButton}
       >
-
         <MaterialCommunityIcons
           style={styles.scenarioButtonIcon}
           name={context.scenarioState.icon}
           size={32}
           color="black"
         />
-        <Text style={styles.scenarioButtonText}>
-          {selectedScenario.name}
-        </Text>
+        <Text style={styles.scenarioButtonText}>Scenarios</Text>
       </Pressable>
 
       <Portal>
@@ -44,11 +38,11 @@ function ScenarioModal({}) {
           visible={scenarioModalVisible}
           onDismiss={() => setScenarioModalVisible(false)}
         >
-          <Dialog.Title style={{ textAlign: 'center' }}>
+          <Dialog.Title style={{ textAlign: "center" }}>
             Choisissez un Scénario
           </Dialog.Title>
           <Dialog.Content>
-            <Text style={{ textAlign: 'center' }}>
+            <Text style={{ textAlign: "center" }}>
               Chaque scénario correspond à un appel différent
             </Text>
           </Dialog.Content>
@@ -59,7 +53,11 @@ function ScenarioModal({}) {
                   key={index}
                   titleStyle={styles.scenarioListTitle}
                   descriptionStyle={styles.scenarioListDescription}
-                  style={[styles.scenarioChoiceButton, scenario.id === selectedScenario.id && styles.selectedScenario]}
+                  style={[
+                    styles.scenarioChoiceButton,
+                    scenario.id === selectedScenario.id &&
+                      styles.selectedScenario,
+                  ]}
                   onPress={() => {
                     handleScenario(scenario);
                   }}
