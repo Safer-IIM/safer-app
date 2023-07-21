@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { useEffect, useRef } from 'react';
-import {
-  Animated, View, Text, Pressable,
-} from 'react-native';
-import { Button } from 'react-native-paper';
-import styles from '../../styles/home';
+import React, { useEffect, useRef } from "react";
+import { Animated, View, Text, Pressable } from "react-native";
+import { Button } from "react-native-paper";
+import styles from "../../styles/home";
 
 function AlertButton({ navigation }) {
   const breathWidthAnim = useRef(new Animated.Value(1)).current;
@@ -45,16 +43,12 @@ function AlertButton({ navigation }) {
     <View>
       <Animated.View>
         <Pressable
-          style={[
-            styles.alertButton,
-          ]}
+          style={[styles.alertButton]}
           onPress={() => {
-            navigation.navigate('Call');
+            navigation.navigate("Call");
           }}
         >
-          <Text style={styles.alertButtonTitle}>
-            SAFERIZE
-          </Text>
+          <Text style={styles.alertButtonTitle}>SAFERIZE</Text>
         </Pressable>
       </Animated.View>
     </View>

@@ -1,6 +1,12 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable import/no-extraneous-dependencies */
-import { ImageBackground, Platform, View, Animated } from "react-native";
+import {
+  ImageBackground,
+  Platform,
+  View,
+  Animated,
+  Linking,
+} from "react-native";
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { Button, IconButton } from "react-native-paper";
 import { Camera, CameraType } from "expo-camera";
@@ -94,6 +100,11 @@ function CallPage({ navigation }) {
       console.error("Failed to start recording", err);
     }
   }
+
+  const pressCall = () => {
+    const url = "tel://0782962651";
+    Linking.openURL(url);
+  };
 
   async function pauseSound() {
     if (isplaying) {
@@ -291,12 +302,12 @@ function CallPage({ navigation }) {
             await getData("@userInfo"),
             await getData("@userToken", "string")
           )
-            .then((res) => console.log("res :", res.data))
-            .catch((res) => console.log(" err :", res.data))
+            .then((res) => pressCall())
+            .catch((res) => pressCall())
         }
         style={styles.emergencyButton}
       >
-        Cliquez pour passer un appel d'urgence
+        Passer un VRAI appel d'urgence
       </Button>
     </View>
   );
