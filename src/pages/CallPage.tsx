@@ -62,7 +62,7 @@ function CallPage({ navigation }) {
       setTimeout(() => {
         setIsSpeaking(false);
         handleSound(stepSound);
-      }, 1000);
+      }, 1500);
     } else {
       setIsSpeaking(false);
     }
@@ -74,10 +74,13 @@ function CallPage({ navigation }) {
     }
   };
 
-  const onAudioPlayingStatusUpdate = ({ didJustFinish }) => {
-    if (didJustFinish) {
-      console.log("didJustFinish", didJustFinish);
-      setIsplaying(false);
+  const onAudioPlayingStatusUpdate = (voice, index) => {
+    if (voice.didJustFinish) {
+      if (index + 1 === soundLink.length) {
+        stopCall();
+      } else {
+        setIsplaying(false);
+      }
     }
   };
   //   await recording.stopAndUnloadAsync();
@@ -114,7 +117,9 @@ function CallPage({ navigation }) {
   }
   async function handleSound(index = 0) {
     const { sound } = await Audio.Sound.createAsync(soundLink[index]);
-    sound.setOnPlaybackStatusUpdate(onAudioPlayingStatusUpdate);
+    sound.setOnPlaybackStatusUpdate((e) =>
+      onAudioPlayingStatusUpdate(e, index)
+    );
     await sound.playAsync();
     setStepSound(() => index + 1);
     setLoadedSound(sound);
